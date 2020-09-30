@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Volos.iml" filepath="$PROJECT_DIR$/Volos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VolosWeb.iml" filepath="$PROJECT_DIR$/VolosWeb.iml" />
     </modules>
   </component>
 </project>
