@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Local" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss 19.0.0.Final" ALTERNATIVE_JRE_ENABLED="false">
+  <configuration default="false" name="Volos" type="JBossConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="JBoss 19.0.0.Final" ALTERNATIVE_JRE_ENABLED="false">
+    <option name="BROWSER_ID" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
     <option name="UPDATING_POLICY" value="restart-server" />
     <deployment>
       <artifact name="Gradle : Volos.war">
