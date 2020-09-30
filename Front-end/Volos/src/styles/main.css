@@ -1,0 +1,95 @@
+
+body {
+    margin: 0;
+    background: #999;
+}
+header {
+    background: red;
+    color: yellow;
+    padding: 15px;
+}
+
+.featured{
+    background-color: blueviolet;
+    color: aqua;
+    margin: 35px;
+    padding: 70px;
+    border-radius: 30px;
+}
+
+.barre h1{
+    margin: 0;
+    display: inline;
+}
+
+.barre nav ul{
+    margin: 0;
+    display: inline;
+}
+
+.barre nav ul li{
+    background: black;
+    color: white;
+    display: inline-block;
+    list-style-type: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.barre nav ul li a{
+    color: white;
+}
+.right{
+    width: 35%;
+    background: linear-gradient(to right,#01a9ac,#01dbdf);
+    padding: 30px 25px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-align: center;
+    color: #fff;
+}
+
+.right img{
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.left{
+    width: 65%;
+    background: #fff;
+    padding: 30px 25px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.left .info,
+.left .projects{
+    margin-bottom: 25px;
+}
+
+.left .info h3,
+.wrapper .left .projects h3{
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #353c4e;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.left .info_data,
+.wrapper .left .projects_data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.left .info_data .data,
+.wrapper .left .projects_data .data{
+    width: 45%;
+}
+
+.left .info_data .data h4,
+.wrapper .left .projects_data .data h4{
+    color: #353c4e;
+    margin-bottom: 5px;
+}
