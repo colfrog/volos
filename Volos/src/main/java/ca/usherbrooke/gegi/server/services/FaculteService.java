@@ -1,7 +1,8 @@
 package ca.usherbrooke.gegi.server.services;
 
-import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
-import ca.usherbrooke.gegi.server.data.Utilisateur;
+import ca.usherbrooke.gegi.server.mappers.FaculteMapper;
+import ca.usherbrooke.gegi.server.mappers.DepartementMapper;
+//import ca.usherbrooke.gegi.server.data.Utilisateur;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -63,37 +64,3 @@ public class UtilisateurService {
         utilisateurMapper.insertUtilisateur(utilisateur);
         System.out.println(trimestre);
     }
-
-    //--------------------//
-    /*public List<Etudiant> getEtudiant(@QueryParam("id") Integer id) {
-        //  System.out.println(httpServletRequest.getUserPrincipal().getName());
-        List<Etudiant> etudiants = etudiantMapper.select(id);
-        return etudiants;
-    }*/
-
-   /* @Produces("text/plain")
-      public String getEtudiant(@QueryParam("id") Integer id) {
-        System.out.println(httpServletRequest.getUserPrincipal().getName());
-        List<Etudiant> etudiants = etudiantMapper.select(id);
-        return etudiants.get(0).toString();
-    }*/
-
-
-    /*@GET
-    @Path("insert_trimestre")
-    public void insertTrimestre() {
-
-        //CONNECTION AVEC LES MICRO-SERVICES ZEUS **COULD BE USEFUL
-
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://zeus.gel.usherbrooke.ca:8080/ms/rest/trimestre?inscription=2017-01-01");
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Trimestre> trimestres = response.readEntity(new GenericType<List<Trimestre>>(){});
-        for (Trimestre trimestre : trimestres) {
-            etudiantMapper.insertTrimestre(trimestre);
-            System.out.println(trimestre);
-        }
-    }*/
-}

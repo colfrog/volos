@@ -5,13 +5,14 @@
 <mapper namespace="ca.usherbrooke.gegi.server.mappers.UtilisateurMapper">
 
     <select id="selectUtilisateurs" resultType="Utilisateur">
+        
         SELECT
             cip,
             nom,
             prenom,
             mail,
-            departement,
-            faculte
+            departement, <!--À changer-->
+            faculte <!--À changer-->
         FROM
             app.v_etudiant_app; <!--Change table-->
     </select>
@@ -22,8 +23,8 @@
             nom,
             prenom,
             mail,
-            departement,
-            faculte
+            departement, <!--À changer-->
+            faculte <!--À changer-->
         FROM
             app.v_etudiant_app <!--Change table-->
         WHERE
@@ -36,8 +37,8 @@
             nom,
             prenom,
             mail,
-            departement,
-            faculte
+            departement, <!--À changer-->
+            faculte <!--À changer-->
         FROM
             app.v_etudiant_app <!--Change table-->
         WHERE
@@ -50,8 +51,8 @@
             nom,
             prenom,
             mail,
-            departement,
-            faculte
+            departement, <!--À changer-->
+            faculte <!--À changer-->
         FROM
             app.v_etudiant_app <!--Change table-->
         WHERE
@@ -64,8 +65,8 @@
             nom,
             prenom,
             mail,
-            departement,
-            faculte)
+            departement, <!--À changer-->
+            faculte) <!--À changer-->
         VALUES  (#{utilisateur.cip},
             #{utilisateur.nom},
             #{utilisateur.prenom},
