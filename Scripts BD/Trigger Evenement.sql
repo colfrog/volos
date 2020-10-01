@@ -39,7 +39,7 @@ CREATE TRIGGER update_evenement
 AFTER INSERT OR UPDATE ON annonce
 FOR EACH ROW EXECUTE FUNCTION insert_evenement();
 
----------- Tests pour la table journal ----------
+---------- Tests pour la table evenement ----------
 --DELETE FROM evenement WHERE id_annonce = -1;
 --DELETE FROM annonce WHERE id = -1;
 
