@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.persistence.EtudiantMapper">
+
+    <select id="select" resultType="Etudiant">
+      SELECT
+        etudiant_app_id,
+        cip,
+        nom,
+        courriel,
+        programme,
+        programme_nom,
+        app,
+        app_titre,
+        ap,
+        departement,
+        faculte,
+        universite
+      FROM
+        app.v_etudiant_app
+      where
+        etudiant_app_id = #{id};
+
+    </select>
+
+  <insert id="insertUniversite">
+    INSERT INTO app.universite(
+      universite_id,)
+      VALUES  (#{universite.universite_id},
+               #{universite.libelle},
+    );
+  </insert>
+
+    <insert id="insertTrimestre">
+    INSERT INTO app.trimestre(
+      trimestre_id,
+      trimestre,
+      debut,
+      fin,
+      inscription)
+      VALUES  (#{trimestre.trimestre_id},
+             #{trimestre.trimestre},
+             #{trimestre.debut},
+             #{trimestre.fin},
+             #{trimestre.inscription});
+
+  </insert>
+</mapper>
