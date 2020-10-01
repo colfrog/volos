@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.UtilisateurMapper">
+
+    <select id="selectUtilisateurs" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            departement,
+            faculte
+        FROM
+            app.v_etudiant_app; <!--Change table-->
+    </select>
+
+    <select id="selectUtilisateurByCip" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            departement,
+            faculte
+        FROM
+            app.v_etudiant_app <!--Change table-->
+        WHERE
+            cip = #{cip};
+    </select>
+
+    <select id="selectUtilisateurByFaculte" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            departement,
+            faculte
+        FROM
+            app.v_etudiant_app <!--Change table-->
+        WHERE
+            faculte = #{faculte};
+    </select>
+
+    <select id="selectUtilisateurByDepartement" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            departement,
+            faculte
+        FROM
+            app.v_etudiant_app <!--Change table-->
+        WHERE
+            departement = #{departement};
+    </select>
+
+    <insert id="insertUtilisateur">
+        INSERT INTO app.trimestre( <!--Change table-->
+            cip,
+            nom,
+            prenom,
+            mail,
+            departement,
+            faculte)
+        VALUES  (#{utilisateur.cip},
+            #{utilisateur.nom},
+            #{utilisateur.prenom},
+            #{utilisateur.mail},
+            #{utilisateur.departement},
+            #{utilisateur.faculte});
+  </insert>
+
+</mapper>
