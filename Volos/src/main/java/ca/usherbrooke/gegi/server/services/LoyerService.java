@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Path("")
 public class LoyerService {
     @Context
     HttpServletRequest httpServletRequest;
@@ -36,6 +37,7 @@ public class LoyerService {
 
     @GET
     @Path("list_loyer")
+    @Produces("application/json")
     public List<Loyer> getListLoyer() {
         List<Loyer> loyers = loyerMapper.select();
         return loyers;

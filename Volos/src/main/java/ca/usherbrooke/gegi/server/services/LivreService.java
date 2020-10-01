@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Path("")
 public class LivreService {
     @Context
     HttpServletRequest httpServletRequest;
@@ -33,6 +34,7 @@ public class LivreService {
 
     @GET
     @Path("list_livre")
+    @Produces("application/json")
     public List<Livre> getListLivre() {
         List<Livre> livres = livreMapper.select();
         return livres;

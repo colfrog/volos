@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Path("")
 public class AnnonceService {
     @Context
     HttpServletRequest httpServletRequest;
@@ -36,7 +37,8 @@ public class AnnonceService {
     }
 
     @GET
-    @Path("list_annoce")
+    @Path("list_annonce")
+    @Produces("application/json")
     public List<Annonce> getListAnnonce() {
         List<Annonce> annonces = annonceMapper.select();
         return annonces;
