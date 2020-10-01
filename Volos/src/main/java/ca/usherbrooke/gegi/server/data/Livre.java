@@ -2,11 +2,20 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
-public class Livre extends Annonce{
+public class Livre {
+    private int id;
     private String titre;
     private String resume;
     private String maisonEdition;
     private Date datePublication;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitre() {
         return titre;
@@ -38,5 +47,16 @@ public class Livre extends Annonce{
 
     public void setDatePublication(Date datePublication) {
         this.datePublication = datePublication;
+    }
+
+    @Override
+    public String toString() {
+        return "Livre{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", resume='" + resume + '\'' +
+                ", maisonEdition='" + maisonEdition + '\'' +
+                ", datePublication='" + datePublication + '\'' +
+                '}';
     }
 }

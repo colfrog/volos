@@ -2,11 +2,20 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
-public class Loyer extends Annonce {
+public class Loyer {
+    private int id;
     private String titre;
     private int nbChambre;
-    private Date dateDebut;
-    private Date dateFin;
+    private Date dateDebutLocation;
+    private Date dateFinLocation;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitre() {
         return titre;
@@ -24,19 +33,30 @@ public class Loyer extends Annonce {
         this.nbChambre = nbChambre;
     }
 
-    public Date getDateDebut() {
-        return dateDebut;
+    public Date getDateDebutLocation() {
+        return dateDebutLocation;
     }
 
-    public void setDateDebut(Date dateDebut) {
-        this.dateDebut = dateDebut;
+    public void setDateDebutLocation(Date dateDebutLocation) {
+        this.dateDebutLocation = dateDebutLocation;
     }
 
-    public Date getDateFin() {
-        return dateFin;
+    public Date getDateFinLocation() {
+        return dateFinLocation;
     }
 
-    public void setDateFin(Date dateFin) {
-        this.dateFin = dateFin;
+    public void setDateFinLocation(Date dateFinLocation) {
+        this.dateFinLocation = dateFinLocation;
+    }
+
+    @Override
+    public String toString() {
+        return "Loyer{" +
+                "id=" + id +
+                ", titre='" + titre + '\'' +
+                ", resume='" + nbChambre + '\'' +
+                ", maisonEdition='" + dateDebutLocation + '\'' +
+                ", datePublication='" + dateFinLocation + '\'' +
+                '}';
     }
 }
