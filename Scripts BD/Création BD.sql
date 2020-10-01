@@ -1,16 +1,5 @@
 ---------- Création de la BD ----------
 
-/*DROP TABLE auteur_livre;
-DROP TABLE auteur;
-DROP TABLE livre;
-DROP TABLE loyer;
-DROP TABLE evenement;
-DROP TABLE favoris;
-DROP TABLE annonce;
-DROP TABLE utilisateur;
-DROP TABLE departement;
-DROP TABLE faculte;*/
-
 CREATE TABLE Faculte
 (
   nom VARCHAR(512) NOT NULL,

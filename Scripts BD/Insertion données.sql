@@ -1,16 +1,5 @@
 ---------- Insertion des données dans la BD ----------
 
-/*DELETE FROM auteur_livre;
-DELETE FROM auteur;
-DELETE FROM livre;
-DELETE FROM loyer;
-DELETE FROM evenement;
-DELETE FROM favoris;
-DELETE FROM annonce;
-DELETE FROM utilisateur;
-DELETE FROM departement;
-DELETE FROM faculte;*/
-
 INSERT INTO faculte (nom)
 VALUES
 ('Génie');
