@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+  <settings>
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+  </settings>
   <typeAliases>
-    <package name="ca.usherbrooke.gegi.server.business"/>
+    <package name="ca.usherbrooke.gegi.server.data"/>
   </typeAliases>
   <environments default="default">
     <environment id="default">
@@ -16,6 +19,6 @@
     </environment>
   </environments>
   <mappers>
-    <package name="ca.usherbrooke.gegi.server.persistence"/>
+    <package name="ca.usherbrooke.gegi.server.mappers"/>
   </mappers>
 </configuration>
