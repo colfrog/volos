@@ -57,4 +57,16 @@ public class Annonce {
     public void setCip(String cip) {
         this.cip = cip;
     }
+
+    @Override
+    public String toString() {
+        return "Annonce{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", prix='" + prix + '\'' +
+                ", etat='" + etat + '\'' +
+                ", dateAffichage='" + dateAffichage + '\'' +
+                ", cip='" + cip + '\'' +
+                '}';
+    }
 }

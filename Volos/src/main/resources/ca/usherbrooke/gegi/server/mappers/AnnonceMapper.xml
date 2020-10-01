@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.AnnonceMapper">
+    <select id="select" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip
+      FROM
+        annonce
+    </select>
+
+    <select id="selectId" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip
+      FROM
+        annonce
+      where
+        id = #{id};
+    </select>
+
+    <insert id="insertAnnonce">
+    INSERT INTO annonce(
+    id,
+    description,
+    prix,
+    date_affichage,
+    etat,
+    cip)
+      VALUES  (#{annonce.id},
+      #{annonce.description},
+      #{annonce.prix},
+      #{annonce.dateAffichage},
+      #{annonce.etat},
+      #{annonce.cip});
+  </insert>
+    <update id="updateAnnonce">
+        UPDATE annonce
+        SET id = #{annonce.id},
+        description = #{annonce.description},
+        prix = #{annonce.prix},
+        date_affichage = #{annonce.dateAffichage},
+        etat = #{annonce.etat},
+        cip = #{annonce.cip}
+        WHERE id = #{id};
+    </update>
+</mapper>
