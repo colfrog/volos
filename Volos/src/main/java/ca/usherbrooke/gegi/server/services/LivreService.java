@@ -40,34 +40,17 @@ public class LivreService {
         return livres;
     }
 
-
     @GET
     @Path("insert_livre")
-    public void insertLivre() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Livre> livres = response.readEntity(new GenericType<List<Livre>>(){});
-        for (Livre livre : livres) {
-            livreMapper.insertLivre(livre);
-            System.out.println(livre);
-        }
+    public void insertLivre(Livre livre) {
+        livreMapper.insertLivre(livre);
+        System.out.println(livre);
     }
 
     @GET
     @Path("update_livre")
-    public void updateLivre() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Livre> livres = response.readEntity(new GenericType<List<Livre>>(){});
-        for (Livre livre : livres) {
-            livreMapper.updateLivre(livre, livre.getId());
-            System.out.println(livre);
-        }
+    public void updateLivre(Livre livre) {
+        livreMapper.updateLivre(livre, livre.getId());
+        System.out.println(livre);
     }
 }

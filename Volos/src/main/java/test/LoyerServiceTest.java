@@ -1,6 +1,6 @@
 package test;
 
-import ca.usherbrooke.gegi.server.data.Loyer;
+/*import ca.usherbrooke.gegi.server.data.Loyer;
 import ca.usherbrooke.gegi.server.services.LoyerService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -54,4 +54,4 @@ class LoyerServiceTest {
     @Test
     void updateLoyer() {
     }
-}
+}/**/

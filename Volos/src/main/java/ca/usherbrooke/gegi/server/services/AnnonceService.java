@@ -47,31 +47,16 @@ public class AnnonceService {
 
     @GET
     @Path("insert_annonce")
-    public void insertAnnonce() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
+    public void insertAnnonce(Annonce annonce) {
+        annonceMapper.insertAnnonce(annonce);
+        System.out.println(annonce);
 
-        List<Annonce> annonces = response.readEntity(new GenericType<List<Annonce>>(){});
-        for (Annonce annonce : annonces) {
-            annonceMapper.insertAnnonce(annonce);
-            System.out.println(annonce);
-        }
     }
 
     @GET
     @Path("update_annonce")
-    public void updateAnnonce() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Annonce> annonces = response.readEntity(new GenericType<List<Annonce>>(){});
-        for (Annonce annonce : annonces) {
-            annonceMapper.updateAnnonce(annonce, annonce.getId());
-            System.out.println(annonce);
-        }
+    public void updateAnnonce(Annonce annonce) {
+        annonceMapper.updateAnnonce(annonce, annonce.getId());
+        System.out.println(annonce);
     }
 }

@@ -9,6 +9,17 @@ public class Loyer {
     private Date dateDebutLocation;
     private Date dateFinLocation;
 
+    public Loyer() {}
+
+    public Loyer(int id, String titre, int nbChambre,
+                 Date dateDebutLocation, Date dateFinLocation) {
+        this.id = id;
+        this.titre = titre;
+        this.nbChambre = nbChambre;
+        this.dateDebutLocation = dateDebutLocation;
+        this.dateFinLocation = dateFinLocation;
+    }
+
     public int getId() {
         return id;
     }

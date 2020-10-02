@@ -46,31 +46,15 @@ public class LoyerService {
 
     @GET
     @Path("insert_loyer")
-    public void insertLoyer() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Loyer> loyers = response.readEntity(new GenericType<List<Loyer>>(){});
-        for (Loyer loyer : loyers) {
-            loyerMapper.insertLoyer(loyer);
-            System.out.println(loyer);
-        }
+    public void insertLoyer(Loyer loyer) {
+        loyerMapper.insertLoyer(loyer);
+        System.out.println(loyer);
     }
 
     @GET
     @Path("update_loyer")
-    public void updateLoyer() {
-        Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(""); //Lien de la BD de Volos
-        Invocation.Builder  builder = target.request(MediaType.APPLICATION_JSON);
-        Response response = builder.get();
-
-        List<Loyer> loyers = response.readEntity(new GenericType<List<Loyer>>(){});
-        for (Loyer loyer : loyers) {
-            loyerMapper.updateLoyer(loyer, loyer.getId());
-            System.out.println(loyer);
-        }
+    public void updateLoyer(Loyer loyer) {
+        loyerMapper.updateLoyer(loyer, loyer.getId());
+        System.out.println(loyer);
     }
 }

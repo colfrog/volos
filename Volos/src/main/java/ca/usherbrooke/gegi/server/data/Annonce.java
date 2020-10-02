@@ -10,6 +10,17 @@ public class Annonce {
     private Date dateAffichage;
     private String cip;
 
+    public Annonce() {}
+
+    public Annonce(int id, String cip, String description, float prix,
+                   int etat, Date dateAffichage){
+        this.id = id;
+        this.cip = cip;
+        this.description = description;
+        this.prix = prix;
+        this.etat = etat;
+        this.dateAffichage = dateAffichage;
+    }
     public int getId() {
         return id;
     }

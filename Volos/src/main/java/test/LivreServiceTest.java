@@ -13,7 +13,6 @@ class LivreServiceTest {
     public void getLivre1() {
         LivreService service = new LivreService();
 
-        Livre result = new Livre();
         Livre livre = service.getLivre(0);
 
         String myDate = "2020/10/01";
@@ -25,13 +24,10 @@ class LivreServiceTest {
             e.printStackTrace();
         }
 
-        result.setId(0);
-        result.setDatePublication(date);
-        result.setMaisonEdition("PEARSON");
-        result.setResume("UML est le language de modélisation le"+
+        Livre result = new Livre(0, "UML 2",
+                "UML est le language de modélisation le"+
                         "plus utilisé dans lindustrie, principalement"+
-                        "pour le développement logiciel.");
-        result.setTitre("UML 2");
+                        "pour le développement logiciel.", "PEARSON", date);
 
         Assert.assertEquals(result, livre);
     }
@@ -55,11 +51,7 @@ class LivreServiceTest {
     public void insertLivre() {
         LivreService service = new LivreService();
 
-
-        Livre result = new Livre();
-        Livre livre = service.getLivre(0);
-
-        String myDate = "2020/10/01";
+        String myDate = "2042/04/20";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date date = null;
         try {
@@ -68,13 +60,14 @@ class LivreServiceTest {
             e.printStackTrace();
         }
 
-        result.setId(3);
-        result.setDatePublication(date);
-        result.setMaisonEdition("PEARSON");
-        result.setResume("UML est le language de modélisation le"+
-                "plus utilisé dans lindustrie, principalement"+
-                "pour le développement logiciel.");
-        result.setTitre("UML 2");
+
+        Livre result = new Livre(3, "titre", "resume",
+                "Maison d'édidition", date);
+        service.insertLivre();
+
+        Livre livre = service.getLivre(0);
+
+
 
         //service.insertLivre(livre);
     }

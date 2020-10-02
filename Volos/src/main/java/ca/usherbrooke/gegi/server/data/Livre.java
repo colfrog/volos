@@ -9,6 +9,17 @@ public class Livre {
     private String maisonEdition;
     private Date datePublication;
 
+    public Livre() {}
+
+    public Livre(int id, String titre, String resume,
+                 String maisonEdition, Date datePublication) {
+        this.id = id;
+        this.titre = titre;
+        this.resume = resume;
+        this.maisonEdition = maisonEdition;
+        this.datePublication = datePublication;
+    }
+
     public int getId() {
         return id;
     }
