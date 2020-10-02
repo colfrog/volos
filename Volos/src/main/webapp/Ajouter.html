@@ -12,21 +12,42 @@
                 <h1>Volos</h1>
                 <ul>
                     <li><a href="Accueil.html">Accueil</a></li>
-                    <li><a href="Categories.html">Categories</a></li>
+                    <div class="dropdown">
+                        <button class="dropbtn">Categories</button>
+                        <div class="dropdown-content">
+                            <a href="Livres.html">Livres</a>
+                            <a href="Loyer.html">Loyer</a>
+                            <a href="Autres.html">Autres</a>
+                        </div>
+                    </div>
                     <li><a href="Profile.html">Profile</a></li>
+                    <li><a href="mesFavoris.html">Voir mes favoris</a></li>
                     <li><a href="Ajouter.html">Ajouter une annonce</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <div class="ajouter">
-        <h2>Ajouter un titre</h2>
-        <h3>Categories</h3>
-        <h4>Prix</h4>
-        <h5>Description</h5>
-        <h6>Ajouter une photo</h6>
-        <h7>Annuler</h7>
-        <h8>Publier</h8>
+    <div class="titre">
+        Inserer un titre ici
     </div>
+    <div class="categorie">
+        Inserer la categorie
+    </div>
+    <div class="prix">
+        <center>Inserer le prix</center>
+    </div>
+    <div class="description">
+        Inserer une description
+    </div>
+    <div class="photo">
+        <center><p><button onclick="addPhoto()">Ajouter une photo</button></p></center>
+    </div>
+    <div class="Annuler">
+        <center><p><button onclick="annuler()">Annuler</button></p></center>
+    </div>
+    <div class="Publier">
+        <center><p><button onclick="publier()">Publier</button></p></center>
+    </div>
+
 </body>
 </html>
