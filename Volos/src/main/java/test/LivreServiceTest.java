@@ -1,6 +1,6 @@
 package test;
 
-import ca.usherbrooke.gegi.server.data.Livre;
+/*import ca.usherbrooke.gegi.server.data.Livre;
 import ca.usherbrooke.gegi.server.services.LivreService;
 import org.junit.Assert;
 import org.junit.Test;

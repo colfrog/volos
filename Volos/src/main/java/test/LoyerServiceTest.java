@@ -1,6 +1,6 @@
 package test;
 
-import ca.usherbrooke.gegi.server.data.Livre;
+/*import ca.usherbrooke.gegi.server.data.Livre;
 import ca.usherbrooke.gegi.server.data.Loyer;
 import ca.usherbrooke.gegi.server.services.LivreService;
 import ca.usherbrooke.gegi.server.services.LoyerService;

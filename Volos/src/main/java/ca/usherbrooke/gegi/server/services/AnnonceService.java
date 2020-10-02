@@ -61,7 +61,7 @@ public class AnnonceService {
         List<Annonce> annonces = annonceMapper.select();
         List<Annonce> annoncesAfficher = new ArrayList<Annonce>();
 
-        for(Annonce annonce: annonces) {
+        /*for(Annonce annonce: annonces) {
             if(annonce.getType() == "LOYER") {
                 Loyer loyer = loyerService.getLoyer(annonce.getId());
                 loyer.setAnnonce(annonce);
@@ -73,9 +73,9 @@ public class AnnonceService {
             } else {
                 annoncesAfficher.add(annonce);
             }
-        }
+        }*/
 
-        return annoncesAfficher;
+        return annonces;
     }
 
 

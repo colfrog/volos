@@ -11,7 +11,7 @@
         date_affichage,
         etat,
         cip,
-        type
+        categorie
       FROM
         annonce
     </select>
@@ -24,7 +24,7 @@
         date_affichage,
         etat,
         cip,
-        type
+        categorie
       FROM
         annonce
       where
@@ -39,14 +39,14 @@
     date_affichage,
     etat,
     cip,
-    type)
+    categorie)
       VALUES  (#{annonce.id},
       #{annonce.description},
       #{annonce.prix},
       #{annonce.dateAffichage},
       #{annonce.etat},
       #{annonce.cip},
-      #{annonce.type});
+      #{annonce.categorie});
   </insert>
     <update id="updateAnnonce">
         UPDATE annonce
@@ -56,7 +56,7 @@
         date_affichage = #{annonce.dateAffichage},
         etat = #{annonce.etat},
         cip = #{annonce.cip},
-        type = #{annonce.type}
+        categorie = #{annonce.type}
         WHERE id = #{id};
     </update>
 </mapper>
