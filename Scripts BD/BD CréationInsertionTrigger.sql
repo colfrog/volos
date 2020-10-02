@@ -41,6 +41,7 @@ CREATE TABLE Annonce
   date_affichage DATE NOT NULL,
   etat INT NOT NULL,
   cip CHAR(8) NOT NULL,
+  type VARCHAR(512) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (cip) REFERENCES Utilisateur(cip)
 );
@@ -120,11 +121,12 @@ VALUES
 ('Tremblay', 'Marc-André', 'trem2842', 'trem2842@usherbrooke.ca', 'Électrique et informatique', 'Génie');
 
 --Etats disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat)
+--Types disponibles: LIVRE, LOYER, AUTRE
+INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, type)
 VALUES
-(0, 'durp0701', 'Un livre presque neuf', 40, '2020-10-01', 1),
-(1, 'boui2215', 'Un loyer pas cher', 300, '2020-10-01', 0),
-(2, 'scop2401', 'Un livre de merde', 100, '2020-10-01', 2);
+(0, 'durp0701', 'Un livre presque neuf', 40, '2020-10-01', 1, 'LIVRE'),
+(1, 'boui2215', 'Un loyer pas cher', 300, '2020-10-01', 0, 'LOYER'),
+(2, 'scop2401', 'Un livre de merde', 100, '2020-10-01', 2, 'LIVRE');
 
 INSERT INTO favoris (id_annonce, cip)
 VALUES
@@ -199,9 +201,9 @@ FOR EACH ROW EXECUTE FUNCTION insert_evenement();
 --DELETE FROM evenement WHERE id_annonce = -1;
 --DELETE FROM annonce WHERE id = -1;
 
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat)
+INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, type)
 VALUES
-(-1, 'durp0701', 'TEST TRIGGER 1.0', 0, '2000-01-01', 1);
+(-1, 'durp0701', 'TEST TRIGGER 1.0', 0, '2000-01-01', 1, 'AUTRE');
 
 UPDATE annonce
 SET description = 'TEST TRIGGER 2.0'
