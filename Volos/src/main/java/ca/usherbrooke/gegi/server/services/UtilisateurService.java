@@ -2,6 +2,7 @@ package ca.usherbrooke.gegi.server.services;
 
 import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
 import ca.usherbrooke.gegi.server.data.Utilisateur;
+import ca.usherbrooke.gegi.server.data.Departement;
 import org.apache.ibatis.annotations.Param;
 
 import javax.inject.Inject;
@@ -60,11 +61,17 @@ public class UtilisateurService {
     }
 
     @GET
+    @Path("updateUtilisateurDepartement")
+    @Produces("application/json")
+    public void updateUtilisateurDepartement(String cip, Departement departement){
+        utilisateurMapper.updateUtilisateurDepartement(cip, departement);
+    }
+
+    @GET
     @Path("insertUtilisateur")
     @Produces("application/json")
     public void insertUtilisateur(Utilisateur utilisateur){
         utilisateurMapper.insertUtilisateur(utilisateur);
-        System.out.println(utilisateur);
     }
 
     //--------------------//

@@ -58,6 +58,12 @@
             nom_departement = #{departement};
     </select>
 
+    <select id="updateUtilisateurDepartement">
+        UPDATE utilisateur
+        SET nom_faculte=#{departement.nomFaculte}, nom_departement = #{departement.nomDepartement}
+        WHERE cip = #{cip}
+    </select>
+
     <insert id="insertUtilisateur">
         INSERT INTO utilisateur(
             cip,

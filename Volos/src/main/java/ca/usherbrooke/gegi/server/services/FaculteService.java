@@ -50,7 +50,6 @@ public class FaculteService {
     @Produces("application/json")
     public void insertDepartement(Departement departement) {
         departementMapper.insertDepartement(departement);
-        System.out.println(departement);
     }
 
     @GET
