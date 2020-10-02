@@ -10,7 +10,8 @@
         prix,
         date_affichage,
         etat,
-        cip
+        cip,
+        type
       FROM
         annonce
     </select>
@@ -22,7 +23,8 @@
         prix,
         date_affichage,
         etat,
-        cip
+        cip,
+        type
       FROM
         annonce
       where
@@ -36,13 +38,15 @@
     prix,
     date_affichage,
     etat,
-    cip)
+    cip,
+    type)
       VALUES  (#{annonce.id},
       #{annonce.description},
       #{annonce.prix},
       #{annonce.dateAffichage},
       #{annonce.etat},
-      #{annonce.cip});
+      #{annonce.cip},
+      #{annonce.type});
   </insert>
     <update id="updateAnnonce">
         UPDATE annonce
@@ -51,7 +55,8 @@
         prix = #{annonce.prix},
         date_affichage = #{annonce.dateAffichage},
         etat = #{annonce.etat},
-        cip = #{annonce.cip}
+        cip = #{annonce.cip},
+        type = #{annonce.type}
         WHERE id = #{id};
     </update>
 </mapper>

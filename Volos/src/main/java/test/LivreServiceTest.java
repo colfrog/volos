@@ -1,6 +1,6 @@
 package test;
 
-/*import ca.usherbrooke.gegi.server.data.Livre;
+import ca.usherbrooke.gegi.server.data.Livre;
 import ca.usherbrooke.gegi.server.services.LivreService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -60,19 +60,35 @@ class LivreServiceTest {
             e.printStackTrace();
         }
 
-
         Livre result = new Livre(3, "titre", "resume",
                 "Maison d'édidition", date);
-        service.insertLivre();
+        service.insertLivre(result);
 
-        Livre livre = service.getLivre(0);
+        Livre livre = service.getLivre(3);
 
-
-
-        //service.insertLivre(livre);
+        Assert.assertEquals(result, livre);
     }
 
     @Test
     public void updateLivre() {
+        LivreService service = new LivreService();
+
+        String myDate = "1997-12-25";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = null;
+        try {
+            date = sdf.parse(myDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Livre result = new Livre(2, "One piece", "L'histoire d'un pirate au"+
+                "chapeau de paille à la recherche du ONE PIECE!!! :o",
+                "Shūeisha Magasine", date);
+        service.updateLivre(result);
+
+        Livre livre = service.getLivre(2);
+
+        Assert.assertEquals(result, livre);
     }
 }/**/
