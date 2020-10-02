@@ -5,7 +5,6 @@
 <mapper namespace="ca.usherbrooke.gegi.server.mappers.UtilisateurMapper">
 
     <select id="selectUtilisateurs" resultType="Utilisateur">
-        
         SELECT
             cip,
             nom,
@@ -71,8 +70,8 @@
             #{utilisateur.nom},
             #{utilisateur.prenom},
             #{utilisateur.mail},
-            #{utilisateur.departement},
-            #{utilisateur.faculte});
+            #{utilisateur.nomDepartement},
+            #{utilisateur.nomFaculte});
   </insert>
 
 </mapper>

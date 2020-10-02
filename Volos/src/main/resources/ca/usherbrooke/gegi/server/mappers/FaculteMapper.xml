@@ -12,11 +12,9 @@
     </select>
 
     <select id="insertFaculte">
-        INSERT INTO departement
-            nom_departement,
-            nom_faculte
-        VALUES (#{departement.nomDepartement},
-            #{departement.nomFaculte});
+        INSERT INTO faculte
+            (nom)
+        VALUES (#{faculte});
     </select>
 
 </mapper>

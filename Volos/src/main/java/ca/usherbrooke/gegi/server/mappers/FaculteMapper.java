@@ -13,5 +13,4 @@ public interface FaculteMapper {
 
     List<String> selectFaculte();
     void insertFaculte(@Param("faculte") String faculte);
-
 }

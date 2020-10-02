@@ -64,7 +64,7 @@ public class FaculteService {
     @GET
     @Path("insertFaculte")
     @Produces("application/json")
-    public void insertFaculte(String faculte){
+    public void insertFaculte(@QueryParam("faculte") String faculte){
         faculteMapper.insertFaculte(faculte);
         System.out.println(faculte);
     }
