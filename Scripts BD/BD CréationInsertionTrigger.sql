@@ -178,12 +178,12 @@ VALUES (
 		ELSE new.id
 	END),
 	(CASE
-		WHEN old.id IS NOT NULL THEN ( 'Id: ' || old.id ||
-									   ', Cip: ' || old.cip ||
-									   ', Description: ' || old.description ||
-									   ', Prix: ' || old.prix ||
-									   ', Date affichage: ' || old.date_affichage ||
-									   ', Etat: ' || old.etat)
+		WHEN old.id IS NOT NULL THEN (  'Id: ' || old.id ||
+						', Cip: ' || old.cip ||
+						', Description: ' || old.description ||
+						', Prix: ' || old.prix ||
+						', Date affichage: ' || old.date_affichage ||
+						', Etat: ' || old.etat)
 	END));
 RETURN new;
 END;
