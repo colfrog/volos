@@ -1,4 +1,4 @@
-package ca.usherbrooke.gegi.server.business;
+package ca.usherbrooke.gegi.server.data;
 
 
 public class Utilisateur {
@@ -6,8 +6,8 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String mail;
-    private String departement;
-    private String faculte;
+    private String nomDepartement;
+    private String nomFaculte;
 
     public String getCip() {
         return cip;
@@ -29,13 +29,13 @@ public class Utilisateur {
 
     public void setMail(String mail) { this.mail = mail; }
 
-    public String getDepartement() { return departement; }
+    public String getNomDepartementt() { return nomDepartement; }
 
-    public void setDepartemen(String departement) { this.departement = departement; }
+    public void setNomDepartement(String departement) { this.nomDepartement = departement; }
 
-    public String getFaculte() { return faculte; }
+    public String getNomFaculte() { return nomFaculte; }
 
-    public void setFaculte(String faculte) { this.faculte = faculte; }
+    public void setNomFaculte(String faculte) { this.nomFaculte = faculte; }
 
     @Override
     public String toString() {
@@ -44,8 +44,8 @@ public class Utilisateur {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", courriel='" + mail + '\'' +
-                ", departemen='" + departemen + '\'' +
-                ", faculte='" + faculte + '\'' +
+                ", departemen='" + nomDepartement + '\'' +
+                ", faculte='" + nomFaculte + '\'' +
                 '}';
     }
 }

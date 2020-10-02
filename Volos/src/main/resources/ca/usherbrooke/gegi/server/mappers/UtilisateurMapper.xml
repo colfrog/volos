@@ -11,10 +11,10 @@
             nom,
             prenom,
             mail,
-            departement, <!--À changer-->
-            faculte <!--À changer-->
+            nom_departement,
+            nom_faculte
         FROM
-            app.v_etudiant_app; <!--Change table-->
+            utilisateur;
     </select>
 
     <select id="selectUtilisateurByCip" resultType="Utilisateur">
@@ -23,10 +23,10 @@
             nom,
             prenom,
             mail,
-            departement, <!--À changer-->
-            faculte <!--À changer-->
+            nom_departement,
+            nom_faculte
         FROM
-            app.v_etudiant_app <!--Change table-->
+            utilisateur
         WHERE
             cip = #{cip};
     </select>
@@ -37,12 +37,12 @@
             nom,
             prenom,
             mail,
-            departement, <!--À changer-->
-            faculte <!--À changer-->
+            nom_departement,
+            nom_faculte
         FROM
-            app.v_etudiant_app <!--Change table-->
+            utilisateur
         WHERE
-            faculte = #{faculte};
+            nom_faculte = #{faculte};
     </select>
 
     <select id="selectUtilisateurByDepartement" resultType="Utilisateur">
@@ -51,22 +51,22 @@
             nom,
             prenom,
             mail,
-            departement, <!--À changer-->
-            faculte <!--À changer-->
+            nom_departement,
+            nom_faculte
         FROM
-            app.v_etudiant_app <!--Change table-->
+            utilisateur
         WHERE
-            departement = #{departement};
+            nom_departement = #{departement};
     </select>
 
     <insert id="insertUtilisateur">
-        INSERT INTO app.trimestre( <!--Change table-->
+        INSERT INTO utilisateur(
             cip,
             nom,
             prenom,
             mail,
-            departement, <!--À changer-->
-            faculte) <!--À changer-->
+            nom_departement,
+            nom_faculte)
         VALUES  (#{utilisateur.cip},
             #{utilisateur.nom},
             #{utilisateur.prenom},

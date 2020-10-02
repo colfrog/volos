@@ -4,46 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ca.usherbrooke.gegi.server.mappers.FaculteMapper">
 
-    <select id="selectUtilisateurs" resultType="Utilisateur">
+    <select id="selectFaculte" resultType="String">
         SELECT
-        cip,
-        nom,
-        prenom,
-        mail,
-        departement, <!--À changer-->
-        faculte <!--À changer-->
+            *
         FROM
-        app.v_etudiant_app; <!--Change table-->
+            faculte;
     </select>
 
-    <select id="selectUtilisateurByCip" resultType="Utilisateur">
-        SELECT
-        cip,
-        nom,
-        prenom,
-        mail,
-        departement, <!--À changer-->
-        faculte <!--À changer-->
-        FROM
-        app.v_etudiant_app <!--Change table-->
-        WHERE
-        cip = #{cip};
+    <select id="insertFaculte">
+        INSERT INTO departement
+            nom_departement,
+            nom_faculte
+        VALUES (#{departement.nomDepartement},
+            #{departement.nomFaculte});
     </select>
-
-    <insert id="insertUtilisateur">
-        INSERT INTO app.trimestre( <!--Change table-->
-        cip,
-        nom,
-        prenom,
-        mail,
-        departement, <!--À changer-->
-        faculte) <!--À changer-->
-        VALUES  (#{utilisateur.cip},
-        #{utilisateur.nom},
-        #{utilisateur.prenom},
-        #{utilisateur.mail},
-        #{utilisateur.departement},
-        #{utilisateur.faculte});
-    </insert>
 
 </mapper>

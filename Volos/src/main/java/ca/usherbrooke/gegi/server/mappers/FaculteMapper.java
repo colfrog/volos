@@ -11,10 +11,7 @@ import java.util.List;
 @Mapper
 public interface FaculteMapper {
 
-    List<Utilisateur> selectUtilisateurs();
-    Utilisateur selectUtilisateurByCip(@Param("cip") String cip );
-    List<Utilisateur> selectUtilisateurByFaculte(@Param("faculte") String faculte);
-    List<Utilisateur> selectUtilisateurByDepartement(@Param("departement") String departement);
-    void insertUtilisateur(@Param("utilisateur") Utilisateur utilisateur);
+    List<String> selectFaculte();
+    void insertFaculte(@Param("faculte") String faculte);
 
 }

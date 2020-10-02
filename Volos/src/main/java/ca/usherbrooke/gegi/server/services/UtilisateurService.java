@@ -2,9 +2,11 @@ package ca.usherbrooke.gegi.server.services;
 
 import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
 import ca.usherbrooke.gegi.server.data.Utilisateur;
+import org.apache.ibatis.annotations.Param;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Path("Utilisateur")
+@Path("")
 public class UtilisateurService {
 
     @Context
@@ -27,41 +29,42 @@ public class UtilisateurService {
 
     @GET
     @Path("selectUtilisateurs")
+    @Produces("application/json")
     public List<Utilisateur> selectUtilisateurs(){
-        System.out.println(httpServletRequest.getUserPrincipal().getName());
         List<Utilisateur> utilisateurs = utilisateurMapper.selectUtilisateurs();
         return utilisateurs;
     }
 
     @GET
     @Path("selectUtilisateurByCip")
-    Utilisateur selectUtilisateurByCip(@QueryParam("cip") String cip){
-        System.out.println(httpServletRequest.getUserPrincipal().getName());
-        List<Utilisateur> utilisateurs = utilisateurMapper.selectUtilisateurByCip(cip);
+    @Produces("application/json")
+    public Utilisateur selectUtilisateurByCip(@QueryParam("cip") String cip){
+        Utilisateur utilisateurs = utilisateurMapper.selectUtilisateurByCip(cip);
         return utilisateurs;
     }
 
     @GET
     @Path("selectUtilisateurByFaculte")
-    List<Utilisateur> selectUtilisateurByFaculte(@QueryParam("faculte") String faculte){
-        System.out.println(httpServletRequest.getUserPrincipal().getName());
-        List<Utilisateur> utilisateurs = utilisateurMapper.selectUtilisateursByFaculte(faculte);
+    @Produces("application/json")
+    public List<Utilisateur> selectUtilisateurByFaculte(@QueryParam("faculte") String faculte){
+        List<Utilisateur> utilisateurs = utilisateurMapper.selectUtilisateurByFaculte(faculte);
         return utilisateurs;
     }
 
     @GET
     @Path("selectUtilisateurByDepartement")
-    List<Utilisateur> selectUtilisateurByDepartement(@QueryParam("departement") String departement){
-        System.out.println(httpServletRequest.getUserPrincipal().getName());
+    @Produces("application/json")
+    public List<Utilisateur> selectUtilisateurByDepartement(@QueryParam("departement") String departement){
         List<Utilisateur> utilisateurs = utilisateurMapper.selectUtilisateurByDepartement(departement);
         return utilisateurs;
     }
 
     @GET
     @Path("insertUtilisateur")
-    void insertUtilisateur(@QueryParam("utilisateur") Utilisateur utilisateur){
+    @Produces("application/json")
+    public void insertUtilisateur(Utilisateur utilisateur){
         utilisateurMapper.insertUtilisateur(utilisateur);
-        System.out.println(trimestre);
+        System.out.println(utilisateur);
     }
 
     //--------------------//
