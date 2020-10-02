@@ -9,19 +9,19 @@ public class Annonce {
     private int etat;
     private Date dateAffichage;
     private String cip;
-    private String type;
+    private String categorie;
 
     public Annonce() {}
 
     public Annonce(int id, String cip, String description, float prix,
-                   int etat, Date dateAffichage, String type){
+                   int etat, Date dateAffichage, String categorie){
         this.id = id;
         this.cip = cip;
         this.description = description;
         this.prix = prix;
         this.etat = etat;
         this.dateAffichage = dateAffichage;
-        this.type = type;
+        this.categorie = categorie;
     }
     public int getId() {
         return id;
@@ -71,33 +71,12 @@ public class Annonce {
         this.cip = cip;
     }
 
-    public String getType() {
-        return type;
+    public String getCategorie() {
+        return categorie;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Annonce getAnnonce() {
-        Annonce annonce = new Annonce();
-        annonce.setCip(this.getCip());
-        annonce.setDescription(this.getDescription());
-        annonce.setPrix(this.getPrix());
-        annonce.setEtat(this.getEtat());
-        annonce.setDateAffichage(this.getDateAffichage());
-        annonce.setType(this.getType());
-
-        return annonce;
-    }
-
-    public void setAnnonce(Annonce annonce) {
-        this.setCip(annonce.getCip());
-        this.setDescription(annonce.getDescription());
-        this.setPrix(annonce.getPrix());
-        this.setEtat(annonce.getEtat());
-        this.setDateAffichage(annonce.getDateAffichage());
-        this.setType(annonce.getType());
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 
     @Override
@@ -109,7 +88,7 @@ public class Annonce {
                 ", etat='" + etat + '\'' +
                 ", dateAffichage='" + dateAffichage + '\'' +
                 ", cip='" + cip + '\'' +
-                ", type='" + type + '\'' +
+                ", categorie='" + categorie + '\'' +
                 '}';
     }
 }

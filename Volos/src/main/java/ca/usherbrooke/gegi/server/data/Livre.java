@@ -2,7 +2,7 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
-public class Livre extends Annonce{
+public class Livre {
     private int id;
     private String titre;
     private String resume;
@@ -58,14 +58,6 @@ public class Livre extends Annonce{
 
     public void setDatePublication(Date datePublication) {
         this.datePublication = datePublication;
-    }
-
-    public Livre getLivre() {
-        if(this.getType() != "LIVRE") {
-            return null;
-        } else {
-            return this;
-        }
     }
 
     @Override

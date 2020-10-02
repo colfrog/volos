@@ -25,7 +25,7 @@ public class LivreService {
     LivreMapper livreMapper;
 
     @GET
-    @Path("livre")
+    @Path("livreById")
     @Produces("application/json")
     public Livre getLivre(@QueryParam("id") Integer id) {
         Livre livre = livreMapper.selectId(id);
@@ -33,7 +33,7 @@ public class LivreService {
     }
 
     @GET
-    @Path("list_livre")
+    @Path("livres")
     @Produces("application/json")
     public List<Livre> getListLivre() {
         List<Livre> livres = livreMapper.select();
@@ -41,14 +41,14 @@ public class LivreService {
     }
 
     @GET
-    @Path("insert_livre")
+    @Path("insertLivre")
     public void insertLivre(Livre livre) {
         livreMapper.insertLivre(livre);
         System.out.println(livre);
     }
 
     @GET
-    @Path("update_livre")
+    @Path("updateLivre")
     public void updateLivre(Livre livre) {
         livreMapper.updateLivre(livre, livre.getId());
         System.out.println(livre);

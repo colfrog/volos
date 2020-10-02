@@ -30,28 +30,14 @@ public class AnnonceService {
 
     @Inject
     AnnonceMapper annonceMapper;
-    @Inject
-    LivreService livreService;
-    @Inject
-    LoyerService loyerService;
 
     @GET
-    @Path("annonceByID")
+    @Path("annonceById")
     @Produces("application/json")
     public Annonce getAnnonceById(@QueryParam("id") Integer id) {
         Annonce annonce = annonceMapper.selectId(id);
 
-        if(annonce.getType() == "LOYER") {
-            Loyer loyer = loyerService.getLoyer(annonce.getId());
-            loyer.setAnnonce(annonce);
-            return loyer;
-        } else if (annonce.getType() == "LIVRE") {
-            Livre livre = livreService.getLivre(annonce.getId());
-            livre.setAnnonce(annonce);
-            return livre;
-        } else {
-            return annonce;
-        }
+        return annonce;
     }
 
     @GET
@@ -59,7 +45,7 @@ public class AnnonceService {
     @Produces("application/json")
     public List<Annonce> getAnnonces() {
         List<Annonce> annonces = annonceMapper.select();
-        List<Annonce> annoncesAfficher = new ArrayList<Annonce>();
+        //List<Annonce> annoncesAfficher = new ArrayList<Annonce>();
 
         /*for(Annonce annonce: annonces) {
             if(annonce.getType() == "LOYER") {
@@ -82,40 +68,12 @@ public class AnnonceService {
     @GET
     @Path("insertAnnonce")
     public void insertAnnonce(Annonce annonce) {
-        annonceMapper.insertAnnonce(annonce.getAnnonce());
-    }
-
-    @GET
-    @Path("insertAnnonceLivre")
-    public void insertAnnonce(Livre livre) {
-        annonceMapper.insertAnnonce(livre.getAnnonce());
-        livreService.insertLivre(livre);
-    }
-
-    @GET
-    @Path("insertAnnonceLoyer")
-    public void insertAnnonce(Loyer loyer) {
-        annonceMapper.insertAnnonce(loyer.getAnnonce());
-        loyerService.insertLoyer(loyer);
+        annonceMapper.insertAnnonce(annonce);
     }
 
     @GET
     @Path("updateAnnonce")
     public void updateAnnonce(Annonce annonce) {
         annonceMapper.updateAnnonce(annonce, annonce.getId());
-    }
-
-    @GET
-    @Path("updateAnnonceLivre")
-    public void updateAnnonce(Livre livre) {
-        annonceMapper.updateAnnonce(livre.getAnnonce(), livre.getId());
-        livreService.updateLivre(livre);
-    }
-
-    @GET
-    @Path("updateAnnonceLoyer")
-    public void updateAnnonce(Loyer loyer) {
-        annonceMapper.updateAnnonce(loyer.getAnnonce(), loyer.getId());
-        loyerService.updateLoyer(loyer);
     }
 }

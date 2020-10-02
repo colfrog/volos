@@ -28,7 +28,7 @@ public class LoyerService {
     LoyerMapper loyerMapper;
 
     @GET
-    @Path("loyer")
+    @Path("loyerById")
     @Produces("application/json")
     public Loyer getLoyer(@QueryParam("id") Integer id) {
         Loyer loyer = loyerMapper.selectId(id);
@@ -36,7 +36,7 @@ public class LoyerService {
     }
 
     @GET
-    @Path("list_loyer")
+    @Path("loyers")
     @Produces("application/json")
     public List<Loyer> getListLoyer() {
         List<Loyer> loyers = loyerMapper.select();
@@ -45,14 +45,14 @@ public class LoyerService {
 
 
     @GET
-    @Path("insert_loyer")
+    @Path("insertLoyer")
     public void insertLoyer(Loyer loyer) {
         loyerMapper.insertLoyer(loyer);
         System.out.println(loyer);
     }
 
     @GET
-    @Path("update_loyer")
+    @Path("updateLoyer")
     public void updateLoyer(Loyer loyer) {
         loyerMapper.updateLoyer(loyer, loyer.getId());
         System.out.println(loyer);

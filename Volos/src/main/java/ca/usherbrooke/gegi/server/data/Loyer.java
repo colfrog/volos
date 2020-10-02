@@ -2,7 +2,7 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
-public class Loyer extends Annonce{
+public class Loyer {
     private int id;
     private String titre;
     private int nbChambre;
