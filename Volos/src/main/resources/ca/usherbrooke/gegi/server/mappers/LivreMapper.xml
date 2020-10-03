@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.LivreMapper">
+    <select id="select" resultType="Livre">
+      SELECT
+        id,
+        maison_edition,
+        resume,
+        titre,
+        date_publication
+      FROM
+        livre
+    </select>
+
+    <select id="selectId" resultType="Livre">
+      SELECT
+        id,
+        maison_edition,
+        resume,
+        titre,
+        date_publication
+      FROM
+        livre
+      where
+        id = #{id};
+    </select>
+
+    <insert id="insertLivre">
+    INSERT INTO livre(
+    id,
+    maison_edition,
+    resume,
+    titre,
+    date_publication)
+      VALUES  (#{livre.id},
+      #{livre.maisonEdition},
+      #{livre.resume},
+      #{livre.titre},
+      #{livre.datePublication});
+  </insert>
+    <update id="updateLivre">
+        UPDATE livre
+        SET maison_edition = #{livre.maisonEdition},
+         resume = #{livre.resume},
+         titre = #{livre.titre},
+         date_publication = #{livre.datePublication}
+        WHERE id = #{id};
+    </update>
+</mapper>
