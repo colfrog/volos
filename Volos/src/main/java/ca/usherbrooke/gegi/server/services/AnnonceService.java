@@ -70,6 +70,7 @@ public class AnnonceService {
 
     @GET
     @Path("annoncePublishLivres")
+    @Produces("application/json")
     public List<Annonce> annoncePublishLivres() {
         List<Annonce> annonces = annonceMapper.selectPublishLivres();
 
@@ -78,6 +79,7 @@ public class AnnonceService {
 
     @GET
     @Path("annoncePublishLoyers")
+    @Produces("application/json")
     public List<Annonce> annoncePublishLoyers() {
         List<Annonce> annonces = annonceMapper.selectPublishLoyers();
 
@@ -85,7 +87,8 @@ public class AnnonceService {
     }
 
     @GET
-    @Path("annoncePublishLoyers")
+    @Path("annoncePublishAutres")
+    @Produces("application/json")
     public List<Annonce> annoncePublishAutres() {
         List<Annonce> annonces = annonceMapper.selectPublishAutres();
 

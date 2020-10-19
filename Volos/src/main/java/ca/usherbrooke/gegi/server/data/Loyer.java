@@ -3,7 +3,6 @@ package ca.usherbrooke.gegi.server.data;
 import java.util.Date;
 
 public class Loyer extends Annonce{
-    private int id;
     private String titre;
     private int nbChambre;
     private Date dateDebutLocation;
@@ -13,19 +12,11 @@ public class Loyer extends Annonce{
 
     public Loyer(int id, String titre, int nbChambre,
                  Date dateDebutLocation, Date dateFinLocation) {
-        this.id = id;
+        setId(id);
         this.titre = titre;
         this.nbChambre = nbChambre;
         this.dateDebutLocation = dateDebutLocation;
         this.dateFinLocation = dateFinLocation;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitre() {
@@ -63,7 +54,13 @@ public class Loyer extends Annonce{
     @Override
     public String toString() {
         return "Loyer{" +
-                "id=" + id +
+                "id=" + getId() +
+                ", description='" + getDescription() + '\'' +
+                ", prix='" + getPrix() + '\'' +
+                ", etat='" + getEtat() + '\'' +
+                ", dateAffichage='" + getDateAffichage() + '\'' +
+                ", cip='" + getCip() + '\'' +
+                ", categorie='" + getCategorie() + '\'' +
                 ", titre='" + titre + '\'' +
                 ", resume='" + nbChambre + '\'' +
                 ", maisonEdition='" + dateDebutLocation + '\'' +

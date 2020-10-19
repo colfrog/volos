@@ -37,14 +37,14 @@
     )
       VALUES  (#{loyer.id},
       #{loyer.titre},
-      #{loyer.nombreChambre},
+      #{loyer.nbChambre},
       #{loyer.dateDebutLocation},
       #{loyer.dateFinLocation});
   </insert>
     <update id="updateLoyer">
         UPDATE loyer
         SET titre = #{loyer.titre},
-        nombre_chambre = #{loyer.nombreChambre},
+        nombre_chambre = #{loyer.nbChambre},
         date_debut_location = #{loyer.dateDebutLocation},
         date_fin_location = #{loyer.dateFinLocation}
         WHERE id = #{id};

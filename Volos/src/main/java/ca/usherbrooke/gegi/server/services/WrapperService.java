@@ -4,7 +4,6 @@ import ca.usherbrooke.gegi.server.data.Annonce;
 import ca.usherbrooke.gegi.server.data.Auteur;
 import ca.usherbrooke.gegi.server.data.Livre;
 import ca.usherbrooke.gegi.server.data.Loyer;
-import ca.usherbrooke.gegi.server.mappers.AnnonceMapper;
 import ca.usherbrooke.gegi.server.mappers.WrapperMapper;
 
 import javax.inject.Inject;
@@ -33,18 +32,21 @@ public class WrapperService {
     LoyerService loyerService;
     @Inject
     AuteurService auteurService;
+    @Inject
+    FavorisService favorisService;
 
     @GET
     @Path("showLivres")
     @Produces("application/json")
     public List<Livre> showPublishLivres() {
-        List<Annonce> annonces = annonceService.annoncePublishAutres();
+        List<Annonce> annonces = annonceService.annoncePublishLivres();
         List<Livre> livres = new ArrayList<Livre>();
             Livre livre;
 
         for(Annonce annonce : annonces) {
             livre = livreService.getLivre(annonce.getId());
             livre.setEnfant(annonce);
+            livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
 
             livres.add(livre);
         }
@@ -56,7 +58,7 @@ public class WrapperService {
     @Path("showLoyers")
     @Produces("application/json")
     public List<Loyer> showPublishLoyers() {
-        List<Annonce> annonces = annonceService.annoncePublishAutres();
+        List<Annonce> annonces = annonceService.annoncePublishLoyers();
         List<Loyer> loyers = new ArrayList<Loyer>();
         Loyer loyer;
 
@@ -77,6 +79,13 @@ public class WrapperService {
         List<Annonce> annonces = annonceService.annoncePublishAutres();
 
         return annonces;
+    }
+
+    @GET
+    @Path("showFavoris")
+    @Produces("application/json")
+    public List<Annonce> getFavoris(@QueryParam("cip") String cip) {
+        return favorisService.getFavoris(cip);
     }
 
     @GET
@@ -126,5 +135,23 @@ public class WrapperService {
         Annonce annonce = new Annonce(id, cip, description, prix, 0 , dateAffichage, "AUTRE");
 
         annonceService.insertAnnonce(annonce);
+    }
+
+    @GET
+    @Path("addFavori")
+    public void addFavorite(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
+        favorisService.addFavori(cip, id);
+    }
+
+    @GET
+    @Path("cancel")
+    public void cancelAnnonce(@QueryParam("id") int id) {
+        annonceService.cancelAnnonce(id);
+    }
+
+    @GET
+    @Path("remove")
+    public void removeAnnoncee(@QueryParam("id") int id) {
+        annonceService.removeAnnonce(id);
     }
 }

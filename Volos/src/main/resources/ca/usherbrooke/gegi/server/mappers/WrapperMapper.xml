@@ -12,4 +12,10 @@
             #{auteur.nom},
             #{auteur.prenom});
     </insert>
+
+    <select id="findAuteur" resultType="Auteur">
+        SELECT nom, prenom
+        FROM auteur_livre
+        WHERE id = #{id}
+    </select>
 </mapper>

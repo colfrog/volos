@@ -12,4 +12,5 @@ import java.util.List;
 @Mapper
 public interface WrapperMapper {
     void addLiaisonAuteurLivre(@Param("livre") Livre livre, @Param("auteur") Auteur auteur);
+    List<Auteur> findAuteur(@Param("id") int id);
 }
