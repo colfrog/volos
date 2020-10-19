@@ -70,6 +70,7 @@
       <option name="BuildArtifacts" enabled="true">
         <artifact name="Gradle : Volos.war" />
       </option>
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="RunBabel" run_configuration_type="ShConfigurationType" />
     </method>
   </configuration>
 </component>
