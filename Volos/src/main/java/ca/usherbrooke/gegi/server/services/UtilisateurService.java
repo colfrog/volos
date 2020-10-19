@@ -88,7 +88,7 @@ public class UtilisateurService {
         utilisateur.setNom((String) details.get("nomFamille"));
         utilisateur.setPrenom((String) details.get("prenom"));
         utilisateur.setMail((String) details.get("courriel"));
-        utilisateur.setNomDepartement("Électrique et Informatique");
+        utilisateur.setNomDepartement("Électrique et informatique");
         utilisateur.setNomFaculte("Génie");
 
         /*utilisateur.setNomDepartement((String) details.get("departement"));
@@ -97,8 +97,7 @@ public class UtilisateurService {
         /*for (Map.Entry<String, Object> x : details.entrySet()) {
             System.out.println("Key: " + x.getKey() + ", Value: " + x.getValue());
         }*/
-
-
+        
         return utilisateur;
     }
 }
