@@ -11,7 +11,7 @@ class Favori extends React.Component {
 
     render() {
         return (
-            <div>{this.state.description}</div>
+            <div>{this.state.description}: {this.state.prix}$</div>
         );
     }
 }
