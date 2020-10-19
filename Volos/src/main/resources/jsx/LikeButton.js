@@ -1,5 +1,3 @@
-'use strict';
-
 class LikeButton extends React.Component {
     constructor(props) {
         super(props);
