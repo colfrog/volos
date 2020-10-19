@@ -1,9 +1,6 @@
 package ca.usherbrooke.gegi.server.services;
 
-import ca.usherbrooke.gegi.server.data.Annonce;
-import ca.usherbrooke.gegi.server.data.Auteur;
-import ca.usherbrooke.gegi.server.data.Livre;
-import ca.usherbrooke.gegi.server.data.Loyer;
+import ca.usherbrooke.gegi.server.data.*;
 import ca.usherbrooke.gegi.server.mappers.WrapperMapper;
 
 import javax.inject.Inject;
@@ -34,6 +31,8 @@ public class WrapperService {
     AuteurService auteurService;
     @Inject
     FavorisService favorisService;
+    @Inject
+    UtilisateurService utilisateurService;
 
     @GET
     @Path("showLivres")
@@ -90,13 +89,15 @@ public class WrapperService {
 
     @GET
     @Path("addLivre")
-    public void addLivre(@QueryParam("cip") String cip, @QueryParam("description") String description,
+    public void addLivre(@QueryParam("description") String description,
                            @QueryParam("prix") float prix,
                            @QueryParam("dateAffichage") Date dateAffichage,
                            @QueryParam("titre") String titre, @QueryParam("resume") String resume,
                            @QueryParam("maisonEdition") String maisonEdition,
                            @QueryParam("datePublication") Date datePublication,
                            @QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
+        String cip = verifierUtilisateur();
+
         int id = annonceService.findLastIdAnnonce()+1;
         Annonce annonce = new Annonce(id, cip, description, prix, 0, dateAffichage, "LIVRE");
         Livre livre = new Livre(id, titre, resume, maisonEdition, datePublication);
@@ -112,12 +113,14 @@ public class WrapperService {
 
     @GET
     @Path("addLoyer")
-    public void addLoyer(@QueryParam("cip") String cip, @QueryParam("description") String description,
+    public void addLoyer(@QueryParam("description") String description,
                            @QueryParam("prix") float prix,
                            @QueryParam("dateAffichage") Date dateAffichage,
                            @QueryParam("titre") String titre, @QueryParam("nbChambre") int nbChambre,
                            @QueryParam("dateDebutLocation") Date dateDebutLocation,
                            @QueryParam("dateFinLocation") Date dateFinLocation) {
+        String cip = verifierUtilisateur();
+
         int id = annonceService.findLastIdAnnonce()+1;
         Annonce annonce = new Annonce(id, cip, description, prix, 0, dateAffichage, "LOYER");
         Loyer loyer = new Loyer(id, titre, nbChambre, dateDebutLocation, dateFinLocation);
@@ -128,9 +131,11 @@ public class WrapperService {
 
     @GET
     @Path("addAutre")
-    public void addAutre(@QueryParam("cip") String cip, @QueryParam("description") String description,
+    public void addAutre(@QueryParam("description") String description,
                            @QueryParam("prix") float prix,
                            @QueryParam("dateAffichage") Date dateAffichage) {
+        String cip = verifierUtilisateur();
+
         int id = annonceService.findLastIdAnnonce()+1;
         Annonce annonce = new Annonce(id, cip, description, prix, 0 , dateAffichage, "AUTRE");
 
@@ -139,7 +144,9 @@ public class WrapperService {
 
     @GET
     @Path("addFavori")
-    public void addFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
+    public void addFavori(@QueryParam("id") Integer id) {
+        String cip = verifierUtilisateur();
+
         favorisService.addFavori(cip, id);
     }
 
@@ -153,5 +160,17 @@ public class WrapperService {
     @Path("sell")
     public void sellAnnoncee(@QueryParam("id") int id) {
         annonceService.removeAnnonce(id);
+    }
+
+    @GET
+    @Path("verifierUtilisateur")
+    public String verifierUtilisateur() {
+        Utilisateur utilisateur = utilisateurService.getCurrentLoggedUtilisateur();
+
+        if(utilisateurService.selectUtilisateurByCip(utilisateur.getCip()) == null) {
+            utilisateurService.insertUtilisateur(utilisateur);
+        }
+
+        return utilisateur.getCip();
     }
 }
