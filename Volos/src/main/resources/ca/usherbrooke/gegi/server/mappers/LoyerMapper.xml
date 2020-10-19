@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.LoyerMapper">
+    <select id="select" resultType="Loyer">
+      SELECT
+        id,
+        titre,
+        nombre_chambre,
+        date_debut_location,
+        date_fin_location
+      FROM
+        loyer
+    </select>
+
+    <select id="selectId" resultType="Loyer">
+      SELECT
+        id,
+        titre,
+        nombre_chambre,
+        date_debut_location,
+        date_fin_location
+      FROM
+        loyer
+      where
+        id = #{id};
+    </select>
+
+    <insert id="insertLoyer">
+    INSERT INTO loyer(
+    id,
+    titre,
+    nombre_chambre,
+    date_debut_location,
+    date_fin_location
+    )
+      VALUES  (#{loyer.id},
+      #{loyer.titre},
+      #{loyer.nombreChambre},
+      #{loyer.dateDebutLocation},
+      #{loyer.dateFinLocation});
+  </insert>
+    <update id="updateLoyer">
+        UPDATE loyer
+        SET titre = #{loyer.titre},
+        nombre_chambre = #{loyer.nombreChambre},
+        date_debut_location = #{loyer.dateDebutLocation},
+        date_fin_location = #{loyer.dateFinLocation}
+        WHERE id = #{id};
+    </update>
+</mapper>

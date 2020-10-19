@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.DepartementMapper">
+
+    <select id="selectDepartements" resultType="Departement">
+        SELECT
+            *
+        FROM
+            departement;
+    </select>
+
+    <select id="selectDepartementByFaculte" resultType="Departement">
+        SELECT
+            *
+        FROM
+            departement
+        WHERE
+            nom_faculte = #{faculte};
+    </select>
+
+    <select id="insertDepartement">
+        INSERT INTO departement
+            nom_departement,
+            nom_faculte
+        VALUES (#{departement.nomDepartement},
+            #{departement.nomFaculte});
+    </select>
+</mapper>

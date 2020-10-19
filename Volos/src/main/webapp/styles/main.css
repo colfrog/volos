@@ -1,20 +1,34 @@
 
 body {
     margin: 0;
-    background: #999;
+    background: #ffffff;
 }
 header {
-    background: red;
-    color: yellow;
+    background: #00a556;
+    color: #ffcb28;
     padding: 15px;
 }
 
 .featured{
-    background-color: blueviolet;
-    color: aqua;
+    background-color: #00a556;
+    color: #ffcb28;
     margin: 35px;
     padding: 70px;
     border-radius: 30px;
+}
+
+.featured h2{
+    margin-top: 0;
+}
+
+.featured_card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 150px;
+    margin: 10px;
+    text-align: center;
+    font-family: arial;
+    display: inline-block;
+    background-color: black;
 }
 
 .barre h1{
@@ -28,8 +42,8 @@ header {
 }
 
 .barre nav ul li{
-    background: black;
-    color: white;
+    background: white;
+    color: #ffcb28;
     display: inline-block;
     list-style-type: none;
     padding: 5px 15px;
@@ -37,16 +51,16 @@ header {
 }
 
 .barre nav ul li a{
-    color: white;
+    color: #ffcb28;
 }
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: 15px;
+    margin: 10px;
     text-align: center;
     font-family: arial;
-    display:inline;
+    display: inline-block;
 }
 
 .price {
@@ -54,11 +68,11 @@ header {
     font-size: 22px;
 }
 
-.card button {
+.card,.profile button {
     border: none;
     outline: 0;
     padding: 12px;
-    color: white;
+    color: #ffff00;
     background-color: #000;
     text-align: center;
     cursor: pointer;
@@ -66,11 +80,139 @@ header {
     font-size: 18px;
 }
 
-.card button:hover {
+.card,.profile button:hover {
     opacity: 0.7;
 }
 
-.row{
-    display: contents;
+.titre, .categorie {
+    font-family: arial;
+    text-align: center;
+    background-color: #00a556;
+    color: #ffcb28;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 30px;
 }
 
+.prix {
+    font-family: arial;
+    background-color: #00a556;
+    color: #ffcb28;
+    margin-left: 30px;
+    margin-right: 90%;
+    width:7%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.description {
+    font-family: arial;
+    text-align: center;
+    background-color: #00a556;
+    color: #ffcb28;
+    margin: 20px;
+    padding: 200px;
+    border-radius: 30px;
+}
+
+.photo {
+    font-family: arial;
+    background-color: #00a556;
+    color: #ffcb28;
+    margin: auto;
+    width:10%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.Annuler {
+    font-family: arial;
+    background-color: #00a556;
+    color: #ffcb28;
+    float: left;
+    margin-left: 30px;
+    width: 7%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.Publier {
+    font-family: arial;
+    background-color: #00a556;
+    color: #ffcb28;
+    float: right;
+    margin-right: 30px;
+    width: 7%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.nom {
+    font-family: arial;
+}
+
+.profile {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    float: right;
+    margin-right: 5%;
+    width: 100%;
+    text-align: center;
+    font-family: arial;
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #00a556;
+}
+
+.information{
+    float: left;
+    margin-top: 10px;
+    margin-left: 5%;
+}
+
+.annonceusager {
+    float: bottom;
+}
+
+/* Dropdown Button */
+.dropbtn {
+    background-color: #ffffff;
+    color: #ffcb28;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #3e8e41;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: #ffcb28;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ffffff;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}

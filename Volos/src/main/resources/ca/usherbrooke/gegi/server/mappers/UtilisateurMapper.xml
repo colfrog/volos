@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.UtilisateurMapper">
+
+    <select id="selectUtilisateurs" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            nom_departement,
+            nom_faculte
+        FROM
+            utilisateur;
+    </select>
+
+    <select id="selectUtilisateurByCip" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            nom_departement,
+            nom_faculte
+        FROM
+            utilisateur
+        WHERE
+            cip = #{cip};
+    </select>
+
+    <select id="selectUtilisateurByFaculte" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            nom_departement,
+            nom_faculte
+        FROM
+            utilisateur
+        WHERE
+            nom_faculte = #{faculte};
+    </select>
+
+    <select id="selectUtilisateurByDepartement" resultType="Utilisateur">
+        SELECT
+            cip,
+            nom,
+            prenom,
+            mail,
+            nom_departement,
+            nom_faculte
+        FROM
+            utilisateur
+        WHERE
+            nom_departement = #{departement};
+    </select>
+
+    <select id="updateUtilisateurDepartement">
+        UPDATE utilisateur
+        SET nom_faculte=#{departement.nomFaculte}, nom_departement = #{departement.nomDepartement}
+        WHERE cip = #{cip}
+    </select>
+
+    <insert id="insertUtilisateur">
+        INSERT INTO utilisateur(
+            cip,
+            nom,
+            prenom,
+            mail,
+            nom_departement,
+            nom_faculte)
+        VALUES  (#{utilisateur.cip},
+            #{utilisateur.nom},
+            #{utilisateur.prenom},
+            #{utilisateur.mail},
+            #{utilisateur.nomDepartement},
+            #{utilisateur.nomFaculte});
+  </insert>
+
+</mapper>

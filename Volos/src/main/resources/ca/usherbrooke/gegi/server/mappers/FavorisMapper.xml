@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ca.usherbrooke.gegi.server.mappers.FavorisMapper">
+    <select id="getFavoris" resultType="Annonce">
+        SELECT a.id, a.description, a.prix, a.etat, a.date_affichage, a.cip
+        FROM favoris as f, annonce as a
+        WHERE f.cip = #{cip}
+        GROUP BY f.cip, f.id_annonce, a.id
+        HAVING f.id_annonce = a.id;
+    </select>
+
+    <insert id="addFavori">
+        INSERT INTO favoris (cip, id_annonce) VALUES (#{cip}, #{id_annonce});
+    </insert>
+</mapper>
