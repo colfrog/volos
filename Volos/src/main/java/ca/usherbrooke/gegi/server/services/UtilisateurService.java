@@ -4,6 +4,7 @@ import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
 import ca.usherbrooke.gegi.server.data.Utilisateur;
 import ca.usherbrooke.gegi.server.data.Departement;
 import org.apache.ibatis.annotations.Param;
+import org.jasig.cas.client.authentication.AttributePrincipalImpl;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Path("")
 public class UtilisateurService {
@@ -72,5 +75,30 @@ public class UtilisateurService {
     @Produces("application/json")
     public void insertUtilisateur(Utilisateur utilisateur){
         utilisateurMapper.insertUtilisateur(utilisateur);
+    }
+
+    @GET
+    @Path("loggedUtilisateur")
+    @Produces("application/json")
+    public Utilisateur getCurrentLoggedUtilisateur(){
+        Principal principal = httpServletRequest.getUserPrincipal();
+        Map<String, Object> details = (Map<String, Object>) ((AttributePrincipalImpl)principal).getAttributes();
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setCip(principal.getName()); // details.get("cip")
+        utilisateur.setNom((String) details.get("nomFamille"));
+        utilisateur.setPrenom((String) details.get("prenom"));
+        utilisateur.setMail((String) details.get("courriel"));
+        utilisateur.setNomDepartement("Électrique et Informatique");
+        utilisateur.setNomFaculte("Génie");
+
+        /*utilisateur.setNomDepartement((String) details.get("departement"));
+        utilisateur.setNomFaculte((String) details.get("faculte"));*/
+
+        /*for (Map.Entry<String, Object> x : details.entrySet()) {
+            System.out.println("Key: " + x.getKey() + ", Value: " + x.getValue());
+        }*/
+
+
+        return utilisateur;
     }
 }
