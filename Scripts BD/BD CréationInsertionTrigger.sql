@@ -84,8 +84,7 @@ CREATE TABLE Evenement
   action VARCHAR(512) NOT NULL,
   id_annonce INT NOT NULL,
   vieille_annonce VARCHAR(512),
-  PRIMARY KEY (id_evenement),
-  FOREIGN KEY (id_annonce) REFERENCES Annonce(id)
+  PRIMARY KEY (id_evenement)
 );
 
 CREATE TABLE Auteur_livre
