@@ -139,7 +139,7 @@ public class WrapperService {
 
     @GET
     @Path("addFavori")
-    public void addFavorite(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
+    public void addFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
         favorisService.addFavori(cip, id);
     }
 
@@ -150,8 +150,8 @@ public class WrapperService {
     }
 
     @GET
-    @Path("remove")
-    public void removeAnnoncee(@QueryParam("id") int id) {
+    @Path("sell")
+    public void sellAnnoncee(@QueryParam("id") int id) {
         annonceService.removeAnnonce(id);
     }
 }
