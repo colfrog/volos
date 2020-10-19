@@ -11,7 +11,13 @@ import java.util.List;
 @Mapper
 public interface AnnonceMapper {
     List<Annonce> select();
+    List<Annonce> selectPublishLivres();
+    List<Annonce> selectPublishLoyers();
+    List<Annonce> selectPublishAutres();
     Annonce selectId(@Param("id") Integer id);
     void insertAnnonce(@Param("annonce") Annonce annonce);
     void updateAnnonce(@Param("annonce") Annonce annonce, @Param("id") Integer id);
+    int findLastIdAnnonce();
+    void cancelAnnonce(@Param("id") int id);
+    void removeAnnonce(@Param("id") int id);
 }

@@ -6,10 +6,10 @@ public class Annonce {
     private int id;
     private String description;
     private float prix;
-    private int etat;
+    private int etat; //Etats disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
     private Date dateAffichage;
     private String cip;
-    private String categorie;
+    private String categorie; //Types disponibles: LIVRE, LOYER, AUTRE
 
     public Annonce() {}
 
@@ -77,6 +77,16 @@ public class Annonce {
 
     public void setCategorie(String categorie) {
         this.categorie = categorie;
+    }
+
+    public void setEnfant(Annonce annonce) {
+        this.id = annonce.id;
+        this.description = annonce.description;
+        this.prix = annonce.prix;
+        this.etat = annonce.etat;
+        this.dateAffichage = annonce.dateAffichage;
+        this.cip = annonce.cip;
+        this.categorie = annonce.categorie;
     }
 
     @Override

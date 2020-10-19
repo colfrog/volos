@@ -16,6 +16,48 @@
         annonce
     </select>
 
+    <select id="selectPublishLivres" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip,
+        categorie
+      FROM
+        annonce
+      WHERE categorie = 'LIVRE' AND etat = 0;
+    </select>
+
+    <select id="selectPublishLoyers" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip,
+        categorie
+      FROM
+        annonce
+      WHERE categorie = 'LOYER' AND etat = 0;
+    </select>
+
+    <select id="selectPublishAutres" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip,
+        categorie
+      FROM
+        annonce
+      WHERE categorie = 'AUTRE' AND etat = 0;
+    </select>
+
     <select id="selectId" resultType="Annonce">
       SELECT
         id,
@@ -58,5 +100,24 @@
         cip = #{annonce.cip},
         categorie = #{annonce.type}
         WHERE id = #{id};
+    </update>
+
+    <select id="findLastIdAnnonce" resultType="int">
+      SELECT
+        MAX(id) AS id
+      FROM
+        annonce;
+    </select>
+
+    <update id="cancelAnnonce">
+        UPDATE annonce
+        SET etat=1
+        WHERE id=#{id};
+    </update>
+
+    <update id="removeAnnonce">
+UPDATE annonce
+        SET etat=2
+        WHERE id=#{id};
     </update>
 </mapper>

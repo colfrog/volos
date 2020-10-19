@@ -11,10 +11,10 @@
             faculte;
     </select>
 
-    <select id="insertFaculte">
+    <insert id="insertFaculte">
         INSERT INTO faculte
             (nom)
         VALUES (#{faculte});
-    </select>
+    </insert>
 
 </mapper>

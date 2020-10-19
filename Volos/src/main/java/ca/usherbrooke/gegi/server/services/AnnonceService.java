@@ -2,8 +2,6 @@ package ca.usherbrooke.gegi.server.services;
 
 
 import ca.usherbrooke.gegi.server.data.Annonce;
-import ca.usherbrooke.gegi.server.data.Livre;
-import ca.usherbrooke.gegi.server.data.Loyer;
 import ca.usherbrooke.gegi.server.mappers.AnnonceMapper;
 
 import javax.inject.Inject;
@@ -12,15 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("")
@@ -31,6 +21,7 @@ public class AnnonceService {
     @Inject
     AnnonceMapper annonceMapper;
 
+    //Méthode pour afficher l'annonce avec l'id passé en parametre
     @GET
     @Path("annonceById")
     @Produces("application/json")
@@ -40,26 +31,12 @@ public class AnnonceService {
         return annonce;
     }
 
+    //Méthode pour afficher toutes les annonces
     @GET
     @Path("annonces")
     @Produces("application/json")
     public List<Annonce> getAnnonces() {
         List<Annonce> annonces = annonceMapper.select();
-        //List<Annonce> annoncesAfficher = new ArrayList<Annonce>();
-
-        /*for(Annonce annonce: annonces) {
-            if(annonce.getType() == "LOYER") {
-                Loyer loyer = loyerService.getLoyer(annonce.getId());
-                loyer.setAnnonce(annonce);
-                annoncesAfficher.add(loyer);
-            } else if (annonce.getType() == "LIVRE") {
-                Livre livre = livreService.getLivre(annonce.getId());
-                livre.setAnnonce(annonce);
-                annoncesAfficher.add(livre);
-            } else {
-                annoncesAfficher.add(annonce);
-            }
-        }*/
 
         return annonces;
     }
@@ -75,5 +52,49 @@ public class AnnonceService {
     @Path("updateAnnonce")
     public void updateAnnonce(Annonce annonce) {
         annonceMapper.updateAnnonce(annonce, annonce.getId());
+    }
+
+    //Méthode rendre l'état d'une annonce à fermé
+    @GET
+    @Path("cancelAnnonce")
+    public void cancelAnnonce(@QueryParam("id") int id) {
+        annonceMapper.cancelAnnonce(id);
+    }
+
+    //Méthode rendre l'état d'une annonce à vendue
+    @GET
+    @Path("removeAnnonce")
+    public void removeAnnonce(@QueryParam("id") int id) {
+        annonceMapper.removeAnnonce(id);
+    }
+
+    @GET
+    @Path("annoncePublishLivres")
+    public List<Annonce> annoncePublishLivres() {
+        List<Annonce> annonces = annonceMapper.selectPublishLivres();
+
+        return annonces;
+    }
+
+    @GET
+    @Path("annoncePublishLoyers")
+    public List<Annonce> annoncePublishLoyers() {
+        List<Annonce> annonces = annonceMapper.selectPublishLoyers();
+
+        return annonces;
+    }
+
+    @GET
+    @Path("annoncePublishLoyers")
+    public List<Annonce> annoncePublishAutres() {
+        List<Annonce> annonces = annonceMapper.selectPublishAutres();
+
+        return annonces;
+    }
+
+    @GET
+    @Path("findLastIdAnnonce")
+    public int findLastIdAnnonce() {
+        return annonceMapper.findLastIdAnnonce();
     }
 }
