@@ -33,9 +33,22 @@ public class AnnonceService {
     @Path("annonceById")
     @Produces("application/json")
     public Annonce getAnnonceById(@QueryParam("id") Integer id) {
-        Annonce annonce = annonceMapper.selectId(id);
+        Annonce annonce = annonceMapper.selectById(id);
 
         return annonce;
+    }
+
+    /**
+     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
+     * de la catégorie Autre
+     */
+    @GET
+    @Path("annoncesByCip")
+    @Produces("application/json")
+    public List<Annonce> annoncesByCip(@QueryParam("cip") String cip) {
+        List<Annonce> annonces = annonceMapper.selectByCip(cip);
+
+        return annonces;
     }
 
     /**
@@ -117,7 +130,7 @@ public class AnnonceService {
      * de la catégorie Autre
      */
     @GET
-    @Path("annoncePublishAutres")
+    @Path("annonceUtilisateur")
     @Produces("application/json")
     public List<Annonce> annoncePublishAutres() {
         List<Annonce> annonces = annonceMapper.selectPublishAutres();

@@ -58,7 +58,7 @@
       WHERE categorie = 'AUTRE' AND etat = 0;
     </select>
 
-    <select id="selectId" resultType="Annonce">
+    <select id="selectById" resultType="Annonce">
       SELECT
         id,
         description,
@@ -71,6 +71,21 @@
         annonce
       where
         id = #{id};
+    </select>
+
+    <select id="selectByCip" resultType="Annonce">
+      SELECT
+        id,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip,
+        categorie
+      FROM
+        annonce
+      where
+        cip = #{cip};
     </select>
 
     <insert id="insertAnnonce">

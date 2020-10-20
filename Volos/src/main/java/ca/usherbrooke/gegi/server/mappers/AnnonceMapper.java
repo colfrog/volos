@@ -19,7 +19,8 @@ public interface AnnonceMapper {
     List<Annonce> selectPublishLivres();
     List<Annonce> selectPublishLoyers();
     List<Annonce> selectPublishAutres();
-    Annonce selectId(@Param("id") Integer id);
+    Annonce selectById(@Param("id") Integer id);
+    List<Annonce> selectByCip(@Param("cip") String cip);
     void insertAnnonce(@Param("annonce") Annonce annonce);
     void updateAnnonce(@Param("annonce") Annonce annonce, @Param("id") Integer id);
     int findLastIdAnnonce();
