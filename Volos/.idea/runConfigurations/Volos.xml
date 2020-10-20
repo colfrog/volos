@@ -66,6 +66,7 @@
       </SHUTDOWN>
     </ConfigurationWrapper>
     <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="RunBabel" run_configuration_type="ShConfigurationType" />
       <option name="Make" enabled="true" />
       <option name="BuildArtifacts" enabled="true">
         <artifact name="Gradle : Volos.war" />

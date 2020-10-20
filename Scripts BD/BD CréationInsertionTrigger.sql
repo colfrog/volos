@@ -84,8 +84,8 @@ CREATE TABLE Evenement
   action VARCHAR(512) NOT NULL,
   id_annonce INT NOT NULL,
   vieille_annonce VARCHAR(512),
-  PRIMARY KEY (id_evenement),
-  FOREIGN KEY (id_annonce) REFERENCES Annonce(id)
+  nouvelle_annonce VARCHAR(512),
+  PRIMARY KEY (id_evenement)
 );
 
 CREATE TABLE Auteur_livre
@@ -158,44 +158,108 @@ VALUES
 
 ---------- Création du TRIGGER pour la table evenement ----------
 
-CREATE OR REPLACE FUNCTION insert_evenement()
-RETURNS TRIGGER
-SET SCHEMA 'public'
-LANGUAGE 'plpgsql'
+CREATE OR REPLACE FUNCTION insert_evenement_function()
+    RETURNS TRIGGER
+    SET SCHEMA 'public'
+    LANGUAGE 'plpgsql'
 AS $$
 BEGIN
-INSERT INTO evenement (id_evenement, action, date, id_annonce, vieille_annonce)
+INSERT INTO evenement (id_evenement, action, date, id_annonce, vieille_annonce, nouvelle_annonce)
 VALUES (
 	(CASE
 	 	WHEN (SELECT MAX(id_evenement) FROM evenement) IS NULL THEN 1
 		ELSE (SELECT MAX(id_evenement) FROM evenement) + 1
 	END),
-	(CASE
-	 	WHEN old.id IS NULL THEN 'INSERT'
-		ELSE 'UPDATE'
-	END),
+	('INSERT'),
 	(CURRENT_TIMESTAMP),
-	(CASE
-		WHEN new.id IS NULL THEN old.id
-		ELSE new.id
-	END),
-	(CASE
-		WHEN old.id IS NOT NULL THEN (  'Id: ' || old.id ||
-						', Cip: ' || old.cip ||
-						', Description: ' || old.description ||
-						', Prix: ' || old.prix ||
-						', Date affichage: ' || old.date_affichage ||
-						', Etat: ' || old.etat)
-	END));
+	(new.id),
+	(null),
+	('Id: ' || new.id ||
+	 ', Cip: ' || new.cip ||
+	 ', Description: ' || new.description ||
+	 ', Prix: ' || new.prix ||
+	 ', Date affichage: ' || new.date_affichage ||
+	 ', Etat: ' || new.etat));
 RETURN new;
 END;
 $$;
 
---DROP TRIGGER IF EXISTS update_evenement ON annonce;
+CREATE OR REPLACE FUNCTION update_evenement_function()
+    RETURNS TRIGGER
+    SET SCHEMA 'public'
+    LANGUAGE 'plpgsql'
+AS $$
+BEGIN
+INSERT INTO evenement (id_evenement, action, date, id_annonce, vieille_annonce, nouvelle_annonce)
+VALUES (
+	(CASE
+	 	WHEN (SELECT MAX(id_evenement) FROM evenement) IS NULL THEN 1
+		ELSE (SELECT MAX(id_evenement) FROM evenement) + 1
+	END),
+	('UPDATE'),
+	(CURRENT_TIMESTAMP),
+	(new.id),
+	('Id: ' || old.id ||
+	 ', Cip: ' || old.cip ||
+	 ', Description: ' || old.description ||
+	 ', Prix: ' || old.prix ||
+	 ', Date affichage: ' || old.date_affichage ||
+	 ', Etat: ' || old.etat),
+	('Id: ' || new.id ||
+	 ', Cip: ' || new.cip ||
+	 ', Description: ' || new.description ||
+	 ', Prix: ' || new.prix ||
+	 ', Date affichage: ' || new.date_affichage ||
+	 ', Etat: ' || new.etat));
+RETURN new;
+END;
+$$;
 
-CREATE TRIGGER update_evenement
-AFTER INSERT OR UPDATE ON annonce
-FOR EACH ROW EXECUTE FUNCTION insert_evenement();
+CREATE OR REPLACE FUNCTION delete_evenement_function()
+    RETURNS TRIGGER
+    SET SCHEMA 'public'
+    LANGUAGE 'plpgsql'
+AS $$
+BEGIN
+INSERT INTO evenement (id_evenement, action, date, id_annonce, vieille_annonce, nouvelle_annonce)
+VALUES (
+	(CASE
+	 	WHEN (SELECT MAX(id_evenement) FROM evenement) IS NULL THEN 1
+		ELSE (SELECT MAX(id_evenement) FROM evenement) + 1
+	END),
+	('DELETE'),
+	(CURRENT_TIMESTAMP),
+	(old.id),
+	(   'Id: ' || old.id ||
+	    ', Cip: ' || old.cip ||
+		', Description: ' || old.description ||
+		', Prix: ' || old.prix ||
+		', Date affichage: ' || old.date_affichage ||
+		', Etat: ' || old.etat),
+	(null));
+RETURN old;
+END;
+$$;
+
+--DROP TRIGGER IF EXISTS insert_evenement_trigger ON annonce;
+--DROP TRIGGER IF EXISTS update_evenement_trigger ON annonce;
+--DROP TRIGGER IF EXISTS delete_evenement_trigger ON annonce;
+
+CREATE TRIGGER insert_evenement_trigger
+    AFTER INSERT ON annonce
+    FOR EACH ROW
+    EXECUTE PROCEDURE insert_evenement_function();
+
+CREATE TRIGGER update_evenement_trigger
+    AFTER UPDATE ON annonce
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_evenement_function();
+
+CREATE TRIGGER delete_evenement_trigger
+    AFTER DELETE ON annonce
+    FOR EACH ROW
+    EXECUTE PROCEDURE delete_evenement_function();
+
 
 ---------- Tests pour la table evenement ----------
 --DELETE FROM evenement WHERE id_annonce = -1;
@@ -207,4 +271,8 @@ VALUES
 
 UPDATE annonce
 SET description = 'TEST TRIGGER 2.0'
+WHERE id = -1;
+
+DELETE 
+FROM annonce 
 WHERE id = -1;
