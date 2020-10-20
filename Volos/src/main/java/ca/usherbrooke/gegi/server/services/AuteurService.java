@@ -29,7 +29,6 @@ public class AuteurService {
     @GET
     @Path("auteur")
     @Produces("application/json")
-
     public List<Auteur> getAuteur() {
         List<Auteur> auteurs = auteurMapper.select();
         return auteurs;

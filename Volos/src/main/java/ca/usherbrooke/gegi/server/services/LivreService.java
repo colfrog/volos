@@ -16,6 +16,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+/**
+ * Service pour manipuler ou afficher des données de la table Livre de la db
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 @Path("")
 public class LivreService {
     @Context
@@ -24,6 +29,9 @@ public class LivreService {
     @Inject
     LivreMapper livreMapper;
 
+    /**
+     * @return le livre avec l'id passé en paramètre
+     */
     @GET
     @Path("livreById")
     @Produces("application/json")
@@ -32,6 +40,9 @@ public class LivreService {
         return livre;
     }
 
+    /**
+     * @return la liste de toutes les livres de la table
+     */
     @GET
     @Path("livres")
     @Produces("application/json")
@@ -40,6 +51,9 @@ public class LivreService {
         return livres;
     }
 
+    /**
+     * Permet d'ajouter le livre passé en paramètre dans la table
+     */
     @GET
     @Path("insertLivre")
     public void insertLivre(Livre livre) {
@@ -47,6 +61,9 @@ public class LivreService {
         System.out.println(livre);
     }
 
+    /**
+     * Permet de modifier le livre passé en paramètre dans la table
+     */
     @GET
     @Path("updateLivre")
     public void updateLivre(Livre livre) {

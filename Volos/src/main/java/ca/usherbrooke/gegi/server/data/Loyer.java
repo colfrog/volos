@@ -2,14 +2,25 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
+/**
+ * Les données sur une annonce de la categorie Loyer de l'application
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 public class Loyer extends Annonce{
     private String titre;
     private int nbChambre;
     private Date dateDebutLocation;
     private Date dateFinLocation;
 
+    /**
+     * Constructeur par défault d'un loyer
+     */
     public Loyer() {}
 
+    /**
+     * Constructeur avec en paramètre certains attributs d'un loyer
+     */
     public Loyer(int id, String titre, int nbChambre,
                  Date dateDebutLocation, Date dateFinLocation) {
         setId(id);
@@ -51,6 +62,10 @@ public class Loyer extends Annonce{
         this.dateFinLocation = dateFinLocation;
     }
 
+    /**
+     * Affiche tous les paramètres d'un loyer
+     * @return une chaine de caractère contenant les paramètre d'un loyer
+     */
     @Override
     public String toString() {
         return "Loyer{" +

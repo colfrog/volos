@@ -13,6 +13,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import java.util.List;
 
+/**
+ * Service pour manipuler ou afficher des données de la table Annonce de la db
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 @Path("")
 public class AnnonceService {
     @Context
@@ -21,7 +26,9 @@ public class AnnonceService {
     @Inject
     AnnonceMapper annonceMapper;
 
-    //Méthode pour afficher l'annonce avec l'id passé en parametre
+    /**
+     * @return l'annonce avec l'id passé en paramètre
+     */
     @GET
     @Path("annonceById")
     @Produces("application/json")
@@ -31,7 +38,9 @@ public class AnnonceService {
         return annonce;
     }
 
-    //Méthode pour afficher toutes les annonces
+    /**
+     * @return la liste de toutes les annonces de la table
+     */
     @GET
     @Path("annonces")
     @Produces("application/json")
@@ -41,33 +50,46 @@ public class AnnonceService {
         return annonces;
     }
 
-
+    /**
+     * Permet d'ajouter l'annonce passé en paramètre dans la table
+     */
     @GET
     @Path("insertAnnonce")
     public void insertAnnonce(Annonce annonce) {
         annonceMapper.insertAnnonce(annonce);
     }
 
+    /**
+     * Permet de modifier l'annonce passé en paramètre dans la table
+     */
     @GET
     @Path("updateAnnonce")
     public void updateAnnonce(Annonce annonce) {
         annonceMapper.updateAnnonce(annonce, annonce.getId());
     }
 
-    //Méthode rendre l'état d'une annonce à fermé
+    /**
+     * Permet de changer l'état de l'annonce passé en paramètre à fermé
+     */
     @GET
     @Path("cancelAnnonce")
     public void cancelAnnonce(@QueryParam("id") int id) {
         annonceMapper.cancelAnnonce(id);
     }
 
-    //Méthode rendre l'état d'une annonce à vendue
+    /**
+     * Permet de changer l'état de l'annonce passé en paramètre à vendue
+     */
     @GET
     @Path("removeAnnonce")
     public void removeAnnonce(@QueryParam("id") int id) {
         annonceMapper.removeAnnonce(id);
     }
 
+    /**
+     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
+     * de la catégorie Livre
+     */
     @GET
     @Path("annoncePublishLivres")
     @Produces("application/json")
@@ -77,6 +99,10 @@ public class AnnonceService {
         return annonces;
     }
 
+    /**
+     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
+     * de la catégorie Loyer
+     */
     @GET
     @Path("annoncePublishLoyers")
     @Produces("application/json")
@@ -86,6 +112,10 @@ public class AnnonceService {
         return annonces;
     }
 
+    /**
+     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
+     * de la catégorie Autre
+     */
     @GET
     @Path("annoncePublishAutres")
     @Produces("application/json")
@@ -95,6 +125,9 @@ public class AnnonceService {
         return annonces;
     }
 
+    /**
+     * @return un entier du dernier id de la table
+     */
     @GET
     @Path("findLastIdAnnonce")
     public int findLastIdAnnonce() {

@@ -3,6 +3,11 @@ package ca.usherbrooke.gegi.server.data;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Les données sur une annonce de la categorie Livre de l'application
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 public class Livre extends Annonce{
     private String titre;
     private String resume;
@@ -10,8 +15,14 @@ public class Livre extends Annonce{
     private Date datePublication;
     private List<Auteur> auteurs;
 
+    /**
+     * Constructeur par défault d'un livre
+     */
     public Livre() {}
 
+    /**
+     * Constructeur avec en paramètre certains attributs d'un livre
+     */
     public Livre(int id, String titre, String resume,
                  String maisonEdition, Date datePublication) {
         setId(id);
@@ -61,6 +72,10 @@ public class Livre extends Annonce{
         this.auteurs = auteurs;
     }
 
+    /**
+     * Affiche tous les paramètres d'un livre
+     * @return une chaine de caractère contenant les paramètre d'un livre
+     */
     @Override
     public String toString() {
         String chaine = "Livre{" +
