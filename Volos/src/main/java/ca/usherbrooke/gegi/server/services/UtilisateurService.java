@@ -1,5 +1,6 @@
 package ca.usherbrooke.gegi.server.services;
 
+import ca.usherbrooke.gegi.server.data.Departement;
 import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
 import ca.usherbrooke.gegi.server.data.Utilisateur;
 import org.jasig.cas.client.authentication.AttributePrincipalImpl;

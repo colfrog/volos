@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Service pour effectuer les différentes méthodes de l'application
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 @Path("")
 public class WrapperService {
     @Context
@@ -34,6 +39,10 @@ public class WrapperService {
     @Inject
     UtilisateurService utilisateurService;
 
+    /**
+     * @return la liste de toutes les annonces de la catégorie Livre avec les données
+     * des services AnnonceService, LivreService et AuteurService
+     */
     @GET
     @Path("showLivres")
     @Produces("application/json")
@@ -53,6 +62,10 @@ public class WrapperService {
         return livres;
     }
 
+    /**
+     * @return la liste de toutes les annonces de la catégorie Loyer avec les données
+     * des services AnnonceService et LoyerService
+     */
     @GET
     @Path("showLoyers")
     @Produces("application/json")
@@ -71,6 +84,10 @@ public class WrapperService {
         return loyers;
     }
 
+    /**
+     * @return la liste de toutes les annonces de la catégorie Autre avec les données
+     * du service AnnonceService
+     */
     @GET
     @Path("showAutres")
     @Produces("application/json")
@@ -80,13 +97,24 @@ public class WrapperService {
         return annonces;
     }
 
+    /**
+     * @return la liste de toutes les annonces favoris de l'utilisateur
+     * présentement connecté
+     */
     @GET
     @Path("showFavoris")
     @Produces("application/json")
-    public List<Annonce> getFavoris(@QueryParam("cip") String cip) {
+    public List<Annonce> getFavoris() {
+        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
+        String cip = verifierUtilisateur();
+
         return favorisService.getFavoris(cip);
     }
 
+    /**
+     * Permet d'ajouter les données de l'annonce de la catégorie Livre aux
+     * tables Annonce, Livre et Auteur pour l'utilisateur connecté à l'application
+     */
     @GET
     @Path("addLivre")
     public void addLivre(@QueryParam("description") String description,
@@ -96,6 +124,7 @@ public class WrapperService {
                            @QueryParam("maisonEdition") String maisonEdition,
                            @QueryParam("datePublication") Date datePublication,
                            @QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
+        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
         String cip = verifierUtilisateur();
 
         int id = annonceService.findLastIdAnnonce()+1;
@@ -111,6 +140,10 @@ public class WrapperService {
         wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
     }
 
+    /**
+     * Permet d'ajouter les données de l'annonce de la catégorie Loyer aux
+     * tables Annonce et Loyer pour l'utilisateur connecté à l'application
+     */
     @GET
     @Path("addLoyer")
     public void addLoyer(@QueryParam("description") String description,
@@ -119,6 +152,7 @@ public class WrapperService {
                            @QueryParam("titre") String titre, @QueryParam("nbChambre") int nbChambre,
                            @QueryParam("dateDebutLocation") Date dateDebutLocation,
                            @QueryParam("dateFinLocation") Date dateFinLocation) {
+        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
         String cip = verifierUtilisateur();
 
         int id = annonceService.findLastIdAnnonce()+1;
@@ -129,11 +163,16 @@ public class WrapperService {
         loyerService.insertLoyer(loyer);
     }
 
+    /**
+     * Permet d'ajouter les données de l'annonce de la catégorie Autre à la
+     * table Annonce pour l'utilisateur connecté à l'application
+     */
     @GET
     @Path("addAutre")
     public void addAutre(@QueryParam("description") String description,
                            @QueryParam("prix") float prix,
                            @QueryParam("dateAffichage") Date dateAffichage) {
+        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
         String cip = verifierUtilisateur();
 
         int id = annonceService.findLastIdAnnonce()+1;
@@ -142,26 +181,42 @@ public class WrapperService {
         annonceService.insertAnnonce(annonce);
     }
 
+    /**
+     * Permet d'ajouter une annonce par son id passé en paramètre
+     * à la liste des favoris de l'utilisateur connecté à l'application
+     */
     @GET
     @Path("addFavori")
     public void addFavori(@QueryParam("id") Integer id) {
+        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
         String cip = verifierUtilisateur();
 
         favorisService.addFavori(cip, id);
     }
 
+    /**
+     * Permet de changer l'état de l'annonce passé en paramètre à fermé
+     */
     @GET
     @Path("cancel")
     public void cancelAnnonce(@QueryParam("id") int id) {
         annonceService.cancelAnnonce(id);
     }
 
+    /**
+     * Permet de changer l'état de l'annonce passé en paramètre à vendue
+     */
     @GET
     @Path("sell")
     public void sellAnnoncee(@QueryParam("id") int id) {
         annonceService.removeAnnonce(id);
     }
 
+    /**
+     * Vérifie que l'utilisateur connecté est présent dans la table Utilisateur. S'il
+     * n'est pas présent, il est ajouté à la table
+     * @return le cip de l'utilisateur connecté
+     */
     @GET
     @Path("verifierUtilisateur")
     public String verifierUtilisateur() {
