@@ -36,10 +36,17 @@
         <p><button onclick="envoyerMail()">Envoyer un email</button></p>
     </div>
     <div class="information">
-        <center>Information fournis par l'usager</center>
+        <div id="profil_utilisateur"></div>
+        <!--center>Information fournis par l'usager</center-->
     </div>
     <div class="annonceusager">
+        <div id="profil_annonces"></div>
         <center> Annonce 1 </center>
     </div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="/Volos/components/ProfilUtilisateur.js"></script>
+    <script src="/Volos/components/ProfilAnnonces.js"></script>
 </body>
 </html>

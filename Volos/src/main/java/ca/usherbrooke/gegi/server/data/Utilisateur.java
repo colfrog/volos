@@ -29,7 +29,7 @@ public class Utilisateur {
 
     public void setMail(String mail) { this.mail = mail; }
 
-    public String getNomDepartementt() { return nomDepartement; }
+    public String getNomDepartement() { return nomDepartement; }
 
     public void setNomDepartement(String departement) { this.nomDepartement = departement; }
 
