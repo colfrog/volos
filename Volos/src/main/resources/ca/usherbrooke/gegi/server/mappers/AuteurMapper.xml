@@ -15,5 +15,15 @@
       INSERT INTO auteur (nom, prenom)
       VALUES  (#{nom}, #{prenom});
 
-  </insert>
+    </insert>
+
+    <select id="existAuteur" resultType="boolean">
+      SELECT CASE WHEN EXISTS (
+            SELECT *
+            FROM Auteur
+            WHERE nom = #{auteur.nom} AND prenom = #{auteur.prenom}
+        )
+        THEN TRUE
+        ELSE FALSE END;
+    </select>
 </mapper>

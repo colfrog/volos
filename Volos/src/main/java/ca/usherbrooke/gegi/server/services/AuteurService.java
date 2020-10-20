@@ -18,6 +18,12 @@ import java.util.List;
 
 @Path("")
 
+/**
+ * Implémentations des services liés à l'auteur
+ *
+ * @author Paul du Réau
+ * @version 1.0
+ */
 public class AuteurService {
 
     @Context
@@ -26,19 +32,36 @@ public class AuteurService {
     @Inject
     AuteurMapper auteurMapper;
 
+    /**
+     * Va chercher tous les auteurs de la BD
+     *
+     * @return Une liste d'auteur
+     */
     @GET
     @Path("auteur")
     @Produces("application/json")
-
     public List<Auteur> getAuteur() {
         List<Auteur> auteurs = auteurMapper.select();
         return auteurs;
     }
 
+    /**
+     * Fait l'insertion d'un auteur
+     */
     @GET
     @Path("insert_auteur")
-
     public void insertAuteur(@QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
         auteurMapper.insertAuteur(nom, prenom);
+    }
+
+    /**
+     * Vérifie si un auteur existe dans la BD
+     *
+     * @return vrai si l'auteur existe dans la BD sinon faux
+     */
+    @GET
+    @Path("existAuteur")
+    public boolean existAuteur(Auteur auteur) {
+        return auteurMapper.existAuteur(auteur);
     }
 }
