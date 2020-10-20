@@ -41,7 +41,7 @@ CREATE TABLE Annonce
   date_affichage DATE NOT NULL,
   etat INT NOT NULL,
   cip CHAR(8) NOT NULL,
-  type VARCHAR(512) NOT NULL,
+  categorie VARCHAR(512) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (cip) REFERENCES Utilisateur(cip)
 );
@@ -121,8 +121,8 @@ VALUES
 ('Tremblay', 'Marc-André', 'trem2842', 'trem2842@usherbrooke.ca', 'Électrique et informatique', 'Génie');
 
 --Etats disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
---Types disponibles: LIVRE, LOYER, AUTRE
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, type)
+--Categories disponibles: LIVRE, LOYER, AUTRE
+INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, categorie)
 VALUES
 (0, 'durp0701', 'Un livre presque neuf', 40, '2020-10-01', 1, 'LIVRE'),
 (1, 'boui2215', 'Un loyer pas cher', 300, '2020-10-01', 0, 'LOYER'),
@@ -179,7 +179,8 @@ VALUES (
 	 ', Description: ' || new.description ||
 	 ', Prix: ' || new.prix ||
 	 ', Date affichage: ' || new.date_affichage ||
-	 ', Etat: ' || new.etat));
+	 ', Etat: ' || new.etat ||
+	 ', Categorie: ' || new.categorie));
 RETURN new;
 END;
 $$;
@@ -204,13 +205,15 @@ VALUES (
 	 ', Description: ' || old.description ||
 	 ', Prix: ' || old.prix ||
 	 ', Date affichage: ' || old.date_affichage ||
-	 ', Etat: ' || old.etat),
+	 ', Etat: ' || old.etat ||
+	 ', Categorie: ' || old.categorie),
 	('Id: ' || new.id ||
 	 ', Cip: ' || new.cip ||
 	 ', Description: ' || new.description ||
 	 ', Prix: ' || new.prix ||
 	 ', Date affichage: ' || new.date_affichage ||
-	 ', Etat: ' || new.etat));
+	 ', Etat: ' || new.etat ||
+	 ', Categorie: ' || new.categorie));
 RETURN new;
 END;
 $$;
@@ -230,12 +233,13 @@ VALUES (
 	('DELETE'),
 	(CURRENT_TIMESTAMP),
 	(old.id),
-	(   'Id: ' || old.id ||
-	    ', Cip: ' || old.cip ||
-		', Description: ' || old.description ||
-		', Prix: ' || old.prix ||
-		', Date affichage: ' || old.date_affichage ||
-		', Etat: ' || old.etat),
+	('Id: ' || old.id ||
+	 ', Cip: ' || old.cip ||
+	 ', Description: ' || old.description ||
+	 ', Prix: ' || old.prix ||
+	 ', Date affichage: ' || old.date_affichage ||
+	 ', Etat: ' || old.etat ||
+	 ', Categorie: ' || old.categorie),
 	(null));
 RETURN old;
 END;
@@ -265,7 +269,7 @@ CREATE TRIGGER delete_evenement_trigger
 --DELETE FROM evenement WHERE id_annonce = -1;
 --DELETE FROM annonce WHERE id = -1;
 
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, type)
+INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, categorie)
 VALUES
 (-1, 'durp0701', 'TEST TRIGGER 1.0', 0, '2000-01-01', 1, 'AUTRE');
 

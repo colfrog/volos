@@ -4,10 +4,8 @@ class Annonce extends React.Component {
 
         this.state = {
             id: this.props.id,
-            cip: this.props.cip,
             description: this.props.description,
             prix: this.props.prix,
-            etat: this.props.etat,
             dateAffichage: this.props.dateAffichage,
             categorie: this.props.categorie
         };
@@ -15,23 +13,40 @@ class Annonce extends React.Component {
 
     render() {
         return (
-            <div>dfdsfghdgfhdgh
+            <div>
+                <p>Description: {this.state.description}</p>
+                <p>Prix: {this.state.prix}</p>
+                <p>Date d'affichage: {this.state.dateAffichage}</p>
+                <p>Catégorie: {this.state.categorie}</p>
             </div>
         );
     }
 }
 
-class listAnnonces extends React.Component {
+class ListeAnnonces extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {annonces: []};
 
         this.updateAnnonces();
     }
 
     updateAnnonces() {
+        fetch('/Volos/api/showUtilisateurAnnonce')
+            .then(data => data.json())
+            .then(annonces => {
+                let utilisateurAnnonces = [];
+                annonces.forEach(annonce => {
+                    utilisateurAnnonces.push(<Annonce key={annonce.id}
+                                                      id={annonce.id}
+                                                      description={annonce.description}
+                                                      prix={annonce.prix}
+                                                      dateAffichage={annonce.dateAffichage}
+                                                      categorie={annonce.categorie} />);
+                });
 
+                this.setState({annonces: utilisateurAnnonces});
+            });
     }
 
     render() {
@@ -42,4 +57,4 @@ class listAnnonces extends React.Component {
 }
 
 const domContainer = document.querySelector('#profil_annonces');
-ReactDOM.render(<listAnnonces/>, domContainer);
+ReactDOM.render(<ListeAnnonces/>, domContainer);
