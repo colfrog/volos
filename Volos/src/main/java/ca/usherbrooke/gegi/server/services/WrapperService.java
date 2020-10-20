@@ -116,11 +116,11 @@ public class WrapperService {
      * présentement connecté
      */
     @GET
-    @Path("showUtilisateurAnnonce")
+    @Path("showUtilisateurAnnonces")
     @Produces("application/json")
     public List<Annonce> getUtilisateurAnnonce() {
-        List<Annonce> annonces = annonceService.annoncesByCip(utilisateurService.
-                                    getCurrentLoggedUtilisateur().getCip());
+        List<Annonce> annonces = annonceService.annoncesByCip("scop2401"/*utilisateurService.
+                                    getCurrentLoggedUtilisateur().getCip()*/);
         List<Annonce> annoncesUtilisateur = new ArrayList<Annonce>();
         Loyer loyer;
         Livre livre;
