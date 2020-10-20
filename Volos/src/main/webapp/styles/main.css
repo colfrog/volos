@@ -47,6 +47,7 @@ header {
     display: inline-block;
     list-style-type: none;
     padding: 5px 15px;
+    margin: 0px 5px;
     border-radius: 5px;
 }
 
@@ -192,6 +193,7 @@ header {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin: 0px 5px;
 }
 
 /* Dropdown Content (Hidden by Default) */

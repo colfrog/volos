@@ -71,5 +71,5 @@ class ListeFavoris extends React.Component {
     }
 }
 
-const domContainer = document.querySelector('#liste_favoris');
+var domContainer = document.querySelector('#liste_favoris');
 ReactDOM.render(<ListeFavoris cip="durp0701" />, domContainer);
