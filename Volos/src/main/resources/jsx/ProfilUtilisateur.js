@@ -37,5 +37,5 @@ class Profil extends React.Component {
     }
 }
 
-const domContainer = document.querySelector('#profil_utilisateur');
+var domContainer = document.querySelector('#profil_utilisateur');
 ReactDOM.render(<Profil/>, domContainer);
