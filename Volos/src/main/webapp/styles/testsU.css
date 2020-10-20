@@ -1,0 +1,32 @@
+.testTitle {
+    border-bottom: 1px solid black;
+}
+
+.testsWrapper {
+    margin-bottom: 50px;
+    padding-left: 15px;
+}
+
+.testGroupWrapper {
+    width: 85%;
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
+}
+
+.testClassWrapper {
+    width: 75%;
+    margin-bottom: 50px;
+}
+
+.testReturnWrapper {
+    padding: 5px 1px;
+    border: 1px solid grey;
+}
+
+.greenBckg {
+    background: rgba(0, 255, 0, 0.7);
+}
+
+.redBckg {
+    background: rgba(255, 0, 0, 0.7);
+}
