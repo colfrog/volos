@@ -18,7 +18,6 @@ import java.util.List;
  * @version 1.0
  */
 public interface AuteurMapper {
-
     List<Auteur> select();
     void insertAuteur(@Param("nom") String nom, @Param("prenom") String prenom);
     boolean existAuteur(@Param("auteur") Auteur auteur);

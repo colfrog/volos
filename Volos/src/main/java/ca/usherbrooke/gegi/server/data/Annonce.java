@@ -2,17 +2,28 @@ package ca.usherbrooke.gegi.server.data;
 
 import java.util.Date;
 
+/**
+ * Les données sur une annonce de l'application
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 public class Annonce {
     private int id;
     private String description;
     private float prix;
-    private int etat;
+    private int etat; //Etats d'annonce disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
     private Date dateAffichage;
     private String cip;
-    private String categorie;
+    private String categorie; //Types d'annonce disponibles: 'LIVRE', 'LOYER', 'AUTRE'
 
+    /**
+     * Constructeur par défault d'une annonce
+     */
     public Annonce() {}
 
+    /**
+     * Constructeur avec en paramètre les attributs d'une annonce
+     */
     public Annonce(int id, String cip, String description, float prix,
                    int etat, Date dateAffichage, String categorie){
         this.id = id;
@@ -79,6 +90,20 @@ public class Annonce {
         this.categorie = categorie;
     }
 
+    public void setEnfant(Annonce annonce) {
+        this.id = annonce.id;
+        this.description = annonce.description;
+        this.prix = annonce.prix;
+        this.etat = annonce.etat;
+        this.dateAffichage = annonce.dateAffichage;
+        this.cip = annonce.cip;
+        this.categorie = annonce.categorie;
+    }
+
+    /**
+     * Affiche tous les paramètres d'une annonce
+     * @return une chaine de caractère contenant les paramètre d'une annonce
+     */
     @Override
     public String toString() {
         return "Annonce{" +
