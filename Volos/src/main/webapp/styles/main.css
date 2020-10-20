@@ -63,6 +63,10 @@ header {
     display: inline-block;
 }
 
+.card img {
+    width: 100%;
+}
+
 .price {
     color: indianred;
     font-size: 22px;
