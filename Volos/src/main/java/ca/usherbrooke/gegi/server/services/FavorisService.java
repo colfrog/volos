@@ -28,8 +28,14 @@ public class FavorisService {
     }
 
     @GET
-    @Path("ajout_favori")
+    @Path("ajouter_favori")
     public void addFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
         favorisMapper.addFavori(cip, id);
+    }
+
+    @GET
+    @Path("retirer_favori")
+    public void removeFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
+        favorisMapper.removeFavori(cip, id);
     }
 }
