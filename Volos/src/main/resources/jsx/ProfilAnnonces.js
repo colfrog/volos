@@ -11,8 +11,7 @@ class Auteur extends React.Component {
     render(){
         return (
             <div>
-                <p>Prénom: {this.state.prenom}</p>
-                <p>Nom: {this.state.nom}</p>
+                - {this.state.prenom} {this.state.nom}
             </div>
         );
     }
@@ -35,27 +34,12 @@ class Annonce extends React.Component {
             nbChambre: this.props.nbChambre,
             dateDebutLocation: this.props.dateDebutLocation,
             dateFinLocation: this.props.dateFinLocation,
-            auteurs: []
+            auteurs: this.props.auteurs
         };
-
-        /*if(this.props.categorie === "LIVRE")
-        {
-            fetch('/Volos/api/showUtilisateurAnnonce')
-                .then(data => data.json())
-                .then(annonce => {
-                    let listeAuteur = [];
-                    annonce.auteurs.forEach(auteur => {
-                        utilisateurAnnonces.push(<Auteur key={auteur.id}
-                                                         prenom={auteur.prenom}
-                                                         nom={auteur.nom}/>);
-                    });
-                    this.setState({auteurs: listeAuteur});
-                });
-        }*/
     }
 
     render() {
-        var titre = "", resume = "", maisonEdition = "", datePublication = "", nbChambre = "", dateDebutLocation = "", dateFinLocation = "";
+        var titre = "", resume = "", maisonEdition = "", datePublication = "", nbChambre = "", dateDebutLocation = "", dateFinLocation = "", nbAuteur = "", auteur = "";
 
         if(this.state.categorie === "LIVRE")
         {
@@ -63,11 +47,17 @@ class Annonce extends React.Component {
             resume = <p>Résumé: {this.state.resume}</p>
             maisonEdition = <p>Maison d'édition: {this.state.maisonEdition}</p>
             datePublication = <p>Date de publication: {this.state.datePublication}</p>
-            /*for (let i = 1; i <= auteur.length + 1; i++)
+
+            if(this.state.auteurs.length > 1)
             {
-                <p>Auteur {i}:</p>
-                {this.state.auteurs[i - 1]}
-            }*/
+                nbAuteur = <div>Auteurs: </div>
+            }
+            else
+            {
+                nbAuteur = <div>Auteur: </div>
+            }
+
+            auteur = <div>{this.state.auteurs}</div>
         }
         else if(this.state.categorie === "LOYER")
         {
@@ -87,6 +77,8 @@ class Annonce extends React.Component {
                 {resume}
                 {maisonEdition}
                 {datePublication}
+                {nbAuteur}
+                {auteur}
                 {nbChambre}
                 {dateDebutLocation}
                 {dateFinLocation}
@@ -108,8 +100,19 @@ class ListeAnnonces extends React.Component {
             .then(data => data.json())
             .then(annonces => {
                 let utilisateurAnnonces = [];
-                let listeAuteurs = [];
                 annonces.forEach(annonce => {
+
+                    let listeAuteurs = [];
+                    if(annonce.categorie === "LIVRE")
+                    {
+                        annonce.auteurs.forEach(auteur => {
+                            listeAuteurs.push(<Auteur key={auteur.prenom}
+                                                      prenom={auteur.prenom}
+                                                      nom={auteur.nom}
+                            />)
+                        });
+                    }
+
                     utilisateurAnnonces.push(<Annonce key={annonce.id}
                                                       id={annonce.id}
                                                       description={annonce.description}
@@ -123,14 +126,7 @@ class ListeAnnonces extends React.Component {
                                                       nbChambre={annonce.nbChambre}
                                                       dateDebutLocation={annonce.dateDebutLocation}
                                                       dateFinLocation={annonce.dateFinLocation}
-
-                                                      /*auteurs={annonce.auteurs.forEach(auteur => {
-                                                          listeAuteurs.push(<Auteur key={auteur.id}
-                                                                                    prenom={auteur.prenom}
-                                                                                    nom={auteur.nom}
-                                                          />)}
-                                                      )}*/
-                                                      //this.setState({auteurs: listeAuteurs})
+                                                      auteurs={listeAuteurs}
                     />);
                 });
                 this.setState({annonces: utilisateurAnnonces});
