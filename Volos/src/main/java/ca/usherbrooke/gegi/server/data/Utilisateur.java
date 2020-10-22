@@ -44,7 +44,7 @@ public class Utilisateur {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", courriel='" + mail + '\'' +
-                ", departemen='" + nomDepartement + '\'' +
+                ", departement='" + nomDepartement + '\'' +
                 ", faculte='" + nomFaculte + '\'' +
                 '}';
     }

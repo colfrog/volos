@@ -14,4 +14,8 @@
     <insert id="addFavori">
         INSERT INTO favoris (cip, id_annonce) VALUES (#{cip}, #{id_annonce});
     </insert>
+
+    <delete id="removeFavori">
+        DELETE FROM favoris WHERE favoris.cip = #{cip} AND favoris.id_annonce = #{id_annonce};
+    </delete>
 </mapper>
