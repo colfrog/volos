@@ -3,6 +3,8 @@ package ca.usherbrooke.gegi.server.services;
 import ca.usherbrooke.gegi.server.data.Departement;
 import ca.usherbrooke.gegi.server.mappers.UtilisateurMapper;
 import ca.usherbrooke.gegi.server.data.Utilisateur;
+import ca.usherbrooke.gegi.server.data.Departement;
+import org.apache.ibatis.annotations.Param;
 import org.jasig.cas.client.authentication.AttributePrincipalImpl;
 
 import javax.inject.Inject;
@@ -12,6 +14,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -88,10 +93,10 @@ public class UtilisateurService {
         /*utilisateur.setNomDepartement((String) details.get("departement"));
         utilisateur.setNomFaculte((String) details.get("faculte"));*/
 
-        /*for (Map.Entry<String, Object> x : details.entrySet())
-        {​​
+        /*for (Map.Entry<String, Object> x : details.entrySet()) {
             System.out.println("Key: " + x.getKey() + ", Value: " + x.getValue());
-        }​​*/
+        }*/
+        
         return utilisateur;
     }
 }
