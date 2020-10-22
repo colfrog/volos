@@ -139,9 +139,7 @@ public class WrapperService {
                 annoncesUtilisateur.add(livre);
             } else {
                 annoncesUtilisateur.add(annonce);
-                System.out.println("-"+annonce.getCategorie()+"-");
             }
-
         }
 
         return annoncesUtilisateur;

@@ -164,3 +164,62 @@ var domContainer = document.querySelector('#testUtilisateurButton');
 ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 ////****** FIN MICRO-SERVICE UTILISATEUR ******////
+
+
+////****** MICRO-SERVICE ANNONCE ******////
+/*class TestUtilisateur extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: []
+        };
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests(){
+
+    }
+
+    //TEST annonceById
+
+    //TEST annoncesByCip
+
+    //TEST annonces
+
+    //TEST cancelAnnonce
+
+    //TEST removeAnnonce
+
+    //TEST annoncePublishLivres
+
+    //TEST annoncePublishLoyers
+
+    //TEST annoncePublishAutres
+
+    //TEST annonceUtilisateur
+
+    //TEST findLastIdAnnonce
+
+    //Lien du bouton avec le render des réponses
+    buttonPress(){
+        let domContain = document.querySelector('#annonceServiceReturn');
+        ReactDOM.render(this.state.utilisateurs, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestUtilisateurButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+
+domContainer = document.querySelector('#testAnnonceButton');
+ReactDOM.render(<TestUtilisateur/>, domContainer);*/
+////****** FIN MICRO-SERVICE ANNONCE ******////
