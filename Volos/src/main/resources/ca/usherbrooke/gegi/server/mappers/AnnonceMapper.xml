@@ -108,7 +108,7 @@
       #{annonce.titre},
       #{annonce.description},
       #{annonce.prix},
-      #{annonce.dateAffichage},
+      CURRENT_TIMESTAMP,
       #{annonce.etat},
       #{annonce.cip},
       #{annonce.categorie});
@@ -119,7 +119,6 @@
         titre = #{annonce.titre},
         description = #{annonce.description},
         prix = #{annonce.prix},
-        date_affichage = #{annonce.dateAffichage},
         etat = #{annonce.etat},
         cip = #{annonce.cip},
         categorie = #{annonce.type}
