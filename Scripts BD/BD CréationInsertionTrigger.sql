@@ -35,6 +35,7 @@ CREATE TABLE Auteur
 
 CREATE TABLE Annonce
 (
+  titre VARCHAR(512) NOT NULL,
   description VARCHAR(2048),
   prix FLOAT NOT NULL,
   id INT NOT NULL,
@@ -59,7 +60,6 @@ CREATE TABLE Livre
 (
   maison_edition VARCHAR(512) NOT NULL,
   resume VARCHAR(2048),
-  titre VARCHAR(512) NOT NULL,
   date_publication DATE NOT NULL,
   id INT NOT NULL,
   PRIMARY KEY (id),
@@ -68,7 +68,6 @@ CREATE TABLE Livre
 
 CREATE TABLE Loyer
 (
-  titre VARCHAR(512) NOT NULL,
   nombre_chambre INT NOT NULL,
   date_debut_location DATE NOT NULL,
   date_fin_location DATE NOT NULL,
@@ -122,24 +121,24 @@ VALUES
 
 --Etats disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
 --Categories disponibles: LIVRE, LOYER, AUTRE
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, categorie)
+INSERT INTO annonce (id, cip, titre, description, prix, date_affichage, etat, categorie)
 VALUES
-(0, 'durp0701', 'Un livre presque neuf', 40, '2020-10-01', 1, 'LIVRE'),
-(1, 'boui2215', 'Un loyer pas cher', 300, '2020-10-01', 0, 'LOYER'),
-(2, 'scop2401', 'Un livre de merde', 100, '2020-10-01', 2, 'LIVRE');
+(0, 'durp0701', 'UML 2','Un livre presque neuf', 40, '2020-10-01', 1, 'LIVRE'),
+(1, 'boui2215', '3 1/2 rue Sherbrooke','Un loyer pas cher', 300, '2020-10-01', 0, 'LOYER'),
+(2, 'scop2401', 'ONE PIECE','Un livre de merde', 100, '2020-10-01', 2, 'LIVRE');
 
 INSERT INTO favoris (id_annonce, cip)
 VALUES
 (1, 'durp0701');
 
-INSERT INTO loyer (id, titre, nombre_chambre, date_debut_location, date_fin_location)
+INSERT INTO loyer (id, nombre_chambre, date_debut_location, date_fin_location)
 VALUES
-(1, '3 1/2 rue Sherbrooke', 2, '2021-01-01', '2021-06-01');
+(1, 2, '2021-01-01', '2021-06-01');
 
-INSERT INTO livre (id, titre, resume, maison_edition, date_publication)
+INSERT INTO livre (id, resume, maison_edition, date_publication)
 VALUES
-(0, 'UML 2', 'UML est le language de modélisation le plus utilisé dans lindustrie, principalement pour le développement logiciel.', 'PEARSON', '2020-10-01'),
-(2, 'ONE PIECE', 'Une histoire de pirate au chapeau de paille!!', 'Shūeisha', '1997-12-24');
+(0, 'UML est le language de modélisation le plus utilisé dans lindustrie, principalement pour le développement logiciel.', 'PEARSON', '2020-10-01'),
+(2, 'Une histoire de pirate au chapeau de paille!!', 'Shūeisha', '1997-12-24');
 
 INSERT INTO auteur (nom, prenom)
 VALUES
@@ -176,6 +175,7 @@ VALUES (
 	(null),
 	('Id: ' || new.id ||
 	 ', Cip: ' || new.cip ||
+	 ', Titre: ' || new.titre ||
 	 ', Description: ' || new.description ||
 	 ', Prix: ' || new.prix ||
 	 ', Date affichage: ' || new.date_affichage ||
@@ -202,6 +202,7 @@ VALUES (
 	(new.id),
 	('Id: ' || old.id ||
 	 ', Cip: ' || old.cip ||
+	 ', Titre: ' || old.titre ||
 	 ', Description: ' || old.description ||
 	 ', Prix: ' || old.prix ||
 	 ', Date affichage: ' || old.date_affichage ||
@@ -209,6 +210,7 @@ VALUES (
 	 ', Categorie: ' || old.categorie),
 	('Id: ' || new.id ||
 	 ', Cip: ' || new.cip ||
+	 ', Titre: ' || new.titre ||
 	 ', Description: ' || new.description ||
 	 ', Prix: ' || new.prix ||
 	 ', Date affichage: ' || new.date_affichage ||
@@ -235,6 +237,7 @@ VALUES (
 	(old.id),
 	('Id: ' || old.id ||
 	 ', Cip: ' || old.cip ||
+	 ', Titre: ' || old.titre ||
 	 ', Description: ' || old.description ||
 	 ', Prix: ' || old.prix ||
 	 ', Date affichage: ' || old.date_affichage ||
@@ -269,14 +272,15 @@ CREATE TRIGGER delete_evenement_trigger
 --DELETE FROM evenement WHERE id_annonce = -1;
 --DELETE FROM annonce WHERE id = -1;
 
-INSERT INTO annonce (id, cip, description, prix, date_affichage, etat, categorie)
+INSERT INTO annonce (id, cip, titre, description, prix, date_affichage, etat, categorie)
 VALUES
-(-1, 'durp0701', 'TEST TRIGGER 1.0', 0, '2000-01-01', 1, 'AUTRE');
+(-1, 'durp0701', 'titretest', 'TEST TRIGGER 1.0', 0, '2000-01-01', 1, 'AUTRE');
 
 UPDATE annonce
 SET description = 'TEST TRIGGER 2.0'
 WHERE id = -1;
 
-DELETE 
-FROM annonce 
+DELETE
+FROM annonce
 WHERE id = -1;
+
