@@ -6,27 +6,8 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <header>
-        <div class="barre">
-            <nav>
-                <h1>Volos</h1>
-                <ul>
-                    <li><a href="Accueil.html">Accueil</a></li>
-                    <div class="dropdown">
-                        <button class="dropbtn">Categories</button>
-                        <div class="dropdown-content">
-                            <a href="Livres.html">Livres</a>
-                            <a href="Loyer.html">Loyer</a>
-                            <a href="Autres.html">Autres</a>
-                        </div>
-                    </div>
-                    <li><a href="Profile.html">Profile</a></li>
-                    <li><a href="mesFavoris.html">Voir mes favoris</a></li>
-                    <li><a href="Ajouter.html">Ajouter une annonce</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <header id="flagHeader"></header>
+
     <h2><center>Livres a vendre</center></h2>
     <div class="card">
         <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
@@ -99,5 +80,11 @@
         <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
     </div>
 
+<!-- Load React. -->
+<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<!-- Load our React component. -->
+<script src="components/Header.js"></script>
 </body>
 </html>

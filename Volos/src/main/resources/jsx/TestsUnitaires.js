@@ -19,7 +19,7 @@ class TestsMicroServices extends React.Component {
         )
     }
 }
-domContainer = document.querySelector('#testMicroServiceButton');
+var domContainer = document.querySelector('#testMicroServiceButton');
 ReactDOM.render(<TestsMicroServices/>, domContainer);
 //FIN CLASSE EXÉCUTANT TOUT LES TESTS DE MICRO-SERVICES
 
@@ -160,7 +160,7 @@ class TestUtilisateur extends React.Component {
     }
 }
 //Lien du bouton 'Test' avec React
-domContainer = document.querySelector('#testUtilisateurButton');
+var domContainer = document.querySelector('#testUtilisateurButton');
 ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 ////****** FIN MICRO-SERVICE UTILISATEUR ******////
