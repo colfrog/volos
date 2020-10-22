@@ -56,24 +56,24 @@ class ListeFavoris extends React.Component {
         fetch('/Volos/api/loggedUtilisateur')
             .then(data => data.json())
             .then(utilisateur => {
-                this.setState({cip: utilisateur.cip});
-                this.setState({prenom: utilisateur.prenom});
-                this.setState({nom: utilisateur.nom});
-            });
-        console.log(this.state.cip)
-        fetch('/Volos/api/favoris?cip='+this.state.cip)
-            .then(data => data.json())
-            .then(annonces => {
-                let favoris = [];
-                annonces.forEach(annonce => {
-                    favoris.push(
-                        <Favori key={annonce.id} cip={this.state.cip} id={annonce.id}
-                                description={annonce.description} prix={annonce.prix}
-                                titre={annonce.titre} estFavori={true} />
-                    );
-                });
+                this.setState({cip: utilisateur.cip,
+                    prenom: utilisateur.prenom,
+                    nom: utilisateur.nom});
 
-                this.setState({favoris: favoris});
+                fetch('/Volos/api/favoris?cip='+this.state.cip)
+                    .then(data => data.json())
+                    .then(annonces => {
+                        let favoris = [];
+                        annonces.forEach(annonce => {
+                            favoris.push(
+                                <Favori key={annonce.id} cip={this.state.cip} id={annonce.id}
+                                        description={annonce.description} prix={annonce.prix}
+                                        titre={annonce.titre} estFavori={true} />
+                            );
+                        });
+
+                        this.setState({favoris: favoris});
+                    });
             });
     }
 
