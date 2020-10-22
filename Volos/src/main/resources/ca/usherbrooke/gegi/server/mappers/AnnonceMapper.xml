@@ -6,6 +6,7 @@
     <select id="select" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -19,6 +20,7 @@
     <select id="selectPublishLivres" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -33,6 +35,7 @@
     <select id="selectPublishLoyers" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -47,6 +50,7 @@
     <select id="selectPublishAutres" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -61,6 +65,7 @@
     <select id="selectById" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -76,6 +81,7 @@
     <select id="selectByCip" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -91,6 +97,7 @@
     <insert id="insertAnnonce">
     INSERT INTO annonce(
     id,
+    titre,
     description,
     prix,
     date_affichage,
@@ -98,6 +105,7 @@
     cip,
     categorie)
       VALUES  (#{annonce.id},
+      #{annonce.titre},
       #{annonce.description},
       #{annonce.prix},
       #{annonce.dateAffichage},
@@ -108,6 +116,7 @@
     <update id="updateAnnonce">
         UPDATE annonce
         SET id = #{annonce.id},
+        titre = #{annonce.titre},
         description = #{annonce.description},
         prix = #{annonce.prix},
         date_affichage = #{annonce.dateAffichage},

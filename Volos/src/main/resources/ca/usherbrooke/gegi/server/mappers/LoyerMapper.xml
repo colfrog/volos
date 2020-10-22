@@ -6,7 +6,6 @@
     <select id="select" resultType="Loyer">
       SELECT
         id,
-        titre,
         nombre_chambre,
         date_debut_location,
         date_fin_location
@@ -17,7 +16,6 @@
     <select id="selectId" resultType="Loyer">
       SELECT
         id,
-        titre,
         nombre_chambre,
         date_debut_location,
         date_fin_location
@@ -30,21 +28,18 @@
     <insert id="insertLoyer">
     INSERT INTO loyer(
     id,
-    titre,
     nombre_chambre,
     date_debut_location,
     date_fin_location
     )
       VALUES  (#{loyer.id},
-      #{loyer.titre},
       #{loyer.nbChambre},
       #{loyer.dateDebutLocation},
       #{loyer.dateFinLocation});
   </insert>
     <update id="updateLoyer">
         UPDATE loyer
-        SET titre = #{loyer.titre},
-        nombre_chambre = #{loyer.nbChambre},
+        SET nombre_chambre = #{loyer.nbChambre},
         date_debut_location = #{loyer.dateDebutLocation},
         date_fin_location = #{loyer.dateFinLocation}
         WHERE id = #{id};
