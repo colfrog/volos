@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ca.usherbrooke.gegi.server.mappers.FavorisMapper">
     <select id="getFavoris" resultType="Annonce">
-        SELECT a.id, a.description, a.prix, a.etat, a.date_affichage, a.cip, a.categorie
+        SELECT a.id, a.description, a.titre, a.prix, a.etat, a.date_affichage, a.cip, a.categorie
         FROM favoris as f, annonce as a
         WHERE f.cip = #{cip}
         GROUP BY f.cip, f.id_annonce, a.id
