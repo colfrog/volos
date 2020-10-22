@@ -270,4 +270,14 @@ public class WrapperService {
 
         return utilisateur.getCip();
     }
+
+    /**
+     * Vérifie si l'annonce est dans les favoris de l'utilisateur
+     */
+    @GET
+    @Path("verifierFavori")
+    @Produces("application/json")
+    public boolean verifierFavori(@QueryParam("cip") String cip, @QueryParam("id") int id) {
+        return favorisService.existFavori(cip, id);
+    }
 }

@@ -1,6 +1,7 @@
 package ca.usherbrooke.gegi.server.services;
 
 import ca.usherbrooke.gegi.server.data.Annonce;
+import ca.usherbrooke.gegi.server.data.Auteur;
 import ca.usherbrooke.gegi.server.mappers.FavorisMapper;
 
 import javax.inject.Inject;
@@ -37,5 +38,16 @@ public class FavorisService {
     @Path("retirer_favori")
     public void removeFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
         favorisMapper.removeFavori(cip, id);
+    }
+
+    /**
+     * Vérifie si l'annonce est dans les favoris de l'utilisateur avec son cip passé
+     *
+     * @return true s'il est dans ses favoris aussi non false
+     */
+    @GET
+    @Path("existFavori")
+    public boolean existFavori(@QueryParam("cip") String cip, @QueryParam("id") int id) {
+        return favorisMapper.existFavori(cip, id);
     }
 }

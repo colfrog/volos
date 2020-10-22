@@ -1,12 +1,16 @@
-class Favori extends React.Component {
+class Loyer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             cip: this.props.cip,
             id: this.props.id,
-            titre: this.props.titre,
             description: this.props.description,
             prix: this.props.prix,
+            dateAffichage: this.props.dateAffichage,
+            titre: this.props.titre,
+            nbChambre: this.props.nbChambre,
+            dateDebutLocation: this.props.dateDebutLocation,
+            dateFinLocation: this.props.dateFinLocation,
             estFavori: this.props.estFavori
         };
     }
@@ -40,49 +44,46 @@ class Favori extends React.Component {
     }
 }
 
-class ListeFavoris extends React.Component {
+class ListeLoyers extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {cip: this.props.cip,
-                    prenom: this.props.prenom,
-                    nom: this.props.nom,
-                    favoris: []};
+        this.state = {loyers: []};
 
         this.updateFavoris();
     }
 
     // fetch la liste de favoris, creer un objet favori chaque, ajouter au state
     updateFavoris() {
-        fetch('/Volos/api/loggedUtilisateur')
-            .then(data => data.json())
-            .then(utilisateur => {
-                this.setState({cip: utilisateur.cip});
-                this.setState({prenom: utilisateur.prenom});
-                this.setState({nom: utilisateur.nom});
-            });
-        console.log(this.state.cip)
-        fetch('/Volos/api/favoris?cip='+this.state.cip)
+        fetch('/Volos/api/showLoyers')
             .then(data => data.json())
             .then(annonces => {
-                let favoris = [];
+                let loyers = [];
                 annonces.forEach(annonce => {
-                    favoris.push(
-                        <Favori key={annonce.id} cip={this.state.cip} id={annonce.id}
-                                description={annonce.description} prix={annonce.prix}
-                                titre={annonce.titre} estFavori={true} />
+                    loyers.push(
+                        <Loyer key={annonce.id}
+                               cip={this.state.cip}
+                               id={annonce.id}
+                               description={annonce.description}
+                               prix={annonce.prix}
+                               dateAffichage={annonce.dateAffichage}
+                               titre={annonce.titre}
+                               nbChambre={annonce.nbChambre}
+                               dateDebutLocation={annonce.dateDebutLocation}
+                               dateFinLocation={annonce.dateFinLocation}
+                               estFavori={false} />//modifier est favori pour vérifier si celui-cci est dans la liste de favoris
                     );
                 });
-
-                this.setState({favoris: favoris});
+                console.log(loyers);
+                this.setState({loyers: loyers});
             });
     }
 
     render() {
         return (
-            <div className="ListeFavoris">{this.state.favoris}</div>
+            <div className="ListeLoyers">{this.state.loyers}</div>
         );
     }
 }
 
-var domContainer = document.querySelector('#liste_favoris');
-ReactDOM.render(<ListeFavoris/>, domContainer);
+var domContainer = document.querySelector('#liste_loyers');
+ReactDOM.render(<ListeLoyers/>, domContainer);
