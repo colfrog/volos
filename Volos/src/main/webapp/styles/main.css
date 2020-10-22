@@ -31,6 +31,10 @@ header {
     background-color: black;
 }
 
+.featured_card img {
+    width: 100%;
+}
+
 .barre h1{
     margin: 0;
     display: inline;

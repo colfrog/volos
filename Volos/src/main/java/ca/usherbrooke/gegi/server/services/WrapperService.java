@@ -47,7 +47,7 @@ public class WrapperService {
     @Path("showLivres")
     @Produces("application/json")
     public List<Livre> showPublishLivres() {
-        List<Annonce> annonces = annonceService.annoncePublishLivres();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("LIVRE");
         List<Livre> livres = new ArrayList<Livre>();
             Livre livre;
 
@@ -70,7 +70,7 @@ public class WrapperService {
     @Path("showLoyers")
     @Produces("application/json")
     public List<Loyer> showPublishLoyers() {
-        List<Annonce> annonces = annonceService.annoncePublishLoyers();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("LOYER");
         List<Loyer> loyers = new ArrayList<Loyer>();
         Loyer loyer;
 
@@ -92,7 +92,7 @@ public class WrapperService {
     @Path("showAutres")
     @Produces("application/json")
     public List<Annonce> showPublishAutres() {
-        List<Annonce> annonces = annonceService.annoncePublishAutres();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("AUTRE");
 
         return annonces;
     }

@@ -6,6 +6,7 @@
     <select id="select" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -16,9 +17,10 @@
         annonce
     </select>
 
-    <select id="selectPublishLivres" resultType="Annonce">
+    <select id="selectPublishedByCategorie" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -27,40 +29,14 @@
         categorie
       FROM
         annonce
-      WHERE categorie = 'LIVRE' AND etat = 0;
-    </select>
-
-    <select id="selectPublishLoyers" resultType="Annonce">
-      SELECT
-        id,
-        description,
-        prix,
-        date_affichage,
-        etat,
-        cip,
-        categorie
-      FROM
-        annonce
-      WHERE categorie = 'LOYER' AND etat = 0;
-    </select>
-
-    <select id="selectPublishAutres" resultType="Annonce">
-      SELECT
-        id,
-        description,
-        prix,
-        date_affichage,
-        etat,
-        cip,
-        categorie
-      FROM
-        annonce
-      WHERE categorie = 'AUTRE' AND etat = 0;
+      WHERE categorie = #{categorie} AND etat = 0
+      ORDER BY date_affichage DESC;
     </select>
 
     <select id="selectById" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -76,6 +52,7 @@
     <select id="selectByCip" resultType="Annonce">
       SELECT
         id,
+        titre,
         description,
         prix,
         date_affichage,
@@ -91,6 +68,7 @@
     <insert id="insertAnnonce">
     INSERT INTO annonce(
     id,
+    titre,
     description,
     prix,
     date_affichage,
@@ -98,6 +76,7 @@
     cip,
     categorie)
       VALUES  (#{annonce.id},
+      #{annonce.titre},
       #{annonce.description},
       #{annonce.prix},
       #{annonce.dateAffichage},
@@ -108,6 +87,7 @@
     <update id="updateAnnonce">
         UPDATE annonce
         SET id = #{annonce.id},
+        titre = #{annonce.titre},
         description = #{annonce.description},
         prix = #{annonce.prix},
         date_affichage = #{annonce.dateAffichage},
