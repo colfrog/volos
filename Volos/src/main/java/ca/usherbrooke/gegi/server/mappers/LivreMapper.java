@@ -7,6 +7,11 @@ import org.mybatis.cdi.Mapper;
 
 import java.util.List;
 
+/**
+ * Mapper qui définit les différentes requête sql passé sur la table Livre
+ * @author Iliass Bourabaa
+ * @version 1.0
+ */
 @SuppressWarnings("CdiManagedBeanInconsistencyInspection")
 @Mapper
 public interface LivreMapper {

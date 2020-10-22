@@ -29,7 +29,6 @@ public class AuteurService {
     @GET
     @Path("auteur")
     @Produces("application/json")
-
     public List<Auteur> getAuteur() {
         List<Auteur> auteurs = auteurMapper.select();
         return auteurs;
@@ -37,8 +36,13 @@ public class AuteurService {
 
     @GET
     @Path("insert_auteur")
-
     public void insertAuteur(@QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
         auteurMapper.insertAuteur(nom, prenom);
+    }
+
+    @GET
+    @Path("existAuteur")
+    public boolean existAuteur(Auteur auteur) {
+        return auteurMapper.existAuteur(auteur);
     }
 }
