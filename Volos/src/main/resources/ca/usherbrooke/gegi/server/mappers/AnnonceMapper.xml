@@ -17,7 +17,7 @@
         annonce
     </select>
 
-    <select id="selectPublishLivres" resultType="Annonce">
+    <select id="selectPublishedByCategorie" resultType="Annonce">
       SELECT
         id,
         titre,
@@ -29,37 +29,8 @@
         categorie
       FROM
         annonce
-      WHERE categorie = 'LIVRE' AND etat = 0;
-    </select>
-
-    <select id="selectPublishLoyers" resultType="Annonce">
-      SELECT
-        id,
-        titre,
-        description,
-        prix,
-        date_affichage,
-        etat,
-        cip,
-        categorie
-      FROM
-        annonce
-      WHERE categorie = 'LOYER' AND etat = 0;
-    </select>
-
-    <select id="selectPublishAutres" resultType="Annonce">
-      SELECT
-        id,
-        titre,
-        description,
-        prix,
-        date_affichage,
-        etat,
-        cip,
-        categorie
-      FROM
-        annonce
-      WHERE categorie = 'AUTRE' AND etat = 0;
+      WHERE categorie = #{categorie} AND etat = 0
+      ORDER BY date_affichage DESC;
     </select>
 
     <select id="selectById" resultType="Annonce">

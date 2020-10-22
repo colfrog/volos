@@ -13,81 +13,22 @@
 
     <div class="featured">
         <h2><center>Nouveaux livres</center></h2>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.15752-9/120699920_1469107423283304_6354952113798118928_n.jpg?_nc_cat=110&_nc_sid=ae9488&_nc_ohc=UMPq3yDUfccAX_LIco2&_nc_ht=scontent.fymq2-1.fna&oh=2dfa907a300cdd66ad66958770e220a2&oe=5F9BC5E8" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
+        <div id="nouveaux_livres"></div>
     </div>
     <div class="featured">
         <h2><center>Nouveaux loyers</center></h2>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.15752-9/120699920_1469107423283304_6354952113798118928_n.jpg?_nc_cat=110&_nc_sid=ae9488&_nc_ohc=UMPq3yDUfccAX_LIco2&_nc_ht=scontent.fymq2-1.fna&oh=2dfa907a300cdd66ad66958770e220a2&oe=5F9BC5E8" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
+        <div id="nouveaux_loyers"></div>
     </div>
     <div class="featured">
         <h2><center>Nouveaux dans autres</center></h2>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.15752-9/120699920_1469107423283304_6354952113798118928_n.jpg?_nc_cat=110&_nc_sid=ae9488&_nc_ohc=UMPq3yDUfccAX_LIco2&_nc_ht=scontent.fymq2-1.fna&oh=2dfa907a300cdd66ad66958770e220a2&oe=5F9BC5E8" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
-        <div class="featured_card">
-            <img src="https://i.imgur.com/gPEswtC.jpg" alt="Livre" style="width:100%">
-            <h1>Titre du livre</h1>
-            <p class="price">$69.69</p>
-            <p>La description</p>
-            <p><button onclick="ajouterFavoris()">Ajouter aux favoris</button></p>
-        </div>
+        <div id="nouveaux_autres"></div>
     </div>
-<!-- Load React. -->
-<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-<!-- Load our React component. -->
-<script src="components/Header.js"></script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load our React components. -->
+    <script src="components/Header.js"></script>
+    <script type="module" src="components/ListeNouveauxAnnonces.js"></script>
 </body>
 </html>
