@@ -93,7 +93,7 @@ header {
     opacity: 0.7;
 }
 
-.titre, .categorie {
+.titre, .categorie, .prix, .description {
     font-family: arial;
     text-align: center;
     background-color: #00a556;
@@ -103,25 +103,18 @@ header {
     border-radius: 30px;
 }
 
-.prix {
-    font-family: arial;
-    background-color: #00a556;
-    color: #ffcb28;
-    margin-left: 30px;
-    margin-right: 90%;
-    width:7%;
-    padding: 10px;
-    border-radius: 15px;
+.descriptionText {
+    min-height: 75px;
+    min-width: 100%;
+    max-block-size: 300px;
+    max-width: 100%;
 }
 
-.description {
-    font-family: arial;
-    text-align: center;
-    background-color: #00a556;
-    color: #ffcb28;
-    margin: 20px;
-    padding: 200px;
-    border-radius: 30px;
+.resumeText {
+    min-height: 75px;
+    max-height: 150px;
+    min-width: 60%;
+    max-width: 60%;
 }
 
 .photo {
@@ -138,9 +131,7 @@ header {
     font-family: arial;
     background-color: #00a556;
     color: #ffcb28;
-    float: left;
     margin-left: 30px;
-    width: 7%;
     padding: 10px;
     border-radius: 15px;
 }
@@ -151,9 +142,22 @@ header {
     color: #ffcb28;
     float: right;
     margin-right: 30px;
-    width: 7%;
     padding: 10px;
     border-radius: 15px;
+}
+
+.annulerBtn {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
+.redBorder {
+    border-color: red;
+    border-radius: 5px;
 }
 
 .nom {

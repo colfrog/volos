@@ -10,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,13 +157,22 @@ public class WrapperService {
                          @QueryParam("prix") float prix,
                          @QueryParam("titre") String titre, @QueryParam("resume") String resume,
                          @QueryParam("maisonEdition") String maisonEdition,
-                         @QueryParam("datePublication") Date datePublication,
+                         @QueryParam("datePublication") String datePublicationS,
                          @QueryParam("nom") String nomAuteur, @QueryParam("prenom") String prenomAuteur) {
         if(description != null && titre != null && resume != null
-                && maisonEdition != null && datePublication != null && nomAuteur != null
+                && maisonEdition != null && datePublicationS != null && nomAuteur != null
                 && prenomAuteur != null) {
             //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
             String cip = verifierUtilisateur();
+
+            //Convertision des strings en Date
+            Date datePublication = null;
+            try {
+                datePublication = new SimpleDateFormat("yyyy-mm-dd").parse(datePublicationS);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 
             int id = annonceService.findLastIdAnnonce()+1;
             Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
@@ -187,12 +198,22 @@ public class WrapperService {
     public void addLoyer(@QueryParam("description") String description,
                          @QueryParam("prix") float prix,
                          @QueryParam("titre") String titre, @QueryParam("nbChambre") int nbChambre,
-                         @QueryParam("dateDebutLocation") Date dateDebutLocation,
-                         @QueryParam("dateFinLocation") Date dateFinLocation) {
-        if(description != null && titre != null && dateDebutLocation != null
-                && dateFinLocation != null) {
+                         @QueryParam("dateDebutLocation") String dateDebutLocationS,
+                         @QueryParam("dateFinLocation") String dateFinLocationS) {
+        if(description != null && titre != null && dateDebutLocationS != null
+                && dateFinLocationS != null) {
             //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
             String cip = verifierUtilisateur();
+
+            //Convertision des strings en Date
+            Date dateDebutLocation = null;
+            Date dateFinLocation = null;
+            try {
+                dateDebutLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateDebutLocationS);
+                dateFinLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateFinLocationS);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             int id = annonceService.findLastIdAnnonce() + 1;
             Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
