@@ -1,4 +1,6 @@
-import Annonce from '/Volos/components/Annonce.js';
+import CarteAnnonce from '/Volos/components/CarteAnnonce.js';
+
+
 
 export default class ListeAnnonces extends React.Component {
     constructor(props) {
@@ -13,25 +15,22 @@ export default class ListeAnnonces extends React.Component {
 
     updateListeAnnonces(annonces) {
         let utilisateurAnnonces = [];
-        annonces.forEach(annonce => {
-            utilisateurAnnonces.push(<Annonce key={annonce.id}
-                                              id={annonce.id}
-                                              description={annonce.description}
-                                              prix={annonce.prix}
-                                              dateAffichage={annonce.dateAffichage}
-                                              categorie={annonce.categorie}
-                                              titre={annonce.titre}
-                                              resume={annonce.resume}
-                                              maisonEdition={annonce.maisonEdition}
-                                              datePublication={annonce.datePublication}
-                                              nbChambre={annonce.nbChambre}
-                                              dateDebutLocation={annonce.dateDebutLocation}
-                                              dateFinLocation={annonce.dateFinLocation}
-                                              auteurs={annonce.auteurs}
-            />);
-        });
+        fetch('/Volos/api/loggedUtilisateur')
+            .then(data => data.json())
+            .then(utilisateur => {
 
-        this.setState({annonces: utilisateurAnnonces});
+                annonces.forEach(annonce => {
+                            utilisateurAnnonces.push(<CarteAnnonce key={annonce.id}
+                                                                   userCip={utilisateur.cip}
+                                                                   id={annonce.id}
+                                                                   description={annonce.description}
+                                                                   prix={annonce.prix}
+                                                                   titre={annonce.titre}
+                            />);
+                });
+
+                this.setState({annonces: utilisateurAnnonces});
+        });
     }
 
     render() {
