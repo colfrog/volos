@@ -12,4 +12,5 @@ public interface FavorisMapper {
     List<Annonce> getFavoris(@Param("cip") String cip);
     void addFavori(@Param("cip") String cip, @Param("id_annonce") Integer id);
     Integer removeFavori(@Param("cip") String cip, @Param("id_annonce") Integer id);
+    boolean existFavori(@Param("cip") String cip, @Param("id_annonce") int id);
 }

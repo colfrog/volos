@@ -8,27 +8,7 @@
 <body>
     <header id="flagHeader"></header>
 
-    <div class="titre">
-        Inserer un titre ici
-    </div>
-    <div class="categorie">
-        Inserer la categorie
-    </div>
-    <div class="prix">
-        <center>Inserer le prix</center>
-    </div>
-    <div class="description">
-        Inserer une description
-    </div>
-    <div class="photo">
-        <center><p><button onclick="addPhoto()">Ajouter une photo</button></p></center>
-    </div>
-    <div class="Annuler">
-        <center><p><button onclick="annuler()">Annuler</button></p></center>
-    </div>
-    <div class="Publier">
-        <center><p><button onclick="publier()">Publier</button></p></center>
-    </div>
+    <div id="annonceForm"></div>
 
 <!-- Load React. -->
 <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -36,5 +16,6 @@
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
 <!-- Load our React component. -->
 <script src="components/Header.js"></script>
+<script src="components/AjouterAnnonce.js"></script>
 </body>
 </html>

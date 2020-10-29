@@ -8,7 +8,6 @@ import java.util.Date;
  * @version 1.0
  */
 public class Loyer extends Annonce{
-    private String titre;
     private int nbChambre;
     private Date dateDebutLocation;
     private Date dateFinLocation;
@@ -21,21 +20,12 @@ public class Loyer extends Annonce{
     /**
      * Constructeur avec en paramètre certains attributs d'un loyer
      */
-    public Loyer(int id, String titre, int nbChambre,
+    public Loyer(int id, int nbChambre,
                  Date dateDebutLocation, Date dateFinLocation) {
         setId(id);
-        this.titre = titre;
         this.nbChambre = nbChambre;
         this.dateDebutLocation = dateDebutLocation;
         this.dateFinLocation = dateFinLocation;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
     }
 
     public int getNbChambre() {
@@ -76,7 +66,7 @@ public class Loyer extends Annonce{
                 ", dateAffichage='" + getDateAffichage() + '\'' +
                 ", cip='" + getCip() + '\'' +
                 ", categorie='" + getCategorie() + '\'' +
-                ", titre='" + titre + '\'' +
+                ", titre='" + getTitre() + '\'' +
                 ", resume='" + nbChambre + '\'' +
                 ", maisonEdition='" + dateDebutLocation + '\'' +
                 ", datePublication='" + dateFinLocation + '\'' +

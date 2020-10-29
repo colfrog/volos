@@ -10,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +49,7 @@ public class WrapperService {
     @Path("showLivres")
     @Produces("application/json")
     public List<Livre> showPublishLivres() {
-        List<Annonce> annonces = annonceService.annoncePublishLivres();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("LIVRE");
         List<Livre> livres = new ArrayList<Livre>();
             Livre livre;
 
@@ -70,7 +72,7 @@ public class WrapperService {
     @Path("showLoyers")
     @Produces("application/json")
     public List<Loyer> showPublishLoyers() {
-        List<Annonce> annonces = annonceService.annoncePublishLoyers();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("LOYER");
         List<Loyer> loyers = new ArrayList<Loyer>();
         Loyer loyer;
 
@@ -92,7 +94,7 @@ public class WrapperService {
     @Path("showAutres")
     @Produces("application/json")
     public List<Annonce> showPublishAutres() {
-        List<Annonce> annonces = annonceService.annoncePublishAutres();
+        List<Annonce> annonces = annonceService.annoncePublishedByCategorie("AUTRE");
 
         return annonces;
     }
@@ -152,26 +154,39 @@ public class WrapperService {
     @GET
     @Path("addLivre")
     public void addLivre(@QueryParam("description") String description,
-                           @QueryParam("prix") float prix,
-                           @QueryParam("dateAffichage") Date dateAffichage,
-                           @QueryParam("titre") String titre, @QueryParam("resume") String resume,
-                           @QueryParam("maisonEdition") String maisonEdition,
-                           @QueryParam("datePublication") Date datePublication,
-                           @QueryParam("nom") String nom, @QueryParam("prenom") String prenom) {
-        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
-        String cip = verifierUtilisateur();
+                         @QueryParam("prix") float prix,
+                         @QueryParam("titre") String titre, @QueryParam("resume") String resume,
+                         @QueryParam("maisonEdition") String maisonEdition,
+                         @QueryParam("datePublication") String datePublicationS,
+                         @QueryParam("nom") String nomAuteur, @QueryParam("prenom") String prenomAuteur) {
+        if(description != null && titre != null && resume != null
+                && maisonEdition != null && datePublicationS != null && nomAuteur != null
+                && prenomAuteur != null) {
+            //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
+            String cip = verifierUtilisateur();
 
-        int id = annonceService.findLastIdAnnonce()+1;
-        Annonce annonce = new Annonce(id, cip, description, prix, 0, dateAffichage, "LIVRE");
-        Livre livre = new Livre(id, titre, resume, maisonEdition, datePublication);
-        Auteur auteur = new Auteur(nom, prenom);
+            //Convertision des strings en Date
+            Date datePublication = null;
+            try {
+                datePublication = new SimpleDateFormat("yyyy-mm-dd").parse(datePublicationS);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        annonceService.insertAnnonce(annonce);
-        livreService.insertLivre(livre);
-        if(!auteurService.existAuteur(auteur)) {
-            auteurService.insertAuteur(nom, prenom);
+
+            int id = annonceService.findLastIdAnnonce()+1;
+            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
+            Livre livre = new Livre(id, resume, maisonEdition, datePublication);
+            Auteur auteur = new Auteur(nomAuteur, prenomAuteur);
+            livre.addAuteurs(auteur);
+
+            annonceService.insertAnnonce(annonce);
+            livreService.insertLivre(livre);
+            if(!auteurService.existAuteur(auteur)) {
+                auteurService.insertAuteur(nomAuteur, prenomAuteur);
+            }
+            wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
         }
-        wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
     }
 
     /**
@@ -181,20 +196,32 @@ public class WrapperService {
     @GET
     @Path("addLoyer")
     public void addLoyer(@QueryParam("description") String description,
-                           @QueryParam("prix") float prix,
-                           @QueryParam("dateAffichage") Date dateAffichage,
-                           @QueryParam("titre") String titre, @QueryParam("nbChambre") int nbChambre,
-                           @QueryParam("dateDebutLocation") Date dateDebutLocation,
-                           @QueryParam("dateFinLocation") Date dateFinLocation) {
-        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
-        String cip = verifierUtilisateur();
+                         @QueryParam("prix") float prix,
+                         @QueryParam("titre") String titre, @QueryParam("nbChambre") int nbChambre,
+                         @QueryParam("dateDebutLocation") String dateDebutLocationS,
+                         @QueryParam("dateFinLocation") String dateFinLocationS) {
+        if(description != null && titre != null && dateDebutLocationS != null
+                && dateFinLocationS != null) {
+            //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
+            String cip = verifierUtilisateur();
 
-        int id = annonceService.findLastIdAnnonce()+1;
-        Annonce annonce = new Annonce(id, cip, description, prix, 0, dateAffichage, "LOYER");
-        Loyer loyer = new Loyer(id, titre, nbChambre, dateDebutLocation, dateFinLocation);
+            //Convertision des strings en Date
+            Date dateDebutLocation = null;
+            Date dateFinLocation = null;
+            try {
+                dateDebutLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateDebutLocationS);
+                dateFinLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateFinLocationS);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        annonceService.insertAnnonce(annonce);
-        loyerService.insertLoyer(loyer);
+            int id = annonceService.findLastIdAnnonce() + 1;
+            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
+            Loyer loyer = new Loyer(id, nbChambre, dateDebutLocation, dateFinLocation);
+
+            annonceService.insertAnnonce(annonce);
+            loyerService.insertLoyer(loyer);
+        }
     }
 
     /**
@@ -203,16 +230,18 @@ public class WrapperService {
      */
     @GET
     @Path("addAutre")
-    public void addAutre(@QueryParam("description") String description,
-                           @QueryParam("prix") float prix,
-                           @QueryParam("dateAffichage") Date dateAffichage) {
-        //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
-        String cip = verifierUtilisateur();
+    public void addAutre(@QueryParam("titre") String titre,
+                         @QueryParam("description") String description,
+                         @QueryParam("prix") float prix) {
+        if(description != null && titre != null) {
+            //Vérfie que l'utilisateur est déjà ajouter à la table Utilisateur
+            String cip = verifierUtilisateur();
 
-        int id = annonceService.findLastIdAnnonce()+1;
-        Annonce annonce = new Annonce(id, cip, description, prix, 0 , dateAffichage, "AUTRE");
+            int id = annonceService.findLastIdAnnonce() + 1;
+            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "AUTRE");
 
-        annonceService.insertAnnonce(annonce);
+            annonceService.insertAnnonce(annonce);
+        }
     }
 
     /**
@@ -261,5 +290,15 @@ public class WrapperService {
         }
 
         return utilisateur.getCip();
+    }
+
+    /**
+     * Vérifie si l'annonce est dans les favoris de l'utilisateur
+     */
+    @GET
+    @Path("verifierFavori")
+    @Produces("application/json")
+    public boolean verifierFavori(@QueryParam("cip") String cip, @QueryParam("id") int id) {
+        return favorisService.existFavori(cip, id);
     }
 }

@@ -8,7 +8,6 @@
         id,
         maison_edition,
         resume,
-        titre,
         date_publication
       FROM
         livre
@@ -19,7 +18,6 @@
         id,
         maison_edition,
         resume,
-        titre,
         date_publication
       FROM
         livre
@@ -32,19 +30,16 @@
     id,
     maison_edition,
     resume,
-    titre,
     date_publication)
       VALUES  (#{livre.id},
       #{livre.maisonEdition},
       #{livre.resume},
-      #{livre.titre},
       #{livre.datePublication});
   </insert>
     <update id="updateLivre">
         UPDATE livre
         SET maison_edition = #{livre.maisonEdition},
          resume = #{livre.resume},
-         titre = #{livre.titre},
          date_publication = #{livre.datePublication}
         WHERE id = #{id};
     </update>
