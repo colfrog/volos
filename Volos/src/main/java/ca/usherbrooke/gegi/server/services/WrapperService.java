@@ -74,9 +74,9 @@ public class WrapperService {
     public List<Livre> showPublishLivres() {
         List<Annonce> annonces = annonceService.annoncePublishedByCategorie("LIVRE");
         List<Livre> livres = new ArrayList<Livre>();
-            Livre livre;
+        Livre livre;
 
-        for(Annonce annonce : annonces) {
+        for (Annonce annonce : annonces) {
             livre = livreService.getLivre(annonce.getId());
             livre.setEnfant(annonce);
             livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
@@ -99,7 +99,7 @@ public class WrapperService {
         List<Loyer> loyers = new ArrayList<Loyer>();
         Loyer loyer;
 
-        for(Annonce annonce : annonces) {
+        for (Annonce annonce : annonces) {
             loyer = loyerService.getLoyer(annonce.getId());
             loyer.setEnfant(annonce);
 
@@ -137,26 +137,24 @@ public class WrapperService {
     }
 
     /**
-     * @return la liste de toutes les annonces publié par l'utilisateur
-     * présentement connecté
+     * @return la liste de toutes les annonces publié par l'utilisateur avec le cip donné
      */
     @GET
-    @Path("showUtilisateurAnnonce")
+    @Path("showPublished")
     @Produces("application/json")
-    public List<Annonce> getUtilisateurAnnonce() {
-        List<Annonce> annonces = annonceService.annoncesByCip(utilisateurService.
-                                    getCurrentLoggedUtilisateur().getCip());
-        List<Annonce> annoncesUtilisateur = new ArrayList<Annonce>();
+    public List<Annonce> showPublishedByCip(@QueryParam("cip") String cip) {
+        List<Annonce> annonces = annonceService.annoncesByCip(cip);
+        List<Annonce> annoncesUtilisateur = new ArrayList<>();
         Loyer loyer;
         Livre livre;
 
-        for(Annonce annonce : annonces) {
-            if(annonce.getCategorie().equals("LOYER")) {
+        for (Annonce annonce :annonces) {
+            if (annonce.getCategorie().equals("LOYER")) {
                 loyer = loyerService.getLoyer(annonce.getId());
                 loyer.setEnfant(annonce);
 
                 annoncesUtilisateur.add(loyer);
-            } else if(annonce.getCategorie().equals("LIVRE")) {
+            } else if (annonce.getCategorie().equals("LIVRE")) {
                 livre = livreService.getLivre(annonce.getId());
                 livre.setEnfant(annonce);
                 livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
@@ -168,6 +166,63 @@ public class WrapperService {
         }
 
         return annoncesUtilisateur;
+    }
+
+    /**
+     * @return la liste de toutes les annonces publié par l'utilisateur
+     * présentement connecté
+     */
+    @GET
+    @Path("showUtilisateurAnnonce")
+    @Produces("application/json")
+    public List<Annonce> getUtilisateurAnnonce() {
+        return showPublishedByCip(utilisateurService.getCurrentLoggedUtilisateur().getCip());
+    }
+
+    @GET
+    @Path("showNouveauxLivres")
+    @Produces("application/json")
+    public List<Livre> showNouveauxLivres() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LIVRE");
+        List<Livre> livres = new ArrayList<Livre>();
+        Livre livre;
+
+        for (Annonce annonce : annonces) {
+            livre = livreService.getLivre(annonce.getId());
+            livre.setEnfant(annonce);
+            livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
+
+            livres.add(livre);
+        }
+
+        return livres;
+    }
+
+    @GET
+    @Path("showNouveauxLoyers")
+    @Produces("application/json")
+    public List<Loyer> showNouveauxLoyers() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LOYER");
+        List<Loyer> loyers = new ArrayList<Loyer>();
+        Loyer loyer;
+
+        for (Annonce annonce : annonces) {
+            loyer = loyerService.getLoyer(annonce.getId());
+            loyer.setEnfant(annonce);
+
+            loyers.add(loyer);
+        }
+
+        return loyers;
+    }
+
+    @GET
+    @Path("showNouveauxAutres")
+    @Produces("application/json")
+    public List<Annonce> showNouveauxAutres() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("AUTRE");
+
+        return annonces;
     }
 
     /**
