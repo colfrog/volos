@@ -1,5 +1,11 @@
 package ca.usherbrooke.gegi.server.data;
 
+/**
+ * Représente un auteur d'un livre d'une annonce
+ *
+ * @author Paul du Réau
+ * @version 1.0
+ */
 public class Auteur {
 
     private String nom;

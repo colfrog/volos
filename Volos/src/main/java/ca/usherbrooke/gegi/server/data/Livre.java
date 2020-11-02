@@ -1,5 +1,7 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +11,6 @@ import java.util.List;
  * @version 1.0
  */
 public class Livre extends Annonce{
-    private String titre;
     private String resume;
     private String maisonEdition;
     private Date datePublication;
@@ -23,21 +24,13 @@ public class Livre extends Annonce{
     /**
      * Constructeur avec en paramètre certains attributs d'un livre
      */
-    public Livre(int id, String titre, String resume,
+    public Livre(int id, String resume,
                  String maisonEdition, Date datePublication) {
         setId(id);
-        this.titre = titre;
         this.resume = resume;
         this.maisonEdition = maisonEdition;
         this.datePublication = datePublication;
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
+        this.auteurs = new ArrayList<Auteur>();
     }
 
     public String getResume() {
@@ -56,8 +49,11 @@ public class Livre extends Annonce{
         this.maisonEdition = maisonEdition;
     }
 
-    public Date getDatePublication() {
-        return datePublication;
+    public String getDatePublication() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(datePublication);
+        return date;
     }
 
     public void setDatePublication(Date datePublication) {
@@ -70,6 +66,10 @@ public class Livre extends Annonce{
 
     public void setAuteurs(List<Auteur> auteurs) {
         this.auteurs = auteurs;
+    }
+
+    public void addAuteurs(Auteur auteur) {
+        this.auteurs.add(auteur);
     }
 
     /**
@@ -86,7 +86,7 @@ public class Livre extends Annonce{
                 ", dateAffichage='" + getDateAffichage() + '\'' +
                 ", cip='" + getCip() + '\'' +
                 ", categorie='" + getCategorie() + '\'' +
-                ", titre='" + titre + '\'' +
+                ", titre='" + getTitre() + '\'' +
                 ", resume='" + resume + '\'' +
                 ", maisonEdition='" + maisonEdition + '\'' +
                 ", datePublication='" + datePublication + '\'' +

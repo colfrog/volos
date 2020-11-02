@@ -4,6 +4,7 @@ class Favori extends React.Component {
         this.state = {
             cip: this.props.cip,
             id: this.props.id,
+            titre: this.props.titre,
             description: this.props.description,
             prix: this.props.prix,
             estFavori: this.props.estFavori
@@ -30,6 +31,7 @@ class Favori extends React.Component {
         return (
             <div className="card">
                 <img src="https://i.imgur.com/gPEswtC.jpg" />
+                <p>{this.state.titre}</p>
                 <p>{this.state.description}</p>
                 <p className="price">{this.state.prix}</p>
                 {bouton}
@@ -41,26 +43,37 @@ class Favori extends React.Component {
 class ListeFavoris extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {cip: this.props.cip, favoris: []};
+        this.state = {cip: this.props.cip,
+                    prenom: this.props.prenom,
+                    nom: this.props.nom,
+                    favoris: []};
 
         this.updateFavoris();
     }
 
     // fetch la liste de favoris, creer un objet favori chaque, ajouter au state
     updateFavoris() {
-        fetch('/Volos/api/favoris?cip='+this.state.cip)
+        fetch('/Volos/api/loggedUtilisateur')
             .then(data => data.json())
-            .then(annonces => {
-                let favoris = [];
-                annonces.forEach(annonce => {
-                    favoris.push(
-                        <Favori key={annonce.id} cip={this.state.cip} id={annonce.id}
-                                description={annonce.description} prix={annonce.prix}
-                                estFavori={true} />
-                    );
-                });
+            .then(utilisateur => {
+                this.setState({cip: utilisateur.cip,
+                    prenom: utilisateur.prenom,
+                    nom: utilisateur.nom});
 
-                this.setState({favoris: favoris});
+                fetch('/Volos/api/favoris?cip='+this.state.cip)
+                    .then(data => data.json())
+                    .then(annonces => {
+                        let favoris = [];
+                        annonces.forEach(annonce => {
+                            favoris.push(
+                                <Favori key={annonce.id} cip={this.state.cip} id={annonce.id}
+                                        description={annonce.description} prix={annonce.prix}
+                                        titre={annonce.titre} estFavori={true} />
+                            );
+                        });
+
+                        this.setState({favoris: favoris});
+                    });
             });
     }
 
@@ -72,4 +85,4 @@ class ListeFavoris extends React.Component {
 }
 
 var domContainer = document.querySelector('#liste_favoris');
-ReactDOM.render(<ListeFavoris cip="durp0701" />, domContainer);
+ReactDOM.render(<ListeFavoris/>, domContainer);

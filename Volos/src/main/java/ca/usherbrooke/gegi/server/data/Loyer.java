@@ -1,5 +1,8 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -8,7 +11,6 @@ import java.util.Date;
  * @version 1.0
  */
 public class Loyer extends Annonce{
-    private String titre;
     private int nbChambre;
     private Date dateDebutLocation;
     private Date dateFinLocation;
@@ -21,41 +23,39 @@ public class Loyer extends Annonce{
     /**
      * Constructeur avec en paramètre certains attributs d'un loyer
      */
-    public Loyer(int id, String titre, int nbChambre,
+    public Loyer(int id, int nbChambre,
                  Date dateDebutLocation, Date dateFinLocation) {
         setId(id);
-        this.titre = titre;
         this.nbChambre = nbChambre;
         this.dateDebutLocation = dateDebutLocation;
         this.dateFinLocation = dateFinLocation;
     }
 
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
-    public int getNbChambre() {
+    public int getNombreChambre() {
         return nbChambre;
     }
 
-    public void setNbChambre(int nbChambre) {
+    public void setNombreChambre(int nbChambre) {
         this.nbChambre = nbChambre;
     }
 
-    public Date getDateDebutLocation() {
-        return dateDebutLocation;
+    public String getDateDebutLocation() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateDebutLocation);
+
+        return date;
     }
 
     public void setDateDebutLocation(Date dateDebutLocation) {
         this.dateDebutLocation = dateDebutLocation;
     }
 
-    public Date getDateFinLocation() {
-        return dateFinLocation;
+    public String getDateFinLocation() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateDebutLocation);
+        return date;
     }
 
     public void setDateFinLocation(Date dateFinLocation) {
@@ -76,10 +76,10 @@ public class Loyer extends Annonce{
                 ", dateAffichage='" + getDateAffichage() + '\'' +
                 ", cip='" + getCip() + '\'' +
                 ", categorie='" + getCategorie() + '\'' +
-                ", titre='" + titre + '\'' +
-                ", resume='" + nbChambre + '\'' +
-                ", maisonEdition='" + dateDebutLocation + '\'' +
-                ", datePublication='" + dateFinLocation + '\'' +
+                ", titre='" + getTitre() + '\'' +
+                ", nbChambre='" + nbChambre + '\'' +
+                ", dateDebutLocation='" + dateDebutLocation + '\'' +
+                ", dateFinLocation='" + dateFinLocation + '\'' +
                 '}';
     }
 }

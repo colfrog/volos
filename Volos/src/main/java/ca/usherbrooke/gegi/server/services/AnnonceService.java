@@ -86,7 +86,7 @@ public class AnnonceService {
      */
     @GET
     @Path("cancelAnnonce")
-    public void cancelAnnonce(@QueryParam("id") int id) {
+    public void cancelAnnonce(@QueryParam("id") Integer id) {
         annonceMapper.cancelAnnonce(id);
     }
 
@@ -95,47 +95,19 @@ public class AnnonceService {
      */
     @GET
     @Path("removeAnnonce")
-    public void removeAnnonce(@QueryParam("id") int id) {
+    public void removeAnnonce(@QueryParam("id") Integer id) {
         annonceMapper.removeAnnonce(id);
     }
 
     /**
      * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
-     * de la catégorie Livre
+     * de la catégorie indiquée
      */
     @GET
-    @Path("annoncePublishLivres")
+    @Path("annoncePublishedByCategorie")
     @Produces("application/json")
-    public List<Annonce> annoncePublishLivres() {
-        List<Annonce> annonces = annonceMapper.selectPublishLivres();
-
-        return annonces;
-    }
-
-    /**
-     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
-     * de la catégorie Loyer
-     */
-    @GET
-    @Path("annoncePublishLoyers")
-    @Produces("application/json")
-    public List<Annonce> annoncePublishLoyers() {
-        List<Annonce> annonces = annonceMapper.selectPublishLoyers();
-
-        return annonces;
-    }
-
-    /**
-     * @return la liste de toutes les annonces de la table dont l'état est publié et qui est
-     * de la catégorie Autre
-     */
-    @GET
-    @Path("annonceUtilisateur")
-    @Produces("application/json")
-    public List<Annonce> annoncePublishAutres() {
-        List<Annonce> annonces = annonceMapper.selectPublishAutres();
-
-        return annonces;
+    public List<Annonce> annoncePublishedByCategorie(@QueryParam("categorie") String categorie) {
+        return annonceMapper.selectPublishedByCategorie(categorie);
     }
 
     /**

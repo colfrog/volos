@@ -16,14 +16,12 @@ import java.util.List;
 @Mapper
 public interface AnnonceMapper {
     List<Annonce> select();
-    List<Annonce> selectPublishLivres();
-    List<Annonce> selectPublishLoyers();
-    List<Annonce> selectPublishAutres();
+    List<Annonce> selectPublishedByCategorie(@Param("categorie") String categorie);
     Annonce selectById(@Param("id") Integer id);
     List<Annonce> selectByCip(@Param("cip") String cip);
     void insertAnnonce(@Param("annonce") Annonce annonce);
     void updateAnnonce(@Param("annonce") Annonce annonce, @Param("id") Integer id);
-    int findLastIdAnnonce();
-    void cancelAnnonce(@Param("id") int id);
-    void removeAnnonce(@Param("id") int id);
+    Integer findLastIdAnnonce();
+    void cancelAnnonce(@Param("id") Integer id);
+    void removeAnnonce(@Param("id") Integer id);
 }

@@ -1,5 +1,6 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -9,6 +10,7 @@ import java.util.Date;
  */
 public class Annonce {
     private int id;
+    private String titre;
     private String description;
     private float prix;
     private int etat; //Etats d'annonce disponibles: 0 = PUBLIÉ, 1 = FERMÉ, 2 = VENDU
@@ -24,10 +26,11 @@ public class Annonce {
     /**
      * Constructeur avec en paramètre les attributs d'une annonce
      */
-    public Annonce(int id, String cip, String description, float prix,
+    public Annonce(int id, String cip, String titre, String description, float prix,
                    int etat, Date dateAffichage, String categorie){
         this.id = id;
         this.cip = cip;
+        this.titre = titre;
         this.description = description;
         this.prix = prix;
         this.etat = etat;
@@ -40,6 +43,14 @@ public class Annonce {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
     public String getDescription() {
@@ -66,8 +77,11 @@ public class Annonce {
         this.etat = etat;
     }
 
-    public Date getDateAffichage() {
-        return dateAffichage;
+    public String getDateAffichage() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateAffichage);
+        return date;
     }
 
     public void setDateAffichage(Date dateAffichage) {
@@ -92,6 +106,7 @@ public class Annonce {
 
     public void setEnfant(Annonce annonce) {
         this.id = annonce.id;
+        this.titre = annonce.titre;
         this.description = annonce.description;
         this.prix = annonce.prix;
         this.etat = annonce.etat;
@@ -108,6 +123,7 @@ public class Annonce {
     public String toString() {
         return "Annonce{" +
                 "id=" + id +
+                ", titre='" + titre + '\'' +
                 ", description='" + description + '\'' +
                 ", prix='" + prix + '\'' +
                 ", etat='" + etat + '\'' +

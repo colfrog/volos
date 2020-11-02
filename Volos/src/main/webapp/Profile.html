@@ -16,16 +16,20 @@
         <p><button onclick="envoyerMail()">Envoyer un email</button></p>
     </div>
     <div class="information">
-        <center>Information fournis par l'usager</center>
+        <div id="profil_utilisateur"></div>
+        <!--center>Information fournis par l'usager</center-->
     </div>
     <div class="annonceusager">
-        <center> Annonce 1 </center>
+        <div id="profil_annonces"></div>
+        <!--center> Annonce 1 </center-->
     </div>
-<!-- Load React. -->
-<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-<!-- Load our React component. -->
-<script src="components/Header.js"></script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load our React component. -->
+    <script src="components/Header.js"></script>
+    <script src="/Volos/components/Profil.js"></script>
+    <script type="module" src="/Volos/components/ListeAnnoncesProfil.js"></script>
 </body>
 </html>
