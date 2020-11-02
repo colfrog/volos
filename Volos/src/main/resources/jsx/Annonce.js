@@ -4,17 +4,6 @@ export default class Annonce extends React.Component {
     constructor(props) {
         super(props);
 
-        let listeAuteurs = [];
-        if(this.props.categorie === "LIVRE")
-        {
-            this.props.auteurs.forEach(auteur => {
-                listeAuteurs.push(<Auteur key={listeAuteurs.length}
-                                          prenom={auteur.prenom}
-                                          nom={auteur.nom}
-                />)
-            });
-        }
-
         this.state = {
             id: this.props.id,
             description: this.props.description,
@@ -28,13 +17,51 @@ export default class Annonce extends React.Component {
             nbChambre: this.props.nbChambre,
             dateDebutLocation: this.props.dateDebutLocation,
             dateFinLocation: this.props.dateFinLocation,
-            auteurs: this.props.auteurs,
-            listeAuteurs: listeAuteurs
+            listeAuteurs: this.props.listeAuteurs
         };
+
+        this.updateAnnonce();
+    }
+
+    updateAnnonce() {
+        let queryString = window.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        console.log(urlParams.get('id'));
+
+        fetch('/Volos/api/showPublishAnnonce?id='+urlParams.get('id'))
+            .then(data => data.json())
+            .then(annonce => {
+                let listeAuteurs = [];
+                if(annonce.categorie === "LIVRE")
+                {
+                    annonce.auteurs.forEach(auteur => {
+                        listeAuteurs.push(<Auteur key={auteur.prenom}
+                                                  prenom={auteur.prenom}
+                                                  nom={auteur.nom}
+                        />)
+                    });
+                }
+
+                console.log(listeAuteurs);
+                this.setState({id: annonce.id,
+                    description: annonce.description,
+                    prix: annonce.prix,
+                    dateAffichage: annonce.dateAffichage,
+                    categorie: annonce.categorie,
+                    titre: annonce.titre,
+                    resume: annonce.resume,
+                    maisonEdition: annonce.maisonEdition,
+                    datePublication: annonce.datePublication,
+                    nbChambre: annonce.nombreChambre,
+                    dateDebutLocation: annonce.dateDebutLocation,
+                    dateFinLocation: annonce.dateFinLocation,
+                    listeAuteurs: listeAuteurs});
+            });
     }
 
     render() {
-        var resume = "", maisonEdition = "", datePublication = "", nbChambre = "", dateDebutLocation = "", dateFinLocation = "", auteurs = "";
+        var resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
+            dateDebutLocation = "", dateFinLocation = "", auteurs = "";
 
         if(this.state.categorie === "LIVRE")
         {
@@ -43,11 +70,11 @@ export default class Annonce extends React.Component {
             datePublication = <p>Date de publication: {this.state.datePublication}</p>
 
             let listeAuteurs = this.state.listeAuteurs;
-            if(this.state.auteurs.length > 1)
+            if(this.state.listeAuteurs.length > 1)
             {
                 auteurs = <div>Auteurs: {listeAuteurs}</div>
             }
-            else if (this.state.auteurs.length > 0)
+            else if (this.state.listeAuteurs.length > 0)
             {
                 auteurs = <div>Auteur: {listeAuteurs}</div>
             }
@@ -60,7 +87,7 @@ export default class Annonce extends React.Component {
         }
 
         return (
-            <div className="featured_card">
+            <div className="card">
                 <img src="https://i.imgur.com/gPEswtC.jpg" />
                 {this.state.titre}
                 <p>{this.state.description}</p>

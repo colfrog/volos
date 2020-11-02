@@ -35,10 +35,12 @@ export default class CarteAnnonce extends React.Component {
 
         return (
             <div className="card">
-                <img src="https://i.imgur.com/gPEswtC.jpg" />
-                <p>{this.state.titre}</p>
-                <p>{this.state.description}</p>
-                <p className="price">{this.state.prix}</p>
+                <a href={"Annonce.html?id="+this.state.id}>
+                    <img src="https://i.imgur.com/gPEswtC.jpg" />
+                    <p>{this.state.titre}</p>
+                    <p>{this.state.description}</p>
+                    <p className="price">{this.state.prix}</p>
+                </a>
                 {bouton}
             </div>
         );

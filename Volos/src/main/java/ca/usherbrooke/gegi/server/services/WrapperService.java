@@ -41,6 +41,29 @@ public class WrapperService {
     @Inject
     UtilisateurService utilisateurService;
 
+    @GET
+    @Path("showPublishAnnonce")
+    @Produces("application/json")
+    public Annonce showPublishAnnonce(@QueryParam("id") int id) {
+        Annonce annonce = annonceService.getAnnonceById(id);
+
+        switch (annonce.getCategorie()) {
+            case "LIVRE":
+                Livre livre = livreService.getLivre(id);
+                livre.setEnfant(annonce);
+                livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
+
+                return livre;
+            case "LOYER":
+                Loyer loyer = loyerService.getLoyer(id);
+                loyer.setEnfant(annonce);
+
+                return loyer;
+            default:
+                return annonce;
+        }
+    }
+
     /**
      * @return la liste de toutes les annonces de la catégorie Livre avec les données
      * des services AnnonceService, LivreService et AuteurService
