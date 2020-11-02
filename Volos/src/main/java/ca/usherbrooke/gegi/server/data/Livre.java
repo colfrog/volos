@@ -1,5 +1,6 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,8 +49,11 @@ public class Livre extends Annonce{
         this.maisonEdition = maisonEdition;
     }
 
-    public Date getDatePublication() {
-        return datePublication;
+    public String getDatePublication() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(datePublication);
+        return date;
     }
 
     public void setDatePublication(Date datePublication) {

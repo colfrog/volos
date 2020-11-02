@@ -1,5 +1,6 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -76,8 +77,11 @@ public class Annonce {
         this.etat = etat;
     }
 
-    public Date getDateAffichage() {
-        return dateAffichage;
+    public String getDateAffichage() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateAffichage);
+        return date;
     }
 
     public void setDateAffichage(Date dateAffichage) {
