@@ -1,41 +1,37 @@
-class Profil extends React.Component {
+export default class Profil extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             cip: this.props.cip,
-            prenom: this.props.prenom,
-            nom: this.props.nom,
-            mail: this.props.mail,
-            faculte: this.props.faculte,
-            departement: this.props.departement
-        };
+            prenom: null,
+            nom: null,
+            mail: null,
+            nomFaculte: null,
+            nomDepartement: null
+        }
 
-        fetch('/Volos/api/loggedUtilisateur')
-            .then(data => data.json())
-            .then(utilisateur => {
-                this.setState({cip: utilisateur.cip,
-                               prenom: utilisateur.prenom,
-                               nom: utilisateur.nom,
-                               mail: utilisateur.mail,
-                               faculte: utilisateur.nomFaculte,
-                               departement: utilisateur.nomDepartement});
-            });
+        if (this.state.cip !== null) {
+            fetch(`/Volos/api/selectUtilisateurByCip?cip=${this.state.cip}`)
+                .then(data => data.json())
+                .then((utilisateur) => this.setState(utilisateur));
+        } else {
+            fetch('/Volos/api/loggedUtilisateur')
+                .then(data => data.json())
+                .then((utilisateur) => this.setState(utilisateur));
+        }
     }
 
     render() {
         return (
-            <div>
+            <div className="informationsusager">
                 <p>Cip: {this.state.cip}</p>
                 <p>Prénom: {this.state.prenom}</p>
                 <p>Nom: {this.state.nom}</p>
                 <p>Mail: {this.state.mail}</p>
-                <p>Faculté: {this.state.faculte}</p>
-                <p>Département: {this.state.departement}</p>
+                <p>Faculté: {this.state.nomFaculte}</p>
+                <p>Département: {this.state.nomDepartement}</p>
             </div>
         );
     }
 }
-
-var domContainer = document.querySelector('#profil_utilisateur');
-ReactDOM.render(<Profil/>, domContainer);
