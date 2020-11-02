@@ -1,5 +1,8 @@
 package ca.usherbrooke.gegi.server.data;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -28,24 +31,31 @@ public class Loyer extends Annonce{
         this.dateFinLocation = dateFinLocation;
     }
 
-    public int getNbChambre() {
+    public int getNombreChambre() {
         return nbChambre;
     }
 
-    public void setNbChambre(int nbChambre) {
+    public void setNombreChambre(int nbChambre) {
         this.nbChambre = nbChambre;
     }
 
-    public Date getDateDebutLocation() {
-        return dateDebutLocation;
+    public String getDateDebutLocation() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateDebutLocation);
+
+        return date;
     }
 
     public void setDateDebutLocation(Date dateDebutLocation) {
         this.dateDebutLocation = dateDebutLocation;
     }
 
-    public Date getDateFinLocation() {
-        return dateFinLocation;
+    public String getDateFinLocation() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        String date = simpleDateFormat.format(dateDebutLocation);
+        return date;
     }
 
     public void setDateFinLocation(Date dateFinLocation) {
@@ -67,9 +77,9 @@ public class Loyer extends Annonce{
                 ", cip='" + getCip() + '\'' +
                 ", categorie='" + getCategorie() + '\'' +
                 ", titre='" + getTitre() + '\'' +
-                ", resume='" + nbChambre + '\'' +
-                ", maisonEdition='" + dateDebutLocation + '\'' +
-                ", datePublication='" + dateFinLocation + '\'' +
+                ", nbChambre='" + nbChambre + '\'' +
+                ", dateDebutLocation='" + dateDebutLocation + '\'' +
+                ", dateFinLocation='" + dateFinLocation + '\'' +
                 '}';
     }
 }
