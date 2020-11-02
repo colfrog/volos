@@ -17,6 +17,23 @@
         annonce
     </select>
 
+    <select id="selectNouveauxByCategorie" resultType="Annonce">
+      SELECT
+        id,
+        titre,
+        description,
+        prix,
+        date_affichage,
+        etat,
+        cip,
+        categorie
+      FROM
+        annonce
+      WHERE categorie = #{categorie} AND etat = 0
+      ORDER BY date_affichage DESC
+      LIMIT 5;
+    </select>
+
     <select id="selectPublishedByCategorie" resultType="Annonce">
       SELECT
         id,

@@ -2,7 +2,7 @@ import ListeAnnonces from '/Volos/components/ListeAnnonces.js';
 
 function categorie_fetcher(categorie) {
     return (callback) => {
-        fetch('/Volos/api/show'+categorie)
+        fetch('/Volos/api/showNouveaux'+categorie)
             .then(data => data.json())
             .then(callback);
     }
