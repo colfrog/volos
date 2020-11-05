@@ -195,10 +195,12 @@ public class WrapperService {
 
         for (Annonce annonce : annonces) {
             livre = livreService.getLivre(annonce.getId());
-            livre.setEnfant(annonce);
-            livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
 
-            livres.add(livre);
+            if (livre != null) {
+                livre.setEnfant(annonce);
+                livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
+                livres.add(livre);
+            }
         }
 
         return livres;
@@ -217,9 +219,11 @@ public class WrapperService {
 
         for (Annonce annonce : annonces) {
             loyer = loyerService.getLoyer(annonce.getId());
-            loyer.setEnfant(annonce);
 
-            loyers.add(loyer);
+            if (loyer != null) {
+                loyer.setEnfant(annonce);
+                loyers.add(loyer);
+            }
         }
 
         return loyers;
