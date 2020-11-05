@@ -8,6 +8,8 @@ import java.util.Date;
  * @author Iliass Bourabaa
  * @version 1.0
  */
+
+
 public class Annonce {
     private int id;
     private String titre;
@@ -40,6 +42,7 @@ public class Annonce {
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;

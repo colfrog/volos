@@ -36,17 +36,17 @@ class FormAnnonce extends React.Component {
                 categoryHTML = (
                     <fragment>
                         <div>
-                            <label>Résumé</label>
+                            <label className="ajout_type resumeLabel">Résumé:</label>
                             <textarea
-                                className="resumeText"
+                                className="resumeText ajout_input"
                                 name="livreResume"
                                 defaultValue={this.state.livreResume}
                                 onChange={this.onChange}
                             />
                         </div>
                         <div>
-                            <label>Maison d'édition</label>
-                            <input
+                            <label className="ajout_type">Maison d'édition:</label>
+                            <input className="ajout_input"
                                 type="text"
                                 name="livreMaisonEdition"
                                 id="inputLivreMaisonEdition"
@@ -55,8 +55,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de publication</label>
-                            <input
+                            <label className="ajout_type">Date de publication:</label>
+                            <input className="ajout_input"
                                 type="date"
                                 name="livreDatePublication"
                                 id="inputLivreDatePublication"
@@ -66,22 +66,22 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Nom et prenom de l'auteur</label>
-                            <input
-                                type="text"
-                                name="livreNomAuteur"
-                                id="inputLivreNomAuteur"
-                                placeholder="Nom"
-                                onChange={this.onChange}
-                                defaultValue=''
+                            <label className="ajout_type">Nom et prenom de l'auteur:</label>
+                            <input className="ajout_input_Auteur"
+                                   type="text"
+                                   name="livreNomAuteur"
+                                   id="inputLivreNomAuteur"
+                                   placeholder="Nom"
+                                   onChange={this.onChange}
+                                   defaultValue=''
                             />
-                            <input
-                                type="text"
-                                name="livrePrenomAuteur"
-                                id="inputLivrePrenomAuteur"
-                                placeholder="Prenom"
-                                onChange={this.onChange}
-                                defaultValue=''
+                            <input className="ajout_input_Auteur"
+                                   type="text"
+                                   name="livrePrenomAuteur"
+                                   id="inputLivrePrenomAuteur"
+                                   placeholder="Prenom"
+                                   onChange={this.onChange}
+                                   defaultValue=''
                             />
                         </div>
                     </fragment>
@@ -91,8 +91,8 @@ class FormAnnonce extends React.Component {
                 categoryHTML = (
                     <fragment>
                         <div>
-                            <label>Taille de l'appartement</label>
-                            <input
+                            <label className="ajout_type">Nombre de chambres:</label>
+                            <input className="ajout_input"
                                 type="text"
                                 name="loyerTaille"
                                 id="inputLoyerTaille"
@@ -101,8 +101,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de début de location</label>
-                            <input
+                            <label className="ajout_type">Date de début de location:</label>
+                            <input className="ajout_input"
                                 type="date"
                                 name="loyerDateDebutLocation"
                                 id="inputLoyerDateDebutLocation"
@@ -112,8 +112,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de fin de location</label>;
-                            <input
+                            <label className="ajout_type">Date de fin de location:</label>;
+                            <input className="ajout_input"
                                 type="date"
                                 name="loyerDateFinLocation"
                                 id="inputLoyerDateFinLocation"
@@ -165,7 +165,7 @@ class FormAnnonce extends React.Component {
         }
         //Vérification des données d'un loyer
         if(this.state.categorie == 'loyer'){
-            if(this.state.loyerTaille == ''){
+            if(this.state.loyerTaille == '' || !Number(this.state.loyerTaille)){
                 document.getElementById("inputLoyerTaille").classList.add("redBorder");
                 OK = false;
             }
@@ -230,8 +230,8 @@ class FormAnnonce extends React.Component {
         return (
             <form onSubmit={this.sumbitHandler}>
                 <div className="titre">
-                    <label>Titre</label>
-                    <input
+                    <label className="ajout_type">Titre:</label>
+                    <input className="ajout_input"
                         type="text"
                         name="titre"
                         id="titreInput"
@@ -239,8 +239,8 @@ class FormAnnonce extends React.Component {
                     />
                 </div>
                 <div className="categorie">
-                    <label>Catégorie</label>
-                    <select name="categorie" onChange={this.selectChange}>
+                    <label className="ajout_type">Catégorie:</label>
+                    <select className="ajout_input" name="categorie" onChange={this.selectChange}>
                         <option value="autre">Autre</option>
                         <option value="livre">Livre</option>
                         <option value="loyer">Loyer</option>
@@ -248,8 +248,8 @@ class FormAnnonce extends React.Component {
                     <div id="categoryDependent"></div>
                 </div>
                 <div className="prix">
-                    <label>Prix</label>
-                    <input
+                    <label className="ajout_type">Prix:</label>
+                    <input className="ajout_input"
                         type="text"
                         name="prix"
                         id="prixInput"
@@ -257,9 +257,9 @@ class FormAnnonce extends React.Component {
                     />
                 </div>
                 <div className="description">
-                    <label>Description</label>
+                    <label className="ajout_type descriptionLabel">Description:</label>
                     <textarea
-                        className="descriptionText"
+                        className="descriptionText ajout_type"
                         name="description"
                         defaultValue={this.state.description}
                         onChange={this.onChange}
@@ -270,12 +270,12 @@ class FormAnnonce extends React.Component {
                         <button>Ajouter une photo</button>
                     </p>
                 </div>
-                <div>
-                    <span className="Annuler">
+                <div className="buttonsAjout">
+                    <span className="AnnulerAjout">
                         <a className="annulerBtn" href="index.html">Annuler</a>
                     </span>
-                    <span className="Publier">
-                        <input
+                    <span className="PublierAjout">
+                        <input className="publierBtn"
                             type="submit"
                             value="Publier"
                         />
