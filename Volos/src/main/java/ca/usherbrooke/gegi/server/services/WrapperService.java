@@ -41,6 +41,9 @@ public class WrapperService {
     @Inject
     UtilisateurService utilisateurService;
 
+    /**
+     * @return L'annonce complète en fonction de ça catégorie
+     */
     @GET
     @Path("showPublishAnnonce")
     @Produces("application/json")
@@ -179,6 +182,9 @@ public class WrapperService {
         return showPublishedByCip(utilisateurService.getCurrentLoggedUtilisateur().getCip());
     }
 
+    /**
+     * @return Un liste de livres comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxLivres")
     @Produces("application/json")
@@ -198,6 +204,9 @@ public class WrapperService {
         return livres;
     }
 
+    /**
+     * @return Un liste de loyers comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxLoyers")
     @Produces("application/json")
@@ -216,6 +225,9 @@ public class WrapperService {
         return loyers;
     }
 
+    /**
+     * @return Un liste de autres comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxAutres")
     @Produces("application/json")
@@ -250,7 +262,6 @@ public class WrapperService {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
 
             int id = annonceService.findLastIdAnnonce()+1;
             Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
