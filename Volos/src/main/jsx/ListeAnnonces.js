@@ -13,17 +13,22 @@ export default class ListeAnnonces extends React.Component {
 
     updateListeAnnonces(annonces) {
         let cartesAnnonce = [];
-        annonces.forEach(annonce => {
-            cartesAnnonce.push(<CarteAnnonce key={annonce.id}
-                                                   id={annonce.id}
-                                                   cip={annonce.cip}
-                                                   description={annonce.description}
-                                                   prix={annonce.prix}
-                                                   titre={annonce.titre}
-            />);
-        });
+        fetch('/Volos/api/loggedUtilisateur')
+            .then(data => data.json())
+            .then(utilisateur => {
+                annonces.forEach(annonce => {
+                    cartesAnnonce.push(<CarteAnnonce key={annonce.id}
+                                                     id={annonce.id}
+                                                     cip={annonce.cip}
+                                                     userCip={utilisateur.cip}
+                                                     description={annonce.description}
+                                                     prix={annonce.prix}
+                                                     titre={annonce.titre}
+                    />);
+                });
 
-        this.setState({annonces: cartesAnnonce});
+                this.setState({annonces: cartesAnnonce});
+            });
     }
 
     render() {

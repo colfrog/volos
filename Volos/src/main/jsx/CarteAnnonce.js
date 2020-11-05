@@ -3,7 +3,7 @@ export default class CarteAnnonce extends React.Component {
         super(props);
         this.state = {
             cip: this.props.cip,
-            userCip: null,
+            userCip: this.props.userCip,
             prenom: null,
             nom: null,
             id: this.props.id,
@@ -13,14 +13,10 @@ export default class CarteAnnonce extends React.Component {
             estFavori: false
         };
 
-        fetch('/Volos/api/loggedUtilisateur')
+        fetch(`/Volos/api/verifierFavori?cip=${this.state.userCip}&id=${this.state.id}`)
             .then(data => data.json())
-            .then(utilisateur => {
-                fetch(`/Volos/api/verifierFavori?cip=${utilisateur.cip}&id=${this.state.id}`)
-                    .then(data => data.json())
-                    .then(verif => {
-                        this.setState({estFavori: verif, userCip: utilisateur.cip});
-                    });
+            .then(verif => {
+                this.setState({estFavori: verif});
             });
 
         fetch(`/Volos/api/selectUtilisateurByCip?cip=${this.state.cip}`)
