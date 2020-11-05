@@ -1,6 +1,11 @@
 package ca.usherbrooke.gegi.server.data;
 
-
+/**
+ * Représente le département d'un utilisateur
+ *
+ * @author Pedro Scoccimarro
+ * @version 1.0
+ */
 public class Departement {
     private String nomDepartement;
     private String nomFaculte;

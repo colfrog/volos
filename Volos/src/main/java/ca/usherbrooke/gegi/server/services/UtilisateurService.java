@@ -22,6 +22,13 @@ import java.util.List;
 import java.util.Map;
 
 @Path("")
+
+/**
+ * Implémentations des services de l'utilisateur
+ *
+ * @author Paul du Réau
+ * @version 1.0
+ */
 public class UtilisateurService {
 
     @Context
@@ -30,6 +37,9 @@ public class UtilisateurService {
     @Inject
     UtilisateurMapper utilisateurMapper;
 
+    /**
+     * @return La liste de tous les utilisateurs
+     */
     @GET
     @Path("selectUtilisateurs")
     @Produces("application/json")
@@ -38,6 +48,10 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
+    /**
+     * @param cip de l'utilisateur auquel on veut avoir les informations
+     * @return L'utilisateur en fonction du cip
+     */
     @GET
     @Path("selectUtilisateurByCip")
     @Produces("application/json")
@@ -46,6 +60,10 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
+    /**
+     * @param faculte des utilisateurs auquels on veut avoir les informations
+     * @return Une liste d'utilsateur en fonction de la faculté
+     */
     @GET
     @Path("selectUtilisateurByFaculte")
     @Produces("application/json")
@@ -54,6 +72,10 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
+    /**
+     * @param departement des utilisateurs auquels on veut avoir les informations
+     * @return Une liste d'utilsateur en fonction de la departement
+     */
     @GET
     @Path("selectUtilisateurByDepartement")
     @Produces("application/json")
@@ -62,13 +84,17 @@ public class UtilisateurService {
         return utilisateurs;
     }
 
+    /*
     @GET
     @Path("updateUtilisateurDepartement")
     @Produces("application/json")
     public void updateUtilisateurDepartement(String cip, Departement departement){
         utilisateurMapper.updateUtilisateurDepartement(cip, departement);
-    }
+    }*/
 
+    /**
+     * @param utilisateur que l'on veut insérer dans la BD
+     */
     @GET
     @Path("insertUtilisateur")
     @Produces("application/json")
@@ -76,6 +102,9 @@ public class UtilisateurService {
         utilisateurMapper.insertUtilisateur(utilisateur);
     }
 
+    /**
+     * @return les informations de l'utilisateur qui est actuellement connecté au serveur CAS
+     */
     @GET
     @Path("loggedUtilisateur")
     @Produces("application/json")
