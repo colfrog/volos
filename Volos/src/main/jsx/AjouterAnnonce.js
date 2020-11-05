@@ -241,6 +241,7 @@ class FormAnnonce extends React.Component {
                 callAPI = "description="+encodeURIComponent(this.state.description)
                     +"&prix="+encodeURIComponent(this.state.prix)
                     +"&titre="+encodeURIComponent(this.state.titre) //Annonce
+                    +"&nbChambre="+encodeURIComponent(this.state.loyerTaille)
                     +"&dateDebutLocation="+encodeURIComponent(this.state.loyerDateDebutLocation)
                     +"&dateFinLocation="+encodeURIComponent(this.state.loyerDateFinLocation); //Loyer
 
