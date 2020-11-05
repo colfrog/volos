@@ -349,8 +349,8 @@ public class WrapperService {
      */
     @GET
     @Path("sell")
-    public void sellAnnoncee(@QueryParam("id") int id) {
-        annonceService.removeAnnonce(id);
+    public void sellAnnonce(@QueryParam("id") int id) {
+        annonceService.annonceVendue(id);
     }
 
     /**
