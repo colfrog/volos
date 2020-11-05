@@ -215,10 +215,10 @@ public class WrapperService {
     public List<Loyer> showNouveauxLoyers() {
         List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LOYER");
         List<Loyer> loyers = new ArrayList<Loyer>();
-        Loyer loyer;
 
         for (Annonce annonce : annonces) {
-            loyer = loyerService.getLoyer(annonce.getId());
+            Loyer loyer = loyerService.getLoyer(annonce.getId());
+            loyer.setEnfant(annonce);
 
             if (loyer != null) {
                 loyer.setEnfant(annonce);
@@ -263,22 +263,21 @@ public class WrapperService {
             Date datePublication = null;
             try {
                 datePublication = new SimpleDateFormat("yyyy-mm-dd").parse(datePublicationS);
+                int id = annonceService.findLastIdAnnonce()+1;
+                Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
+                Livre livre = new Livre(id, resume, maisonEdition, datePublication);
+                Auteur auteur = new Auteur(nomAuteur, prenomAuteur);
+                livre.addAuteurs(auteur);
+
+                annonceService.insertAnnonce(annonce);
+                livreService.insertLivre(livre);
+                if(!auteurService.existAuteur(auteur)) {
+                    auteurService.insertAuteur(nomAuteur, prenomAuteur);
+                }
+                wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            int id = annonceService.findLastIdAnnonce()+1;
-            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
-            Livre livre = new Livre(id, resume, maisonEdition, datePublication);
-            Auteur auteur = new Auteur(nomAuteur, prenomAuteur);
-            livre.addAuteurs(auteur);
-
-            annonceService.insertAnnonce(annonce);
-            livreService.insertLivre(livre);
-            if(!auteurService.existAuteur(auteur)) {
-                auteurService.insertAuteur(nomAuteur, prenomAuteur);
-            }
-            wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
         }
     }
 
@@ -301,19 +300,23 @@ public class WrapperService {
             //Convertision des strings en Date
             Date dateDebutLocation = null;
             Date dateFinLocation = null;
+
             try {
                 dateDebutLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateDebutLocationS);
                 dateFinLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateFinLocationS);
+
+                int id = annonceService.findLastIdAnnonce() + 1;
+
+                Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
+                Loyer loyer = new Loyer(id, nbChambre, dateDebutLocation, dateFinLocation);
+
+                if(annonce != null && loyer != null) {
+                    annonceService.insertAnnonce(annonce);
+                    loyerService.insertLoyer(loyer);
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            int id = annonceService.findLastIdAnnonce() + 1;
-            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
-            Loyer loyer = new Loyer(id, nbChambre, dateDebutLocation, dateFinLocation);
-
-            annonceService.insertAnnonce(annonce);
-            loyerService.insertLoyer(loyer);
         }
     }
 

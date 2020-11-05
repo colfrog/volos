@@ -34,7 +34,7 @@ class FormAnnonce extends React.Component {
 
             if(this.state.categorie == "livre"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
                             <label className="ajout_type resumeLabel">Résumé:</label>
                             <textarea
@@ -84,12 +84,12 @@ class FormAnnonce extends React.Component {
                                    defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
             else if (this.state.categorie == "loyer"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
                             <label className="ajout_type">Nombre de chambres:</label>
                             <input className="ajout_input"
@@ -122,7 +122,7 @@ class FormAnnonce extends React.Component {
                                 defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
 
@@ -139,35 +139,65 @@ class FormAnnonce extends React.Component {
         if(this.state.titre == null || this.state.titre == ''){
             document.getElementById("titreInput").classList.add("redBorder");
             OK = false;
+        } else {
+            document.getElementById("titreInput").classList.remove("redBorder");
         }
+
         if(this.state.prix == '' || !Number(this.state.prix)){
             document.getElementById("prixInput").classList.add("redBorder");
             OK = false;
+        } else {
+            document.getElementById("prixInput").classList.remove("redBorder");
         }
         //Vérification des données d'un livre
         if(this.state.categorie == 'livre'){
             if(this.state.livreMaisonEdition == ''){
                 document.getElementById("inputLivreMaisonEdition").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreMaisonEdition").classList.remove("redBorder");
             }
+
             if(this.state.livreDatePublication == ''){
                 document.getElementById("inputLivreDatePublication").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreDatePublication").classList.remove("redBorder");
             }
+
             if(this.state.livreNomAuteur == ''){
                 document.getElementById("inputLivreNomAuteur").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreNomAuteur").classList.remove("redBorder");
             }
+
             if(this.state.livrePrenomAuteur == ''){
                 document.getElementById("inputLivrePrenomAuteur").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivrePrenomAuteur").classList.remove("redBorder");
             }
         }
         //Vérification des données d'un loyer
         if(this.state.categorie == 'loyer'){
-            if(this.state.loyerTaille == '' || !Number(this.state.loyerTaille)){
+            if(this.state.loyerTaille == '' ||
+                this.state.loyerTaille != parseInt(this.state.loyerTaille, 10)){
                 document.getElementById("inputLoyerTaille").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLoyerTaille").classList.remove("redBorder");
+            }
+
+            var debut = encodeURIComponent(this.state.loyerDateDebutLocation);
+            var fin = encodeURIComponent(this.state.loyerDateFinLocation);
+            if(debut >= fin) {
+                document.getElementById("inputLoyerDateDebutLocation").classList.add("redBorder");
+                document.getElementById("inputLoyerDateFinLocation").classList.add("redBorder");
+                OK = false;
+            } else {
+                document.getElementById("inputLoyerDateDebutLocation").classList.remove("redBorder");
+                document.getElementById("inputLoyerDateFinLocation").classList.remove("redBorder");
             }
         }
 
@@ -211,6 +241,7 @@ class FormAnnonce extends React.Component {
                 callAPI = "description="+encodeURIComponent(this.state.description)
                     +"&prix="+encodeURIComponent(this.state.prix)
                     +"&titre="+encodeURIComponent(this.state.titre) //Annonce
+                    +"&nbChambre="+encodeURIComponent(this.state.loyerTaille)
                     +"&dateDebutLocation="+encodeURIComponent(this.state.loyerDateDebutLocation)
                     +"&dateFinLocation="+encodeURIComponent(this.state.loyerDateFinLocation); //Loyer
 
