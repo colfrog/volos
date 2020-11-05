@@ -39,23 +39,16 @@ public class Loyer extends Annonce{
         this.nbChambre = nbChambre;
     }
 
-    public String getDateDebutLocation() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        String date = simpleDateFormat.format(dateDebutLocation);
-
-        return date;
+    public Date getDateDebutLocation() {
+        return dateDebutLocation;
     }
 
     public void setDateDebutLocation(Date dateDebutLocation) {
         this.dateDebutLocation = dateDebutLocation;
     }
 
-    public String getDateFinLocation() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        String date = simpleDateFormat.format(dateDebutLocation);
-        return date;
+    public Date getDateFinLocation() {
+        return dateFinLocation;
     }
 
     public void setDateFinLocation(Date dateFinLocation) {
