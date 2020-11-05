@@ -17,6 +17,7 @@ import java.util.List;
 public interface AnnonceMapper {
     List<Annonce> select();
     List<Annonce> selectPublishedByCategorie(@Param("categorie") String categorie);
+    List<Annonce> selectNouveauxByCategorie(@Param("categorie") String categorie);
     Annonce selectById(@Param("id") Integer id);
     List<Annonce> selectByCip(@Param("cip") String cip);
     void insertAnnonce(@Param("annonce") Annonce annonce);

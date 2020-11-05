@@ -118,4 +118,8 @@ public class AnnonceService {
     public int findLastIdAnnonce() {
         return annonceMapper.findLastIdAnnonce();
     }
+
+    public List<Annonce> annonceNouveauxByCategorie(String categorie) {
+        return annonceMapper.selectNouveauxByCategorie(categorie);
+    }
 }

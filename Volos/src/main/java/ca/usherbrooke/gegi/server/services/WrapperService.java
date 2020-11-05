@@ -179,6 +179,52 @@ public class WrapperService {
         return showPublishedByCip(utilisateurService.getCurrentLoggedUtilisateur().getCip());
     }
 
+    @GET
+    @Path("showNouveauxLivres")
+    @Produces("application/json")
+    public List<Livre> showNouveauxLivres() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LIVRE");
+        List<Livre> livres = new ArrayList<Livre>();
+        Livre livre;
+
+        for (Annonce annonce : annonces) {
+            livre = livreService.getLivre(annonce.getId());
+            livre.setEnfant(annonce);
+            livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
+
+            livres.add(livre);
+        }
+
+        return livres;
+    }
+
+    @GET
+    @Path("showNouveauxLoyers")
+    @Produces("application/json")
+    public List<Loyer> showNouveauxLoyers() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LOYER");
+        List<Loyer> loyers = new ArrayList<Loyer>();
+        Loyer loyer;
+
+        for (Annonce annonce : annonces) {
+            loyer = loyerService.getLoyer(annonce.getId());
+            loyer.setEnfant(annonce);
+
+            loyers.add(loyer);
+        }
+
+        return loyers;
+    }
+
+    @GET
+    @Path("showNouveauxAutres")
+    @Produces("application/json")
+    public List<Annonce> showNouveauxAutres() {
+        List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("AUTRE");
+
+        return annonces;
+    }
+
     /**
      * Permet d'ajouter les données de l'annonce de la catégorie Livre aux
      * tables Annonce, Livre et Auteur pour l'utilisateur connecté à l'application
