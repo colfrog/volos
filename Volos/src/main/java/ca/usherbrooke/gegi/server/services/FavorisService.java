@@ -14,6 +14,13 @@ import javax.ws.rs.core.Context;
 import java.util.List;
 
 @Path("")
+
+/**
+ * Implémentations des favoris de l'auteur
+ *
+ * @author Laurent Cimon
+ * @version 1.0
+ */
 public class FavorisService {
     @Context
     HttpServletRequest httpServletRequest;
@@ -21,6 +28,10 @@ public class FavorisService {
     @Inject
     FavorisMapper favorisMapper;
 
+    /**
+     * @param cip de l'utilisateur auquel on veut avoir accès aux favoris
+     * @return La liste de favoris de l'utilisateur
+     */
     @GET
     @Path("favoris")
     @Produces("application/json")
@@ -28,12 +39,20 @@ public class FavorisService {
         return favorisMapper.getFavoris(cip);
     }
 
+    /**
+     * @param cip de l'utilisateur auquel on veut ajouter un favoris
+     * @param id l'identifiant de l'annonce à ajouter en favoris
+     */
     @GET
     @Path("ajouter_favori")
     public void addFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {
         favorisMapper.addFavori(cip, id);
     }
 
+    /**
+     * @param cip de l'utilisateur auquel on veut retirer un favoris
+     * @param id l'identifiant de l'annonce à retirer des favoris
+     */
     @GET
     @Path("retirer_favori")
     public void removeFavori(@QueryParam("cip") String cip, @QueryParam("id") Integer id) {

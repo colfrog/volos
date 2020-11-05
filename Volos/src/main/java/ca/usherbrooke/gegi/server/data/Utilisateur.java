@@ -1,6 +1,11 @@
 package ca.usherbrooke.gegi.server.data;
 
-
+/**
+ * Représente un utilisateur de la plateforme
+ *
+ * @author Paul du Réau
+ * @version 1.0
+ */
 public class Utilisateur {
     private String cip;
     private String nom;

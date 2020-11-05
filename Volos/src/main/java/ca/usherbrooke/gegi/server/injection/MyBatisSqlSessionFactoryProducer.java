@@ -11,6 +11,9 @@ import javax.enterprise.inject.Produces;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Fait la connection à la BD
+ */
 @ApplicationScoped
 public class MyBatisSqlSessionFactoryProducer {
 

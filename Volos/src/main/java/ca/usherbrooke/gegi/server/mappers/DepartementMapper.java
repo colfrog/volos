@@ -9,6 +9,11 @@ import java.util.List;
 
 @SuppressWarnings("CdiManagedBeanInconsistencyInspection")
 @Mapper
+/**
+ * Mapper qui définit les différentes requête sql passé sur la table Departement
+ * @author Pedro Scoccimaro
+ * @version 1.0
+ */
 public interface DepartementMapper {
 
     List<Departement> selectDepartements();
