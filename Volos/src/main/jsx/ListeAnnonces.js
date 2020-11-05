@@ -24,6 +24,7 @@ export default class ListeAnnonces extends React.Component {
                                                      description={annonce.description}
                                                      prix={annonce.prix}
                                                      titre={annonce.titre}
+                                                     etat={annonce.etat}
                     />);
                 });
 
@@ -33,7 +34,7 @@ export default class ListeAnnonces extends React.Component {
 
     render() {
         return (
-            <div>{this.state.annonces}</div>
+            <div className="cardContainer">{this.state.annonces}</div>
         );
     }
 }

@@ -8,21 +8,40 @@
 <body>
     <header id="flagHeader"></header>
 
-    <div class="profile">
-        <img src="https://i.imgur.com/0LR4iuT.jpeg" alt="John" style="width:100%">
-        <h1>Deez Nuts</h1>
-        <p class="title">Faculte de Genie</p>
-        <p>Universite de Sherbrooke</p>
-        <p><button onclick="envoyerMail()">Envoyer un email</button></p>
+    <span class="profilLeft">
+        <div class="information profilLeft1">
+            <div id="profil_utilisateur"></div>
+                <!--center>Information fournis par l'usager</center-->
+        </div>
+        <!--div class="profilLeft2">
+            <img src="https://www.usherbrooke.ca/communications/fileadmin/_migrated/pics/UdeS_nouveau_coul.72dpi_05.jpg">
+        </div-->
+    </span>
+
+    <span class="profilRight">
+        <img src="https://www.usherbrooke.ca/communications/fileadmin/_migrated/pics/UdeS_nouveau_coul.72dpi_05.jpg">
+        <!--div class="profile">
+            <img src="https://i.imgur.com/0LR4iuT.jpeg" alt="John" style="width:100%">
+            <h1>Deez Nuts</h1>
+            <p class="title">Faculte de Genie</p>
+            <p>Universite de Sherbrooke</p>
+            <p><button onclick="envoyerMail()">Envoyer un email</button></p>
+        </div-->
+    </span>
+
+    <div class="profilBottom">
+        <div class="annonceusager">
+            <div class="featured" >
+                <h2><center>Mes annonces</center></h2>
+                <div class="annonceContainer_box" id="profil_annonces"></div>
+            </div>
+            <!--div id="profil_annonces"></div-->
+            <!--center> Annonce 1 </center-->
+        </div>
     </div>
-    <div class="information">
-        <div id="profil_utilisateur"></div>
-        <!--center>Information fournis par l'usager</center-->
-    </div>
-    <div class="annonceusager">
-        <div id="profil_annonces"></div>
-        <!--center> Annonce 1 </center-->
-    </div>
+
+
+
     <!-- Load React. -->
     <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
@@ -30,5 +49,6 @@
     <!-- Load our React component. -->
     <script src="components/Header.js"></script>
     <script type="module" src="/Volos/components/ProfilUsager.js"></script>
+    <script type="module" src="/Volos/components/ProfilAnnonces.js"></script>
 </body>
 </html>

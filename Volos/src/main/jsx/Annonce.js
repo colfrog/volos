@@ -54,20 +54,48 @@ export default class Annonce extends React.Component {
                     });
                 }
 
+
+                let dateAffichage = "";
+                let datePublication = "";
+                let dateDebut = "";
+                let dateFin = "";
+
+                if(annonce.dateAffichage != null) {
+                    dateAffichage = new Date(annonce.dateAffichage);
+                    dateAffichage = dateAffichage.getDate() + "-" + (dateAffichage.getMonth()+1)
+                        + "-" + dateAffichage.getFullYear();
+                }
+                if(annonce.datePublication != null) {
+                    datePublication = new Date(annonce.datePublication);
+                    datePublication = datePublication.getDate() + "-" + (datePublication.getMonth()+1)
+                        + "-" + datePublication.getFullYear();
+                }
+                if(annonce.dateDebutLocation != null) {
+                    dateDebut = new Date(annonce.dateDebutLocation);
+                    dateDebut = dateDebut.getDate() + "-" + (dateDebut.getMonth()+1)
+                        + "-" + dateDebut.getFullYear();
+                }
+                if(annonce.dateFinLocation != null) {
+                    dateFin = new Date(annonce.dateFinLocation);
+                    dateFin = dateFin.getDate() + "-" + (dateFin.getMonth()+1)
+                        + "-" + dateFin.getFullYear();
+                }
+
+
                 this.setState({
                     mail: annonce.cip + "@usherbrooke.ca",
                     id: annonce.id,
                     description: annonce.description,
                     prix: annonce.prix,
-                    dateAffichage: annonce.dateAffichage,
+                    dateAffichage: dateAffichage,
                     categorie: annonce.categorie,
                     titre: annonce.titre,
                     resume: annonce.resume,
                     maisonEdition: annonce.maisonEdition,
-                    datePublication: annonce.datePublication,
+                    datePublication: datePublication,
                     nbChambre: annonce.nombreChambre,
-                    dateDebutLocation: annonce.dateDebutLocation,
-                    dateFinLocation: annonce.dateFinLocation,
+                    dateDebutLocation: dateDebut,
+                    dateFinLocation: dateFin,
                     listeAuteurs: listeAuteurs});
             });
     }

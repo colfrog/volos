@@ -52,7 +52,7 @@ class Utilisateur extends React.Component {
         if(this.state.ok != null){  //Est-ce que le test à été fait correctement
             if(this.state.ok){ //Test réussi
                 return (
-                    <div class='testReturnWrapper greenBckg'>
+                    <div className='testReturnWrapper greenBckg'>
                         Test: {this.state.titreTest} |
                         {this.state.cip}: {this.state.prenom} {this.state.nom} |
                         {this.state.mail} |
@@ -62,7 +62,7 @@ class Utilisateur extends React.Component {
             }
             else{
                 return ( //Test échoué
-                    <div class='testReturnWrapper redBckg'>
+                    <div className='testReturnWrapper redBckg'>
                         Test: {this.state.titreTest} |
                         {this.state.cip}:
                         {this.state.prenom} {this.state.nom} |
@@ -74,7 +74,7 @@ class Utilisateur extends React.Component {
         }
         else{
             return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
-                <div class='testReturnWrapper'>
+                <div className='testReturnWrapper'>
                     Test: {this.state.titreTest} |
                     {this.state.cip}:
                     {this.state.prenom} {this.state.nom} |
@@ -104,7 +104,12 @@ class TestUtilisateur extends React.Component {
     //Éxecute tout les tests
     executerTests(){
         this.testSelectUtilisateurs();
-        this.testSelectUtilisateurByCip('scop2401');
+        this.testSelectUtilisateurByCip("durp0701");
+        this.selectUtilisateurByFaculte("Génie");
+        this.selectUtilisateurByDepartement("Électrique et informatique");
+        /*this.insertUtilisateur("NomTest", "PrenomTest", "TEST6942",
+                               "TEST6942@usherbrooke.ca", "Génie", "Électrique et informatique");*/
+        this.loggedUtilisateur();
     }
 
     //TEST SelectUtilisateurs
@@ -131,7 +136,7 @@ class TestUtilisateur extends React.Component {
             .then(utilisateur => {
 
                 //Vérification du cip recherché
-                if(utilisateur.cip == cip){  //RÉUSSI
+                if(utilisateur.cip === cip){  //RÉUSSI
                     uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
                                           mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
                                           nomDepartement={utilisateur.nomDepartement} titreTest={'SelectUtilisateurByCip'} ok={true} />)
@@ -144,6 +149,101 @@ class TestUtilisateur extends React.Component {
                     this.setState({utilisateurs: uti});
                 }
             })
+    }
+
+    //TEST SelectUtilisateurByFaculte
+    selectUtilisateurByFaculte(faculte){
+        let uti = this.state.utilisateurs;
+        fetch("/Volos/api/selectUtilisateurByFaculte?faculte="+faculte)
+            .then(data => data.json())
+            .then(utilisateurs => {
+                utilisateurs.forEach(utilisateur => {
+
+                    //Vérification du cip recherché
+                    if(utilisateur.nomFaculte === faculte){  //RÉUSSI
+                        uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                              mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                              nomDepartement={utilisateur.nomDepartement} titreTest={'SelectUtilisateurByFaculte'} ok={true} />)
+                        this.setState({utilisateurs: uti});
+                    }
+                    else{   //ÉCHOUÉ
+                        uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                              mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                              nomDepartement={utilisateur.nomDepartement} titreTest={'SelectUtilisateurByFaculte'} ok={false} />)
+                        this.setState({utilisateurs: uti});
+                    }
+                });
+            })
+    }
+
+    //TEST SelectUtilisateurByDepartement
+    selectUtilisateurByDepartement(departement){
+        let uti = this.state.utilisateurs;
+        fetch("/Volos/api/selectUtilisateurByDepartement?departement="+departement)
+            .then(data => data.json())
+            .then(utilisateurs => {
+                utilisateurs.forEach(utilisateur => {
+
+                    //Vérification du cip recherché
+                    if(utilisateur.nomDepartement === departement){  //RÉUSSI
+                        uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                              mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                              nomDepartement={utilisateur.nomDepartement} titreTest={'SelectUtilisateurByDepartement'} ok={true} />)
+                        this.setState({utilisateurs: uti});
+                    }
+                    else{   //ÉCHOUÉ
+                        uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                              mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                              nomDepartement={utilisateur.nomDepartement} titreTest={'SelectUtilisateurByDepartement'} ok={false} />)
+                        this.setState({utilisateurs: uti});
+                    }
+                });
+            })
+    }
+
+    //TEST InsertUtilisateur
+    /*insertUtilisateur(nom, prenom, cip, mail, nomFaculte, nomDepartement){
+        let uti = this.state.utilisateurs;
+
+        let utilisateur = <Utilisateur
+            nom={nom}
+            prenom={prenom}
+            cip={cip}
+            mail={mail}
+            nomFaculte={nomFaculte}
+            nomDepartement={nomDepartement}
+            titreTest={null}
+            ok={null}/>
+
+        fetch("/Volos/api/insertUtilisateur?utilisateur="+utilisateur)
+            .then(data => {
+                if(data.ok === false)
+                {
+                    uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                           mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                           nomDepartement={utilisateur.nomDepartement} titreTest={'InsertUtilisateur'} ok={false} />)
+                    this.setState({utilisateurs: uti});
+                }
+                else
+                {
+                    uti.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                           mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                           nomDepartement={utilisateur.nomDepartement} titreTest={'InsertUtilisateur'} ok={null} />)
+                    this.setState({utilisateurs: uti});
+                }})
+    }*/
+
+    //TEST LoggedUtilisateur
+    loggedUtilisateur(){
+        let utis = this.state.utilisateurs;
+        fetch("/Volos/api/loggedUtilisateur")
+            .then(data => data.json())
+            .then(utilisateur => {
+                utis.push(<Utilisateur key={utilisateur.id} nom={utilisateur.nom} prenom={utilisateur.prenom} cip={utilisateur.cip}
+                                           mail={utilisateur.mail} nomFaculte={utilisateur.nomFaculte}
+                                           nomDepartement={utilisateur.nomDepartement} titreTest={'LoggedUtilisateur'} ok={null} />)
+            });
+        this.setState({utilisateurs: utis});
     }
 
     //Lien du bouton avec le render des réponses
@@ -164,6 +264,12 @@ var domContainer = document.querySelector('#testUtilisateurButton');
 ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 ////****** FIN MICRO-SERVICE UTILISATEUR ******////
+
+
+
+
+
+
 
 
 ////****** MICRO-SERVICE ANNONCE ******////

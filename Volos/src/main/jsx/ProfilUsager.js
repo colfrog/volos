@@ -6,19 +6,6 @@ class ProfilUsager extends React.Component {
         return (
             <div className="profilusager">
                 <Profil cip={this.props.cip} />
-                <div className="annoncesusager">
-                    <ListeAnnonces fetcher={(callback) => {
-                        let req = null;
-                        if (this.props.cip)
-                            req = `/Volos/api/showPublished?cip=${this.props.cip}`;
-                        else
-                            req = '/Volos/api/showUtilisateurAnnonce';
-
-                        fetch(req)
-                            .then(data => data.json())
-                            .then(callback);
-                    }}/>
-                </div>
             </div>
         )
     }
