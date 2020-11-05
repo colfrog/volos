@@ -77,11 +77,8 @@ public class Annonce {
         this.etat = etat;
     }
 
-    public String getDateAffichage() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        String date = simpleDateFormat.format(dateAffichage);
-        return date;
+    public Date getDateAffichage() {
+        return dateAffichage;
     }
 
     public void setDateAffichage(Date dateAffichage) {
