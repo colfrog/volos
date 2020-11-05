@@ -11,7 +11,9 @@ export default class CarteAnnonce extends React.Component {
             prix: this.props.prix,
             titre: this.props.titre,
             etat: this.props.etat,
-            estFavori: false
+            estFavori: false,
+            opacity: 1,
+            cursor: "default"
         };
 
         fetch(`/Volos/api/verifierFavori?cip=${this.state.userCip}&id=${this.state.id}`)
@@ -52,13 +54,23 @@ export default class CarteAnnonce extends React.Component {
         this.setState({etat: 2});
     }
 
+    changeCard(){
+        this.setState({opacity: 0.7});
+        this.setState({cursor: "pointer"});
+    }
+
+    undoCard(){
+        this.setState({opacity: 1});
+        this.setState({cursor: "default"});
+    }
+
     render() {
-        let boutonFavori = null, user = null, etat = null;
+        let boutonFavori = null, user = null, etat = null, descrpt = this.state.description, styles = {opacity: this.state.opacity, cursor: this.state.cursor};
         if (this.state.userCip != this.state.cip) {
             if (this.state.estFavori)
-                boutonFavori = <button onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
+                boutonFavori = <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
             else
-                boutonFavori = <button onClick={this.ajouterFavori.bind(this)}>Ajouter aux favoris</button>;
+                boutonFavori = <button className="cardButton" onClick={this.ajouterFavori.bind(this)}>Ajouter aux favoris</button>;
         }
 
         if (this.state.prenom == null || this.state.nom == null)
@@ -68,9 +80,9 @@ export default class CarteAnnonce extends React.Component {
 
         var boutonsEtat = null;
         if (this.state.userCip == this.state.cip) {
-            var boutonOuvrir = <button onClick={this.ouvrir.bind(this)}>Réouvrir l'annonce</button>;
-            var boutonFermer = <button onClick={this.fermer.bind(this)}>Fermer l'annonce</button>;
-            var boutonVendue = <button onClick={this.vendue.bind(this)}>Signaler comme vendue</button>;
+            var boutonOuvrir = <button className="cardButton" onClick={this.ouvrir.bind(this)}>Réouvrir l'annonce</button>;
+            var boutonFermer = <button className="cardButton" onClick={this.fermer.bind(this)}>Fermer l'annonce</button>;
+            var boutonVendue = <button className="cardButton" onClick={this.vendue.bind(this)}>Signaler comme vendue</button>;
 
             if (this.state.etat == 0)
                 boutonsEtat = <div className="boutons_etat">{boutonFermer}{boutonVendue}</div>;
@@ -79,24 +91,30 @@ export default class CarteAnnonce extends React.Component {
         }
 
         if (this.state.etat == 1)
-            etat = <p className="texteFerme">FERMÉ</p>;
+            etat = <p className="texteFerme">FERMÉE</p>;
         if (this.state.etat == 2)
-            etat = <p className="texteVendu">VENDU</p>;
+            etat = <p className="texteVendu">VENDUE</p>;
+
+        if(descrpt != ""){
+            descrpt = <p className="cardDescription">{this.state.description}</p>;
+        }
 
         return (
-            <div className="card">
-                <img src="https://i.imgur.com/gPEswtC.jpg" />
-                <a href={"Annonce.html?id="+this.state.id}>
+            <div className="card" style={styles}>
+                <a className="cardTop" href={"Annonce.html?id="+this.state.id} onMouseOver={this.changeCard.bind(this)} onMouseLeave={this.undoCard.bind(this)}>
+                    <img src="https://i.imgur.com/gPEswtC.jpg" />
                     <p>{this.state.titre}</p>
                 </a>
-                <a href={"Profile.html?cip="+this.state.cip}>
+                <a className="cardMiddle" href={"Profile.html?cip="+this.state.cip}>
                     <p className="submitter">{user}</p>
                 </a>
-                <p>{this.state.description}</p>
-                <p className="price">{this.state.prix}$</p>
-                {boutonFavori}
-                {boutonsEtat}
-                {etat}
+                <div className="cardBottom">
+                    {descrpt}
+                    <p className="price">{this.state.prix}$</p>
+                    {boutonFavori}
+                    {boutonsEtat}
+                    {etat}
+                </div>
             </div>
         );
     }
