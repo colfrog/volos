@@ -34,7 +34,7 @@ class FormAnnonce extends React.Component {
 
             if(this.state.categorie == "livre"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
                             <label className="ajout_type resumeLabel">Résumé:</label>
                             <textarea
@@ -84,12 +84,12 @@ class FormAnnonce extends React.Component {
                                    defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
             else if (this.state.categorie == "loyer"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
                             <label className="ajout_type">Nombre de chambres:</label>
                             <input className="ajout_input"
@@ -122,7 +122,7 @@ class FormAnnonce extends React.Component {
                                 defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
 
