@@ -101,7 +101,7 @@ public class AnnonceService {
      * Permet de changer l'état de l'annonce passé en paramètre à vendu
      */
     @GET
-    @Path("removeAnnonce")
+    @Path("annonceVendue")
     public void annonceVendue(@QueryParam("id") Integer id) {
         annonceMapper.annonceVendue(id);
     }
