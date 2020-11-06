@@ -118,15 +118,22 @@ public class AnnonceService {
     }
 
     /**
+     * @return la liste des 5 dernières annonces publié de la table et qui est
+     * de la catégorie indiquée
+     */
+    @GET
+    @Path("annonceNouveauxByCategorie")
+    @Produces("application/json")
+    public List<Annonce> annonceNouveauxByCategorie(@QueryParam("categorie") String categorie) {
+        return annonceMapper.selectNouveauxByCategorie(categorie);
+    }
+
+    /**
      * @return un entier du dernier id de la table
      */
     @GET
     @Path("findLastIdAnnonce")
     public int findLastIdAnnonce() {
         return annonceMapper.findLastIdAnnonce();
-    }
-
-    public List<Annonce> annonceNouveauxByCategorie(String categorie) {
-        return annonceMapper.selectNouveauxByCategorie(categorie);
     }
 }
