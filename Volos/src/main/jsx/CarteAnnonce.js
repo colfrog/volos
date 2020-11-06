@@ -11,6 +11,7 @@ export default class CarteAnnonce extends React.Component {
             prix: this.props.prix,
             titre: this.props.titre,
             etat: this.props.etat,
+            categorie: this.props.categorie,
             estFavori: false,
             opacity: 1,
             cursor: "default"
@@ -65,7 +66,8 @@ export default class CarteAnnonce extends React.Component {
     }
 
     render() {
-        let boutonFavori = null, user = null, etat = null, descrpt = this.state.description, styles = {opacity: this.state.opacity, cursor: this.state.cursor};
+        let boutonFavori = null, user = null, etat = null, descrpt = this.state.description,
+            styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image="images/autre.jpg";
         if (this.state.userCip != this.state.cip) {
             if (this.state.estFavori)
                 boutonFavori = <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
@@ -98,11 +100,16 @@ export default class CarteAnnonce extends React.Component {
         if(descrpt != ""){
             descrpt = <p className="cardDescription">{this.state.description}</p>;
         }
+        if(this.state.categorie == "LIVRE") {
+            image = "images/livre.jpg";
+        } else if (this.state.categorie == "LOYER") {
+            image = "images/loyer.jpg";
+        }
 
         return (
             <div className="card" style={styles}>
                 <a className="cardTop" href={"Annonce.html?id="+this.state.id} onMouseOver={this.changeCard.bind(this)} onMouseLeave={this.undoCard.bind(this)}>
-                    <img src="https://i.imgur.com/gPEswtC.jpg" />
+                    <img className="img" src={image} />
                     <p>{this.state.titre}</p>
                 </a>
                 <a className="cardMiddle" href={"Profile.html?cip="+this.state.cip}>

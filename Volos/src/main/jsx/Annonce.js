@@ -101,8 +101,8 @@ export default class Annonce extends React.Component {
     }
 
     render() {
-        var resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
-            dateDebutLocation = "", dateFinLocation = "", auteurs = "";
+        let resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
+            dateDebutLocation = "", dateFinLocation = "", auteurs = "", image="images/autre.jpg";
 
         if(this.state.categorie === "LIVRE")
         {
@@ -119,12 +119,15 @@ export default class Annonce extends React.Component {
             {
                 auteurs = <div>Auteur: {listeAuteurs}</div>
             }
+
+            image="images/livre.jpg"
         }
         else if(this.state.categorie === "LOYER")
         {
             nbChambre = <p>Nombre de chambres: {this.state.nbChambre}</p>
             dateDebutLocation = <p>Date de début de location: {this.state.dateDebutLocation}</p>
             dateFinLocation = <p>Date de fin de location: {this.state.dateFinLocation}</p>
+            image="images/loyer.jpg"
         }
 
         var subjectMail = "Offre Volos";
@@ -137,24 +140,34 @@ export default class Annonce extends React.Component {
                     "Catégorie: " + this.state.categorie;
 
         return (
-            <div className="card">
-                <img src="https://i.imgur.com/gPEswtC.jpg" />
-                {this.state.titre}
-                <p>{this.state.description}</p>
-                <p>{this.state.prix}$</p>
-                <p>Date d'affichage: {this.state.dateAffichage}</p>
-                <p>Catégorie: {this.state.categorie}</p>
-                {resume}
-                {maisonEdition}
-                {datePublication}
-                {auteurs}
-                {nbChambre}
-                {dateDebutLocation}
-                {dateFinLocation}
-                <p><a href={"mailto:" + this.state.mail +
-                            "?subject=" + encodeURIComponent(subjectMail) +
-                            "&body=" + encodeURIComponent(bodyMail)}>
-                            Envoyer un mail à ce correspondant</a></p>
+            <div className="annonceContainer">
+                <div className="annonceContainer_box">
+                    <span className="annonceContainerLeft">
+                        <img className="imageAffichageAnnonce" src={image} />
+                    </span>
+                    <span className="annonceContainerRight">
+                        <div className="annonceTitreContainer">
+                            <h2>{this.state.titre}</h2>
+                        </div>
+                        <div className="annonceInfoContainer">
+                            <p>{this.state.description}</p>
+                            <p>Prix: {this.state.prix}$</p>
+                            <p>Date d'affichage: {this.state.dateAffichage}</p>
+                            <p>Catégorie: {this.state.categorie}</p>
+                            {resume}
+                            {maisonEdition}
+                            {datePublication}
+                            {auteurs}
+                            {nbChambre}
+                            {dateDebutLocation}
+                            {dateFinLocation}
+                            <p><a href={"mailto:" + this.state.mail +
+                                        "?subject=" + encodeURIComponent(subjectMail) +
+                                        "&body=" + encodeURIComponent(bodyMail)}>
+                                        {this.state.mail}</a></p>
+                        </div>
+                    </span>
+                </div>
             </div>
         );
     }

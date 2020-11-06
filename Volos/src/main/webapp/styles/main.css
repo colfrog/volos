@@ -195,7 +195,7 @@ header {
     border-radius: 15px;
 }
 
-.card img {
+.img {
     width: 100%;
 }
 
@@ -241,6 +241,42 @@ header {
 }
 
 /*** FIN Affichage d'une Carte Annonce ***/
+
+
+
+/*** Affichage d'une Annonce ***/
+
+.imageAffichageAnnonce {
+    border: 5px solid black;
+    max-width: 400px;
+    margin: 25px;
+}
+
+.annonceContainerLeft {
+    display: inline-block;
+    width: 500px;
+    vertical-align: middle;
+}
+
+.annonceContainerRight {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+    padding: 2% 10px;
+    border-radius: 15px;
+    background: #3e8e41;
+    margin: 25px 0;
+}
+
+.annonceTitreContainer {
+    text-align: center;
+}
+
+.annonceInfoContainer {
+    margin-left: 20px;
+}
+
+/*** FIN Affichage d'une Annonce ***/
 
 
 
