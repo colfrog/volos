@@ -17,16 +17,19 @@ export default class ListeAnnonces extends React.Component {
             .then(data => data.json())
             .then(utilisateur => {
                 annonces.forEach(annonce => {
-                    cartesAnnonce.push(<CarteAnnonce key={annonce.id}
-                                                     id={annonce.id}
-                                                     cip={annonce.cip}
-                                                     userCip={utilisateur.cip}
-                                                     description={annonce.description}
-                                                     prix={annonce.prix}
-                                                     titre={annonce.titre}
-                                                     etat={annonce.etat}
-                                                     categorie={annonce.categorie}
-                    />);
+                    if((annonce.etat == 0 && annonce.cip != utilisateur.cip)
+                    || (annonce.cip == utilisateur.cip)) {
+                        cartesAnnonce.push(<CarteAnnonce key={annonce.id}
+                                                         id={annonce.id}
+                                                         cip={annonce.cip}
+                                                         userCip={utilisateur.cip}
+                                                         description={annonce.description}
+                                                         prix={annonce.prix}
+                                                         titre={annonce.titre}
+                                                         etat={annonce.etat}
+                                                         categorie={annonce.categorie}
+                        />);
+                    }
                 });
 
                 this.setState({annonces: cartesAnnonce});
