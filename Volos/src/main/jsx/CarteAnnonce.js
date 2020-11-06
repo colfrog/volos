@@ -10,6 +10,7 @@ export default class CarteAnnonce extends React.Component {
             description: this.props.description,
             prix: this.props.prix,
             titre: this.props.titre,
+            hasPhoto: false,
             etat: this.props.etat,
             categorie: this.props.categorie,
             estFavori: false,
@@ -28,6 +29,10 @@ export default class CarteAnnonce extends React.Component {
             .then(utilisateur => {
                 this.setState({prenom: utilisateur.prenom, nom: utilisateur.nom});
             });
+
+        fetch(`/Volos/api/hasPhoto?id=${this.state.id}`)
+            .then(data => data.json())
+            .then(hasPhoto => this.setState({hasPhoto: hasPhoto}));
     }
 
     ajouterFavori() {
@@ -67,7 +72,8 @@ export default class CarteAnnonce extends React.Component {
 
     render() {
         let boutonFavori = null, user = null, etat = null, descrpt = this.state.description,
-            styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image="images/autre.jpg";
+            styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image = null;
+
         if (this.state.userCip != this.state.cip) {
             if (this.state.estFavori)
                 boutonFavori = <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
@@ -97,14 +103,14 @@ export default class CarteAnnonce extends React.Component {
         if (this.state.etat == 2)
             etat = <p className="texteVendu">VENDUE</p>;
 
-        if(descrpt != ""){
+        if (descrpt != "") {
             descrpt = <p className="cardDescription">{this.state.description}</p>;
         }
-        if(this.state.categorie == "LIVRE") {
-            image = "images/livre.jpg";
-        } else if (this.state.categorie == "LOYER") {
-            image = "images/loyer.jpg";
-        }
+
+        if (this.state.hasPhoto)
+            image = `/Volos/api/photo?id=${this.state.id}`;
+        else
+            image = "images/" + this.state.categorie.toLowerCase() + ".jpg";
 
         return (
             <div className="card" style={styles}>
