@@ -73,13 +73,12 @@ export default class CarteAnnonce extends React.Component {
     render() {
         let boutonFavori = null, user = null, etat = null, descrpt = this.state.description,
             styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image = null;
+
         if (this.state.userCip != this.state.cip) {
             if (this.state.estFavori)
-                boutonFavori =
-                    <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
+                boutonFavori = <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
             else
-                boutonFavori =
-                    <button className="cardButton" onClick={this.ajouterFavori.bind(this)}>Ajouter aux favoris</button>;
+                boutonFavori = <button className="cardButton" onClick={this.ajouterFavori.bind(this)}>Ajouter aux favoris</button>;
         }
 
         if (this.state.prenom == null || this.state.nom == null)
@@ -89,12 +88,9 @@ export default class CarteAnnonce extends React.Component {
 
         var boutonsEtat = null;
         if (this.state.userCip == this.state.cip) {
-            var boutonOuvrir = <button className="cardButton" onClick={this.ouvrir.bind(this)}>Réouvrir
-                l'annonce</button>;
-            var boutonFermer = <button className="cardButton" onClick={this.fermer.bind(this)}>Fermer
-                l'annonce</button>;
-            var boutonVendue = <button className="cardButton" onClick={this.vendue.bind(this)}>Signaler comme
-                vendue</button>;
+            var boutonOuvrir = <button className="cardButton" onClick={this.ouvrir.bind(this)}>Réouvrir l'annonce</button>;
+            var boutonFermer = <button className="cardButton" onClick={this.fermer.bind(this)}>Fermer l'annonce</button>;
+            var boutonVendue = <button className="cardButton" onClick={this.vendue.bind(this)}>Signaler comme vendue</button>;
 
             if (this.state.etat == 0)
                 boutonsEtat = <div className="boutons_etat">{boutonFermer}{boutonVendue}</div>;
@@ -114,7 +110,7 @@ export default class CarteAnnonce extends React.Component {
         if (this.state.hasPhoto)
             image = `/Volos/api/photo?id=${this.state.id}`;
         else
-            image = this.state.categorie.toLowerCase() + ".jpg";
+            image = "images/" + this.state.categorie.toLowerCase() + ".jpg";
 
         return (
             <div className="card" style={styles}>
