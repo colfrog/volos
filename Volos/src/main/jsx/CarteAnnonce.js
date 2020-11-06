@@ -67,7 +67,7 @@ export default class CarteAnnonce extends React.Component {
 
     render() {
         let boutonFavori = null, user = null, etat = null, descrpt = this.state.description,
-            styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image="autre.jpg";
+            styles = {opacity: this.state.opacity, cursor: this.state.cursor}, image="images/autre.jpg";
         if (this.state.userCip != this.state.cip) {
             if (this.state.estFavori)
                 boutonFavori = <button className="cardButton" onClick={this.retirerFavori.bind(this)}>Retirer des favoris</button>;
@@ -101,9 +101,9 @@ export default class CarteAnnonce extends React.Component {
             descrpt = <p className="cardDescription">{this.state.description}</p>;
         }
         if(this.state.categorie == "LIVRE") {
-            image = "livre.jpg";
-        } if (this.state.categorie == "LOYER") {
-            image = "loyer.jpg";
+            image = "images/livre.jpg";
+        } else if (this.state.categorie == "LOYER") {
+            image = "images/loyer.jpg";
         }
 
         return (
