@@ -9,6 +9,8 @@ class TestsMicroServices extends React.Component {
 
     //AJOUTER UNE NOUVELLE LIGNE AVEC LE ID DE VOTRE BOUTTON
     buttonPress(){
+        //Tests Annonce
+        document.getElementById('reactTestAnnonceButton').click();
         //Tests Utilisateur
         document.getElementById('reactTestUtilisateurButton').click();
         //Tests Auteur
@@ -356,12 +358,70 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 
 ////****** MICRO-SERVICE ANNONCE ******////
-/*class TestUtilisateur extends React.Component {
+class Annonce extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            annonces: []
+            titre: this.props.titre,
+            description: this.props.description,
+            id: this.props.id,
+            prix: this.props.prix,
+            dateAffichage: this.props.dateAffichage,
+            cip: this.props.cip,
+            categorie: this.props.categorie,
+            etat: this.props.etat,
+            titreTest: this.props.titreTest,    //Titre du test effectué
+            ok: this.props.ok   //Boolean indiquant si le test à été réussi avec succès
         };
+    }
+
+    render() {
+        if(this.state.ok != null){  //Est-ce que le test à été fait correctement
+            if(this.state.ok){ //Test réussi
+                return (
+                    <div className='testReturnWrapper greenBckg'>
+                        Test: {this.state.titreTest} |
+                        {this.state.id}: {this.state.titre} {this.state.description} |
+                        {this.state.prix} |{this.state.dateAffichage} |
+                        {this.state.cip} | {this.state.etat} |
+                        {this.state.categorie}
+                    </div>
+                );
+            }
+            else{
+                return ( //Test échoué
+                    <div className='testReturnWrapper redBckg'>
+                        Test: {this.state.titreTest} |
+                        {this.state.id}: {this.state.titre} {this.state.description} |
+                        {this.state.dateAffichage} |
+                        {this.state.categorie} {this.state.cip}
+                    </div>
+                );
+            }
+        }
+        else{
+            return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
+                <div className='testReturnWrapper'>
+                    Test: {this.state.titreTest} |
+                    {this.state.id}: {this.state.titre} {this.state.description} |
+                    {this.state.dateAffichage} |
+                    {this.state.categorie} {this.state.cip}
+                </div>
+            );
+        }
+    }
+}
+
+//
+class TestAnnonce extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: [],
+            increment: this.props.increment
+        };
+
+        this.state.increment = 0;
 
         //Éxectuer tout les tests du micro-service
         this.executerTests();
@@ -372,26 +432,50 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
 
     //Éxecute tout les tests
     executerTests(){
-
+        this.annonceById(1);
+        this.annonceById(0);
     }
 
     //TEST annonceById
+    annonceById(id) {
+
+        fetch("/Volos/api/annonceById?id="+id)
+            .then(data => data.json())
+            .then(annone => {
+                //Vérification de l'id recherché
+                if(annonce.id === id){  //RÉUSSI
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                      etat={annonce.etat} titreTest={'annonceById'} ok={true} />)
+                }
+                else{   //ÉCHOUÉ
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                      etat={annonce.etat} titreTest={'annonceById'} ok={true} />)
+                }
+            });
+
+
+        this.state.increment++;
+    }
 
     //TEST annoncesByCip
 
     //TEST annonces
 
+    //TEST openAnnonce
+
     //TEST cancelAnnonce
 
-    //TEST removeAnnonce
+    //TEST annonceVendue
 
-    //TEST annoncePublishLivres
+    //TEST annoncePublishedByCategorie
 
-    //TEST annoncePublishLoyers
+    //TEST annoncePublishedByCategorie
 
-    //TEST annoncePublishAutres
-
-    //TEST annonceUtilisateur
+    //TEST annoncePublishedByCategorie
 
     //TEST findLastIdAnnonce
 
@@ -404,11 +488,12 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
     render() {
         return (
             //IMPORTANT DE DÉFINIR L'ID DU BOUTON
-            <button id='reactTestUtilisateurButton' onClick={this.buttonPress}>TestReact</button>
+            <button id='reactTestAnnonceButton' onClick={this.buttonPress}>TestReact</button>
         )
     }
 }
 
+//Lien du bouton 'testAnnonceButton' avec React
 domContainer = document.querySelector('#testAnnonceButton');
-ReactDOM.render(<TestUtilisateur/>, domContainer);*/
+ReactDOM.render(<TestUtilisateur/>, domContainer);/**/
 ////****** FIN MICRO-SERVICE ANNONCE ******////
