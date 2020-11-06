@@ -17,6 +17,8 @@ class TestsMicroServices extends React.Component {
         document.getElementById('reactTestAnnonceButton').click();
         //Tests Utilisateur
         document.getElementById('reactTestUtilisateurButton').click();
+        //Tests favoris
+        document.getElementById('reactTestFavorisButton').click();
     }
 
     render() {
@@ -509,7 +511,7 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 
 
-////****** MICRO-SERVICE ANNONCE ******////
+//classe de données des micro-services Annonce, Favoris, Loyer et Livre
 class Annonce extends React.Component {
     constructor(props) {
         super(props);
@@ -563,8 +565,107 @@ class Annonce extends React.Component {
         }
     }
 }
+//Fin classe de données annonce
 
-//
+
+////****** MICRO-SERVICES FAVORIS ******////
+
+//classe des tests du micro-service
+class TestFavoris extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: [],
+            increment: this.props.increment
+        };
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests() {
+        this.testGetFavoris("durp0701");
+        this.testAddFavoris("scop2401", 0);
+    }
+
+    //TEST getFavoris
+    testGetFavoris(cip) {
+        fetch("/Volos/api/favoris?cip="+cip)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                           id={annonce.id} prix={annonce.prix}
+                                           dateAffichage={annonce.dateAffichage} cip={annonce.cip}
+                                           categorie={annonce.categorie} etat={annonce.etat} titreTest={'GetFavoris'}
+                                           ok={null}/>)
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST addFavoris
+    testAddFavoris(cip, annonceId) {
+        return fetch("/Volos/api/ajouter_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "addFavoris"));
+    }
+
+    //TEST existFavoris
+    testExistFavoris(cip, annonceId, test) {
+        return fetch("/Volos/api/existFavori?cip="+cip+"&id="+annonceId)
+            .then(data => data.json())
+            .then(data => {
+                if (data == true) {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={true}/>)
+                    this.state.increment++;
+                } else {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={false}/>)
+                    this.state.increment++;
+                }
+
+                if(test === "addFavoris") {
+                    this.testRemoveFavoris(cip, annonceId);
+                }
+            });
+    }
+
+    //TEST removeFavoris
+    testRemoveFavoris(cip, annonceId) {
+        return fetch("/Volos/api/retirer_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "removeFavoris"));
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress() {
+        let domContain = document.querySelector('#favorisServiceReturn');
+        ReactDOM.render(this.state.annonces, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestFavorisButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+//Lien du bouton 'Test' avec React
+var domContainer = document.querySelector('#testFavorisButton');
+ReactDOM.render(<TestFavoris/>, domContainer);
+
+////****** FIN MICRO-SERVICES FAVORIS ******////
+
+
+
+////****** MICRO-SERVICE ANNONCE ******////
+
+//classe des tests du micro-service Annonce
 class TestAnnonce extends React.Component {
     constructor(props) {
         super(props);
@@ -593,7 +694,7 @@ class TestAnnonce extends React.Component {
 
         fetch("/Volos/api/annonceById?id="+id)
             .then(data => data.json())
-            .then(annone => {
+            .then(annonce => {
                 //Vérification de l'id recherché
                 if(annonce.id === id){  //RÉUSSI
                     this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
@@ -634,7 +735,7 @@ class TestAnnonce extends React.Component {
     //Lien du bouton avec le render des réponses
     buttonPress(){
         let domContain = document.querySelector('#annonceServiceReturn');
-        ReactDOM.render(this.state.utilisateurs, domContain);
+        ReactDOM.render(this.state.annonces, domContain);
     }
 
     render() {
@@ -647,5 +748,5 @@ class TestAnnonce extends React.Component {
 
 //Lien du bouton 'testAnnonceButton' avec React
 domContainer = document.querySelector('#testAnnonceButton');
-ReactDOM.render(<TestUtilisateur/>, domContainer);/**/
+ReactDOM.render(<TestAnnonce/>, domContainer);/**/
 ////****** FIN MICRO-SERVICE ANNONCE ******////
