@@ -120,13 +120,19 @@
         annonce;
     </select>
 
+    <update id="openAnnonce">
+        UPDATE annonce
+        SET etat=0
+        WHERE id=#{id};
+    </update>
+
     <update id="cancelAnnonce">
         UPDATE annonce
         SET etat=1
         WHERE id=#{id};
     </update>
 
-    <update id="removeAnnonce">
+    <update id="annonceVendue">
 UPDATE annonce
         SET etat=2
         WHERE id=#{id};

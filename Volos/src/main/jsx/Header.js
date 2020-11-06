@@ -19,7 +19,7 @@ class Header extends React.Component {
                                 <a href="Autres.html">Autres</a>
                             </div>
                         </div>
-                        <li><a href="Profile.html">Profile</a></li>
+                        <li><a href="Profile.html">Profil</a></li>
                         <li><a href="mesFavoris.html">Voir mes favoris</a></li>
                         <li><a href="Ajouter.html">Ajouter une annonce</a></li>
                     </ul>

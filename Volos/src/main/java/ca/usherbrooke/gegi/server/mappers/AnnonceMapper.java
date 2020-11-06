@@ -23,6 +23,7 @@ public interface AnnonceMapper {
     void insertAnnonce(@Param("annonce") Annonce annonce);
     void updateAnnonce(@Param("annonce") Annonce annonce, @Param("id") Integer id);
     Integer findLastIdAnnonce();
+    void openAnnonce(@Param("id") Integer id);
     void cancelAnnonce(@Param("id") Integer id);
-    void removeAnnonce(@Param("id") Integer id);
+    void annonceVendue(@Param("id") Integer id);
 }

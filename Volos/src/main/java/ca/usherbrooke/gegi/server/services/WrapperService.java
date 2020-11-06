@@ -41,6 +41,9 @@ public class WrapperService {
     @Inject
     UtilisateurService utilisateurService;
 
+    /**
+     * @return L'annonce complète en fonction de ça catégorie
+     */
     @GET
     @Path("showPublishAnnonce")
     @Produces("application/json")
@@ -179,6 +182,9 @@ public class WrapperService {
         return showPublishedByCip(utilisateurService.getCurrentLoggedUtilisateur().getCip());
     }
 
+    /**
+     * @return Un liste de livres comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxLivres")
     @Produces("application/json")
@@ -189,33 +195,43 @@ public class WrapperService {
 
         for (Annonce annonce : annonces) {
             livre = livreService.getLivre(annonce.getId());
-            livre.setEnfant(annonce);
-            livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
 
-            livres.add(livre);
+            if (livre != null) {
+                livre.setEnfant(annonce);
+                livre.setAuteurs(wrapperMapper.findAuteur(livre.getId()));
+                livres.add(livre);
+            }
         }
 
         return livres;
     }
 
+    /**
+     * @return Un liste de loyers comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxLoyers")
     @Produces("application/json")
     public List<Loyer> showNouveauxLoyers() {
         List<Annonce> annonces = annonceService.annonceNouveauxByCategorie("LOYER");
         List<Loyer> loyers = new ArrayList<Loyer>();
-        Loyer loyer;
 
         for (Annonce annonce : annonces) {
-            loyer = loyerService.getLoyer(annonce.getId());
+            Loyer loyer = loyerService.getLoyer(annonce.getId());
             loyer.setEnfant(annonce);
 
-            loyers.add(loyer);
+            if (loyer != null) {
+                loyer.setEnfant(annonce);
+                loyers.add(loyer);
+            }
         }
 
         return loyers;
     }
 
+    /**
+     * @return Un liste de autres comportant les 5 dernières publications en fonction de la date
+     */
     @GET
     @Path("showNouveauxAutres")
     @Produces("application/json")
@@ -247,23 +263,21 @@ public class WrapperService {
             Date datePublication = null;
             try {
                 datePublication = new SimpleDateFormat("yyyy-mm-dd").parse(datePublicationS);
+                int id = annonceService.findLastIdAnnonce()+1;
+                Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
+                Livre livre = new Livre(id, resume, maisonEdition, datePublication);
+                Auteur auteur = new Auteur(nomAuteur, prenomAuteur);
+                livre.addAuteurs(auteur);
+
+                annonceService.insertAnnonce(annonce);
+                livreService.insertLivre(livre);
+                if(!auteurService.existAuteur(auteur)) {
+                    auteurService.insertAuteur(nomAuteur, prenomAuteur);
+                }
+                wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-
-            int id = annonceService.findLastIdAnnonce()+1;
-            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LIVRE");
-            Livre livre = new Livre(id, resume, maisonEdition, datePublication);
-            Auteur auteur = new Auteur(nomAuteur, prenomAuteur);
-            livre.addAuteurs(auteur);
-
-            annonceService.insertAnnonce(annonce);
-            livreService.insertLivre(livre);
-            if(!auteurService.existAuteur(auteur)) {
-                auteurService.insertAuteur(nomAuteur, prenomAuteur);
-            }
-            wrapperMapper.addLiaisonAuteurLivre(livre, auteur);
         }
     }
 
@@ -286,19 +300,23 @@ public class WrapperService {
             //Convertision des strings en Date
             Date dateDebutLocation = null;
             Date dateFinLocation = null;
+
             try {
                 dateDebutLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateDebutLocationS);
                 dateFinLocation = new SimpleDateFormat("yyyy-mm-dd").parse(dateFinLocationS);
+
+                int id = annonceService.findLastIdAnnonce() + 1;
+
+                Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
+                Loyer loyer = new Loyer(id, nbChambre, dateDebutLocation, dateFinLocation);
+
+                if(annonce != null && loyer != null) {
+                    annonceService.insertAnnonce(annonce);
+                    loyerService.insertLoyer(loyer);
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            int id = annonceService.findLastIdAnnonce() + 1;
-            Annonce annonce = new Annonce(id, cip, titre, description, prix, 0, null, "LOYER");
-            Loyer loyer = new Loyer(id, nbChambre, dateDebutLocation, dateFinLocation);
-
-            annonceService.insertAnnonce(annonce);
-            loyerService.insertLoyer(loyer);
         }
     }
 
@@ -349,8 +367,8 @@ public class WrapperService {
      */
     @GET
     @Path("sell")
-    public void sellAnnoncee(@QueryParam("id") int id) {
-        annonceService.removeAnnonce(id);
+    public void sellAnnonce(@QueryParam("id") int id) {
+        annonceService.annonceVendue(id);
     }
 
     /**

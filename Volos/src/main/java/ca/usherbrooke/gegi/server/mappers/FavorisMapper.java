@@ -8,6 +8,11 @@ import java.util.List;
 
 @SuppressWarnings("CdiManagedBeanInconsistencyInspection")
 @Mapper
+/**
+ * Mapper qui définit les différentes requête sql passé sur la table favoris
+ * @author Laurent Cimon
+ * @version 1.0
+ */
 public interface FavorisMapper {
     List<Annonce> getFavoris(@Param("cip") String cip);
     void addFavori(@Param("cip") String cip, @Param("id_annonce") Integer id);

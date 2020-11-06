@@ -17,7 +17,11 @@ export default class Annonce extends React.Component {
             nbChambre: this.props.nbChambre,
             dateDebutLocation: this.props.dateDebutLocation,
             dateFinLocation: this.props.dateFinLocation,
-            listeAuteurs: this.props.listeAuteurs
+            listeAuteurs: this.props.listeAuteurs,
+
+            mail: this.props.mail,
+            prenom: this.props.prenom,
+            nom: this.props.nom
         };
 
         this.updateAnnonce();
@@ -26,7 +30,15 @@ export default class Annonce extends React.Component {
     updateAnnonce() {
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);
-        console.log(urlParams.get('id'));
+
+        fetch('/Volos/api/loggedUtilisateur')
+            .then(data => data.json())
+            .then(utilisateur => {
+                this.setState({
+                    nom: utilisateur.nom,
+                    prenom: utilisateur.prenom
+                })
+            })
 
         fetch('/Volos/api/showPublishAnnonce?id='+urlParams.get('id'))
             .then(data => data.json())
@@ -42,19 +54,48 @@ export default class Annonce extends React.Component {
                     });
                 }
 
-                console.log(listeAuteurs);
-                this.setState({id: annonce.id,
+
+                let dateAffichage = "";
+                let datePublication = "";
+                let dateDebut = "";
+                let dateFin = "";
+
+                if(annonce.dateAffichage != null) {
+                    dateAffichage = new Date(annonce.dateAffichage);
+                    dateAffichage = dateAffichage.getDate() + "-" + (dateAffichage.getMonth()+1)
+                        + "-" + dateAffichage.getFullYear();
+                }
+                if(annonce.datePublication != null) {
+                    datePublication = new Date(annonce.datePublication);
+                    datePublication = datePublication.getDate() + "-" + (datePublication.getMonth()+1)
+                        + "-" + datePublication.getFullYear();
+                }
+                if(annonce.dateDebutLocation != null) {
+                    dateDebut = new Date(annonce.dateDebutLocation);
+                    dateDebut = dateDebut.getDate() + "-" + (dateDebut.getMonth()+1)
+                        + "-" + dateDebut.getFullYear();
+                }
+                if(annonce.dateFinLocation != null) {
+                    dateFin = new Date(annonce.dateFinLocation);
+                    dateFin = dateFin.getDate() + "-" + (dateFin.getMonth()+1)
+                        + "-" + dateFin.getFullYear();
+                }
+
+
+                this.setState({
+                    mail: annonce.cip + "@usherbrooke.ca",
+                    id: annonce.id,
                     description: annonce.description,
                     prix: annonce.prix,
-                    dateAffichage: annonce.dateAffichage,
+                    dateAffichage: dateAffichage,
                     categorie: annonce.categorie,
                     titre: annonce.titre,
                     resume: annonce.resume,
                     maisonEdition: annonce.maisonEdition,
-                    datePublication: annonce.datePublication,
+                    datePublication: datePublication,
                     nbChambre: annonce.nombreChambre,
-                    dateDebutLocation: annonce.dateDebutLocation,
-                    dateFinLocation: annonce.dateFinLocation,
+                    dateDebutLocation: dateDebut,
+                    dateFinLocation: dateFin,
                     listeAuteurs: listeAuteurs});
             });
     }
@@ -86,6 +127,15 @@ export default class Annonce extends React.Component {
             dateFinLocation = <p>Date de fin de location: {this.state.dateFinLocation}</p>
         }
 
+        var subjectMail = "Offre Volos";
+        var bodyMail = "Bonjour,\n" +
+                    this.state.prenom + " " + this.state.nom + " est intéresssé par l'annonce suivante:\n" +
+                    "Titre: " + this.state.titre + "\n" +
+                    "Description: " + this.state.description + "\n" +
+                    "Prix: " + this.state.prix + "\n" +
+                    "Date d'affichage: " + this.state.dateAffichage + "\n" +
+                    "Catégorie: " + this.state.categorie;
+
         return (
             <div className="card">
                 <img src="https://i.imgur.com/gPEswtC.jpg" />
@@ -101,6 +151,10 @@ export default class Annonce extends React.Component {
                 {nbChambre}
                 {dateDebutLocation}
                 {dateFinLocation}
+                <p><a href={"mailto:" + this.state.mail +
+                            "?subject=" + encodeURIComponent(subjectMail) +
+                            "&body=" + encodeURIComponent(bodyMail)}>
+                            Envoyer un mail à ce correspondant</a></p>
             </div>
         );
     }

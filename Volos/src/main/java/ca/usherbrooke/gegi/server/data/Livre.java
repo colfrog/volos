@@ -49,11 +49,8 @@ public class Livre extends Annonce{
         this.maisonEdition = maisonEdition;
     }
 
-    public String getDatePublication() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        String date = simpleDateFormat.format(datePublication);
-        return date;
+    public Date getDatePublication() {
+        return datePublication;
     }
 
     public void setDatePublication(Date datePublication) {

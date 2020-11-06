@@ -34,19 +34,19 @@ class FormAnnonce extends React.Component {
 
             if(this.state.categorie == "livre"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
-                            <label>Résumé</label>
+                            <label className="ajout_type resumeLabel">Résumé:</label>
                             <textarea
-                                className="resumeText"
+                                className="resumeText ajout_input"
                                 name="livreResume"
                                 defaultValue={this.state.livreResume}
                                 onChange={this.onChange}
                             />
                         </div>
                         <div>
-                            <label>Maison d'édition</label>
-                            <input
+                            <label className="ajout_type">Maison d'édition:</label>
+                            <input className="ajout_input"
                                 type="text"
                                 name="livreMaisonEdition"
                                 id="inputLivreMaisonEdition"
@@ -55,8 +55,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de publication</label>
-                            <input
+                            <label className="ajout_type">Date de publication:</label>
+                            <input className="ajout_input"
                                 type="date"
                                 name="livreDatePublication"
                                 id="inputLivreDatePublication"
@@ -66,33 +66,33 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Nom et prenom de l'auteur</label>
-                            <input
-                                type="text"
-                                name="livreNomAuteur"
-                                id="inputLivreNomAuteur"
-                                placeholder="Nom"
-                                onChange={this.onChange}
-                                defaultValue=''
+                            <label className="ajout_type">Nom et prenom de l'auteur:</label>
+                            <input className="ajout_input_Auteur"
+                                   type="text"
+                                   name="livreNomAuteur"
+                                   id="inputLivreNomAuteur"
+                                   placeholder="Nom"
+                                   onChange={this.onChange}
+                                   defaultValue=''
                             />
-                            <input
-                                type="text"
-                                name="livrePrenomAuteur"
-                                id="inputLivrePrenomAuteur"
-                                placeholder="Prenom"
-                                onChange={this.onChange}
-                                defaultValue=''
+                            <input className="ajout_input_Auteur"
+                                   type="text"
+                                   name="livrePrenomAuteur"
+                                   id="inputLivrePrenomAuteur"
+                                   placeholder="Prenom"
+                                   onChange={this.onChange}
+                                   defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
             else if (this.state.categorie == "loyer"){
                 categoryHTML = (
-                    <fragment>
+                    <div>
                         <div>
-                            <label>Taille de l'appartement</label>
-                            <input
+                            <label className="ajout_type">Nombre de chambres:</label>
+                            <input className="ajout_input"
                                 type="text"
                                 name="loyerTaille"
                                 id="inputLoyerTaille"
@@ -101,8 +101,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de début de location</label>
-                            <input
+                            <label className="ajout_type">Date de début de location:</label>
+                            <input className="ajout_input"
                                 type="date"
                                 name="loyerDateDebutLocation"
                                 id="inputLoyerDateDebutLocation"
@@ -112,8 +112,8 @@ class FormAnnonce extends React.Component {
                             />
                         </div>
                         <div>
-                            <label>Date de fin de location</label>;
-                            <input
+                            <label className="ajout_type">Date de fin de location:</label>;
+                            <input className="ajout_input"
                                 type="date"
                                 name="loyerDateFinLocation"
                                 id="inputLoyerDateFinLocation"
@@ -122,7 +122,7 @@ class FormAnnonce extends React.Component {
                                 defaultValue=''
                             />
                         </div>
-                    </fragment>
+                    </div>
                 );
             }
 
@@ -139,35 +139,65 @@ class FormAnnonce extends React.Component {
         if(this.state.titre == null || this.state.titre == ''){
             document.getElementById("titreInput").classList.add("redBorder");
             OK = false;
+        } else {
+            document.getElementById("titreInput").classList.remove("redBorder");
         }
+
         if(this.state.prix == '' || !Number(this.state.prix)){
             document.getElementById("prixInput").classList.add("redBorder");
             OK = false;
+        } else {
+            document.getElementById("prixInput").classList.remove("redBorder");
         }
         //Vérification des données d'un livre
         if(this.state.categorie == 'livre'){
             if(this.state.livreMaisonEdition == ''){
                 document.getElementById("inputLivreMaisonEdition").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreMaisonEdition").classList.remove("redBorder");
             }
+
             if(this.state.livreDatePublication == ''){
                 document.getElementById("inputLivreDatePublication").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreDatePublication").classList.remove("redBorder");
             }
+
             if(this.state.livreNomAuteur == ''){
                 document.getElementById("inputLivreNomAuteur").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivreNomAuteur").classList.remove("redBorder");
             }
+
             if(this.state.livrePrenomAuteur == ''){
                 document.getElementById("inputLivrePrenomAuteur").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLivrePrenomAuteur").classList.remove("redBorder");
             }
         }
         //Vérification des données d'un loyer
         if(this.state.categorie == 'loyer'){
-            if(this.state.loyerTaille == ''){
+            if(this.state.loyerTaille == '' ||
+                this.state.loyerTaille != parseInt(this.state.loyerTaille, 10)){
                 document.getElementById("inputLoyerTaille").classList.add("redBorder");
                 OK = false;
+            } else {
+                document.getElementById("inputLoyerTaille").classList.remove("redBorder");
+            }
+
+            var debut = encodeURIComponent(this.state.loyerDateDebutLocation);
+            var fin = encodeURIComponent(this.state.loyerDateFinLocation);
+            if(debut >= fin) {
+                document.getElementById("inputLoyerDateDebutLocation").classList.add("redBorder");
+                document.getElementById("inputLoyerDateFinLocation").classList.add("redBorder");
+                OK = false;
+            } else {
+                document.getElementById("inputLoyerDateDebutLocation").classList.remove("redBorder");
+                document.getElementById("inputLoyerDateFinLocation").classList.remove("redBorder");
             }
         }
 
@@ -211,6 +241,7 @@ class FormAnnonce extends React.Component {
                 callAPI = "description="+encodeURIComponent(this.state.description)
                     +"&prix="+encodeURIComponent(this.state.prix)
                     +"&titre="+encodeURIComponent(this.state.titre) //Annonce
+                    +"&nbChambre="+encodeURIComponent(this.state.loyerTaille)
                     +"&dateDebutLocation="+encodeURIComponent(this.state.loyerDateDebutLocation)
                     +"&dateFinLocation="+encodeURIComponent(this.state.loyerDateFinLocation); //Loyer
 
@@ -230,8 +261,8 @@ class FormAnnonce extends React.Component {
         return (
             <form onSubmit={this.sumbitHandler}>
                 <div className="titre">
-                    <label>Titre</label>
-                    <input
+                    <label className="ajout_type">Titre:</label>
+                    <input className="ajout_input"
                         type="text"
                         name="titre"
                         id="titreInput"
@@ -239,8 +270,8 @@ class FormAnnonce extends React.Component {
                     />
                 </div>
                 <div className="categorie">
-                    <label>Catégorie</label>
-                    <select name="categorie" onChange={this.selectChange}>
+                    <label className="ajout_type">Catégorie:</label>
+                    <select className="ajout_input" name="categorie" onChange={this.selectChange}>
                         <option value="autre">Autre</option>
                         <option value="livre">Livre</option>
                         <option value="loyer">Loyer</option>
@@ -248,8 +279,8 @@ class FormAnnonce extends React.Component {
                     <div id="categoryDependent"></div>
                 </div>
                 <div className="prix">
-                    <label>Prix</label>
-                    <input
+                    <label className="ajout_type">Prix:</label>
+                    <input className="ajout_input"
                         type="text"
                         name="prix"
                         id="prixInput"
@@ -257,9 +288,9 @@ class FormAnnonce extends React.Component {
                     />
                 </div>
                 <div className="description">
-                    <label>Description</label>
+                    <label className="ajout_type descriptionLabel">Description:</label>
                     <textarea
-                        className="descriptionText"
+                        className="descriptionText ajout_type"
                         name="description"
                         defaultValue={this.state.description}
                         onChange={this.onChange}
@@ -270,12 +301,12 @@ class FormAnnonce extends React.Component {
                         <button>Ajouter une photo</button>
                     </p>
                 </div>
-                <div>
-                    <span className="Annuler">
+                <div className="buttonsAjout">
+                    <span className="AnnulerAjout">
                         <a className="annulerBtn" href="index.html">Annuler</a>
                     </span>
-                    <span className="Publier">
-                        <input
+                    <span className="PublierAjout">
+                        <input className="publierBtn"
                             type="submit"
                             value="Publier"
                         />

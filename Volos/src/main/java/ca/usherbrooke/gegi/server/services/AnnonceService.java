@@ -82,6 +82,13 @@ public class AnnonceService {
     }
 
     /**
+     * Permet de changer l'état de l'annonce passé en paramètre à ouvert
+     */
+    @GET
+    @Path("openAnnonce")
+    public void openAnnonce(@QueryParam("id") Integer id) { annonceMapper.openAnnonce(id); }
+
+    /**
      * Permet de changer l'état de l'annonce passé en paramètre à fermé
      */
     @GET
@@ -91,12 +98,12 @@ public class AnnonceService {
     }
 
     /**
-     * Permet de changer l'état de l'annonce passé en paramètre à vendue
+     * Permet de changer l'état de l'annonce passé en paramètre à vendu
      */
     @GET
-    @Path("removeAnnonce")
-    public void removeAnnonce(@QueryParam("id") Integer id) {
-        annonceMapper.removeAnnonce(id);
+    @Path("annonceVendue")
+    public void annonceVendue(@QueryParam("id") Integer id) {
+        annonceMapper.annonceVendue(id);
     }
 
     /**

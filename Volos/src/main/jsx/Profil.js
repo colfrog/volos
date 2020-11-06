@@ -24,14 +24,24 @@ export default class Profil extends React.Component {
 
     render() {
         return (
-            <div className="informationsusager">
-                <p>Cip: {this.state.cip}</p>
-                <p>Prénom: {this.state.prenom}</p>
-                <p>Nom: {this.state.nom}</p>
-                <p>Mail: {this.state.mail}</p>
-                <p>Faculté: {this.state.nomFaculte}</p>
-                <p>Département: {this.state.nomDepartement}</p>
-            </div>
+            <span>
+                <span className="profilLeftData1">
+                    <p>Cip:</p>
+                    <p>Prénom:</p>
+                    <p>Nom:</p>
+                    <p>Mail:</p>
+                    <p>Faculté:</p>
+                    <p>Département:</p>
+                </span>
+                <span className="profilLeftData2">
+                    <p>{this.state.cip}</p>
+                    <p>{this.state.prenom}</p>
+                    <p>{this.state.nom}</p>
+                    <p>{this.state.mail}</p>
+                    <p>Génie</p>
+                    <p>Électrique et Informatique</p>
+                </span>
+            </span>
         );
     }
 }
