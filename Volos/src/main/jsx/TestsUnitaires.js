@@ -9,12 +9,16 @@ class TestsMicroServices extends React.Component {
 
     //AJOUTER UNE NOUVELLE LIGNE AVEC LE ID DE VOTRE BOUTTON
     buttonPress(){
+        //Tests Auteur
+        document.getElementById('reactTestAuteurButton').click();
+        //Tests Loyer
+        document.getElementById('reactTestLoyerButton').click();
         //Tests Annonce
         document.getElementById('reactTestAnnonceButton').click();
         //Tests Utilisateur
         document.getElementById('reactTestUtilisateurButton').click();
-        //Tests Auteur
-        document.getElementById('reactTestAuteurButton').click();
+        //Tests favoris
+        document.getElementById('reactTestFavorisButton').click();
     }
 
     render() {
@@ -147,6 +151,156 @@ var domContainer = document.querySelector('#testAuteurButton');
 ReactDOM.render(<TestAuteur/>, domContainer);
 
 ///****** FIN MICRO-SERVICE AUTEUR ******////
+
+
+
+////****** MICRO-SERVICE LOYER ******////
+
+//Classe de données pour le micro-service Auteur
+class Loyer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            nombreChambre: this.props.nombreChambre,
+            dateDebutLocation: this.props.dateDebutLocation,
+            dateFinLocation: this.props.dateFinLocation,
+            titreTest: this.props.titreTest,    //Titre du test effectué
+            ok: this.props.ok   //Boolean indiquant si le test à été réussi avec succès
+        };
+    }
+
+    render() {
+        let dateDebutLocationAffichage = new Date(this.state.dateDebutLocation);
+        dateDebutLocationAffichage = dateDebutLocationAffichage.getDate() + "/" +
+                                    (dateDebutLocationAffichage.getMonth()+1) + "/" +
+                                     dateDebutLocationAffichage.getFullYear();
+
+        let dateFinLocationAffichage = new Date(this.state.dateFinLocation);
+        dateFinLocationAffichage = dateFinLocationAffichage.getDate() + "/" +
+                                  (dateFinLocationAffichage.getMonth()+1) + "/" +
+                                   dateFinLocationAffichage.getFullYear();
+
+        if(this.state.ok != null){  //Est-ce que le test à été fait correctement
+            if(this.state.ok){ //Test réussi
+                return (
+                    <div className='testReturnWrapper greenBckg'>
+                        Test: {this.state.titreTest} | {this.state.nombreChambre} |
+                              {dateDebutLocationAffichage} | {dateFinLocationAffichage}
+                    </div>
+                );
+            }
+            else{
+                return ( //Test échoué
+                    <div className='testReturnWrapper redBckg'>
+                        Test: {this.state.titreTest} | {this.state.nombreChambre} |
+                              {dateDebutLocationAffichage} | {dateFinLocationAffichage}
+                    </div>
+                );
+            }
+        }
+        else{
+            return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
+                <div className='testReturnWrapper'>
+                    Test: {this.state.titreTest} | {this.state.nombreChambre} |
+                          {dateDebutLocationAffichage} | {dateFinLocationAffichage}
+                </div>
+            );
+        }
+    }
+}
+
+//Classe des tests du micro-service
+class TestLoyer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loyers: [],
+            increment: this.props.increment
+        };
+
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests(){
+        this.loyerById(1);
+        this.loyers();
+        this.insertLoyer();
+        this.updateLoyer();
+    }
+
+    //TEST LoyerById
+    loyerById(id){
+        fetch("/Volos/api/loyerById?id="+id)
+            .then(data => data.json())
+            .then(loyer => {
+                if(loyer.id === id)
+                {
+                    this.state.loyers.push(<Loyer key={this.state.increment} nombreChambre={loyer.nombreChambre}
+                                                    dateDebutLocation={loyer.dateDebutLocation} dateFinLocation={loyer.dateFinLocation}
+                                                    titreTest={'LoyerById'} ok={true}/>)
+                    this.state.increment++;
+                }
+                else
+                {
+                    this.state.loyers.push(<Loyer key={this.state.increment} nombreChambre={loyer.nombreChambre}
+                                                    dateDebutLocation={loyer.dateDebutLocation} dateFinLocation={loyer.dateFinLocation}
+                                                    titreTest={'LoyerById'} ok={false}/>)
+                    this.state.increment++;
+                }
+            });
+    }
+
+    //TEST Loyers
+    loyers(){
+        fetch("/Volos/api/loyers")
+            .then(data => data.json())
+            .then(loyers => {
+                loyers.forEach(loyer => {
+                    this.state.loyers.push(<Loyer key={this.state.increment} nombreChambre={loyer.nombreChambre}
+                                                  dateDebutLocation={loyer.dateDebutLocation} dateFinLocation={loyer.dateFinLocation}
+                                                  titreTest={'Loyers'} ok={null}/>)
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST InsertLoyer
+    insertLoyer(){
+        this.state.loyers.push(<Loyer key={this.state.increment} titreTest={'InsertLoyer'} ok={false} />);
+        this.state.increment++;
+    }
+
+    //TEST UpdateLoyer
+    updateLoyer(){
+        this.state.loyers.push(<Loyer key={this.state.increment} titreTest={'UpdateLoyer'} ok={false} />);
+        this.state.increment++;
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress(){
+        let domContain = document.querySelector('#loyerServiceReturn');
+        ReactDOM.render(this.state.loyers, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestLoyerButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+//Lien du bouton 'Test' avec React
+var domContainer = document.querySelector('#testLoyerButton');
+ReactDOM.render(<TestLoyer/>, domContainer);
+
+///****** FIN MICRO-SERVICE LOYER ******////
 
 
 
@@ -358,7 +512,7 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 
 ////****** MICRO-SERVICE ANNONCE ******////
-//Classe de données pour le micro-service Annonce
+//classe de données des micro-services Annonce, Favoris, Loyer et Livre
 class Annonce extends React.Component {
     constructor(props) {
         super(props);
@@ -419,7 +573,107 @@ class Annonce extends React.Component {
         }
     }
 }
+//Fin classe de données annonce
 
+
+////****** MICRO-SERVICES FAVORIS ******////
+
+//classe des tests du micro-service
+class TestFavoris extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: [],
+            increment: this.props.increment
+        };
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests() {
+        this.testGetFavoris("durp0701");
+        this.testAddFavoris("scop2401", 0);
+    }
+
+    //TEST getFavoris
+    testGetFavoris(cip) {
+        fetch("/Volos/api/favoris?cip="+cip)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                           id={annonce.id} prix={annonce.prix}
+                                           dateAffichage={annonce.dateAffichage} cip={annonce.cip}
+                                           categorie={annonce.categorie} etat={annonce.etat} titreTest={'GetFavoris'}
+                                           ok={null}/>)
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST addFavoris
+    testAddFavoris(cip, annonceId) {
+        return fetch("/Volos/api/ajouter_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "addFavoris"));
+    }
+
+    //TEST existFavoris
+    testExistFavoris(cip, annonceId, test) {
+        return fetch("/Volos/api/existFavori?cip="+cip+"&id="+annonceId)
+            .then(data => data.json())
+            .then(data => {
+                if (data == true) {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={true}/>)
+                    this.state.increment++;
+                } else {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={false}/>)
+                    this.state.increment++;
+                }
+
+                if(test === "addFavoris") {
+                    this.testRemoveFavoris(cip, annonceId);
+                }
+            });
+    }
+
+    //TEST removeFavoris
+    testRemoveFavoris(cip, annonceId) {
+        return fetch("/Volos/api/retirer_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "removeFavoris"));
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress() {
+        let domContain = document.querySelector('#favorisServiceReturn');
+        ReactDOM.render(this.state.annonces, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestFavorisButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+//Lien du bouton 'Test' avec React
+var domContainer = document.querySelector('#testFavorisButton');
+ReactDOM.render(<TestFavoris/>, domContainer);
+
+////****** FIN MICRO-SERVICES FAVORIS ******////
+
+
+
+////****** MICRO-SERVICE ANNONCE ******////
+
+//classe des tests du micro-service Annonce
 //Classe des tests du micro-service
 class TestAnnonce extends React.Component {
     constructor(props) {

@@ -10,6 +10,7 @@ export default class Annonce extends React.Component {
             prix: this.props.prix,
             dateAffichage: this.props.dateAffichage,
             categorie: this.props.categorie,
+            hasPhoto: false,
             titre: this.props.titre,
             resume: this.props.resume,
             maisonEdition: this.props.maisonEdition,
@@ -38,7 +39,7 @@ export default class Annonce extends React.Component {
                     nom: utilisateur.nom,
                     prenom: utilisateur.prenom
                 })
-            })
+            });
 
         fetch('/Volos/api/showPublishAnnonce?id='+urlParams.get('id'))
             .then(data => data.json())
@@ -53,7 +54,6 @@ export default class Annonce extends React.Component {
                         />)
                     });
                 }
-
 
                 let dateAffichage = "";
                 let datePublication = "";
@@ -81,6 +81,9 @@ export default class Annonce extends React.Component {
                         + "-" + dateFin.getFullYear();
                 }
 
+                fetch(`/Volos/api/hasPhoto?id=${annonce.id}`)
+                    .then(data => data.json())
+                    .then(hasPhoto => this.setState({hasPhoto: hasPhoto}));
 
                 this.setState({
                     mail: annonce.cip + "@usherbrooke.ca",
@@ -103,6 +106,9 @@ export default class Annonce extends React.Component {
     render() {
         let resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
             dateDebutLocation = "", dateFinLocation = "", auteurs = "", image="images/autre.jpg";
+
+        if (this.state.hasPhoto)
+            image = `/Volos/api/photo?id=${this.state.id}`;
 
         if(this.state.categorie === "LIVRE")
         {
