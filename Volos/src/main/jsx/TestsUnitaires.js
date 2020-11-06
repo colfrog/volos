@@ -511,7 +511,6 @@ ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 
 
-////****** MICRO-SERVICE ANNONCE ******////
 //classe de données des micro-services Annonce, Favoris, Loyer et Livre
 class Annonce extends React.Component {
     constructor(props) {
@@ -674,7 +673,6 @@ ReactDOM.render(<TestFavoris/>, domContainer);
 ////****** MICRO-SERVICE ANNONCE ******////
 
 //classe des tests du micro-service Annonce
-//Classe des tests du micro-service
 class TestAnnonce extends React.Component {
     constructor(props) {
         super(props);
