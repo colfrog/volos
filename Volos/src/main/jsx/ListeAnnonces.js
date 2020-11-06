@@ -25,6 +25,7 @@ export default class ListeAnnonces extends React.Component {
                                                      prix={annonce.prix}
                                                      titre={annonce.titre}
                                                      etat={annonce.etat}
+                                                     categorie={annonce.categorie}
                     />);
                 });
 

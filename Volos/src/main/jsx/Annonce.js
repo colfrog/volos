@@ -101,8 +101,8 @@ export default class Annonce extends React.Component {
     }
 
     render() {
-        var resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
-            dateDebutLocation = "", dateFinLocation = "", auteurs = "";
+        let resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
+            dateDebutLocation = "", dateFinLocation = "", auteurs = "", image="autre.jpg";
 
         if(this.state.categorie === "LIVRE")
         {
@@ -119,12 +119,15 @@ export default class Annonce extends React.Component {
             {
                 auteurs = <div>Auteur: {listeAuteurs}</div>
             }
+
+            image="livre.jpg"
         }
         else if(this.state.categorie === "LOYER")
         {
             nbChambre = <p>Nombre de chambres: {this.state.nbChambre}</p>
             dateDebutLocation = <p>Date de début de location: {this.state.dateDebutLocation}</p>
             dateFinLocation = <p>Date de fin de location: {this.state.dateFinLocation}</p>
+            image="loyer.jpg"
         }
 
         var subjectMail = "Offre Volos";
@@ -138,7 +141,7 @@ export default class Annonce extends React.Component {
 
         return (
             <div className="card">
-                <img src="https://i.imgur.com/gPEswtC.jpg" />
+                <img className="img" src={image} />
                 {this.state.titre}
                 <p>{this.state.description}</p>
                 <p>{this.state.prix}$</p>
