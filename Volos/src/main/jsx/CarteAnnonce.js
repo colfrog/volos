@@ -1,3 +1,8 @@
+/*
+ * Gère l'affichage court et intéractif d'un annonce, qui
+ * pourrait aussi bien appartenir à cet utilisateur qu'à
+ * un autre.
+ */
 export default class CarteAnnonce extends React.Component {
     constructor(props) {
         super(props);

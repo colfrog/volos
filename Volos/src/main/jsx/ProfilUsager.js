@@ -1,5 +1,4 @@
 import Profil from '/Volos/components/Profil.js';
-import ListeAnnonces from '/Volos/components/ListeAnnonces.js';
 
 class ProfilUsager extends React.Component {
     render() {
@@ -11,6 +10,7 @@ class ProfilUsager extends React.Component {
     }
 }
 
+// Injecte les informations de l'usager dans la page
 const params = new URLSearchParams(window.location.search);
 var domContainer = document.querySelector('#profil_utilisateur');
 ReactDOM.render(<ProfilUsager cip={params.get('cip')}/>, domContainer);

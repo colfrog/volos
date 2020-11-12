@@ -1,5 +1,10 @@
 import ListeAnnonces from '/Volos/components/ListeAnnonces.js';
 
+/*
+ * Injecte un certain nombre de CarteAnnonce pour les annonces les plus
+ * récentes de chaque catégorie d'annonce.
+ */
+
 function categorie_fetcher(categorie) {
     return (callback) => {
         fetch('/Volos/api/showNouveaux'+categorie)

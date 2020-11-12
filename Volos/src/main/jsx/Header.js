@@ -1,4 +1,6 @@
-//HEADER DU SITE
+/*
+ * Gère le menu principal du site
+ */
 class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -28,5 +30,7 @@ class Header extends React.Component {
         );
     }
 }
+
+// Injecte le menu principal du site dans la page
 var domContainer = document.querySelector('#flagHeader');
 ReactDOM.render(<Header/>, domContainer);
