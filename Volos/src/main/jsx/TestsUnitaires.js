@@ -134,6 +134,8 @@ class TestAnnonce extends React.Component {
         this.testAnnonceNouveauxByCategorie("LOYER");
         this.testAnnonceNouveauxByCategorie("AUTRE");
         this.testFindLastIdAnnonce();
+        this.testInsertAnnonce();
+        this.testUpdateAnnonce();
     }
 
     //TEST annonceById
@@ -347,6 +349,18 @@ class TestAnnonce extends React.Component {
                         this.state.increment++;
                     })
             });
+    }
+
+    //TEST insertAnnonce
+    testInsertAnnonce(){
+        this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'InsertAnnonce'} ok={false} />);
+        this.state.increment++;
+    }
+
+    //TEST updateAnnonce
+    testUpdateAnnonce(){
+        this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'UpdateAnnonce'} ok={false} />);
+        this.state.increment++;
     }
 
     //Lien du bouton avec le render des réponses
