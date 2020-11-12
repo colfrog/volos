@@ -9,16 +9,18 @@ class TestsMicroServices extends React.Component {
 
     //AJOUTER UNE NOUVELLE LIGNE AVEC LE ID DE VOTRE BOUTTON
     buttonPress(){
-        //Tests Auteur
-        document.getElementById('reactTestAuteurButton').click();
-        //Tests Loyer
-        document.getElementById('reactTestLoyerButton').click();
         //Tests Annonce
         document.getElementById('reactTestAnnonceButton').click();
+        //Tests Auteur
+        document.getElementById('reactTestAuteurButton').click();
+        //Tests Favoris
+        document.getElementById('reactTestFavorisButton').click();
+        //Tests Livre
+        document.getElementById('reactTestLivreButton').click();
+        //Tests Loyer
+        document.getElementById('reactTestLoyerButton').click();
         //Tests Utilisateur
         document.getElementById('reactTestUtilisateurButton').click();
-        //Tests favoris
-        document.getElementById('reactTestFavorisButton').click();
     }
 
     render() {
@@ -32,9 +34,340 @@ ReactDOM.render(<TestsMicroServices/>, domContainer);
 //FIN CLASSE EXÉCUTANT TOUT LES TESTS DE MICRO-SERVICES
 
 
-///****** MICRO-SERVICE X ******////
 
-///****** FIN MICRO-SERVICE X ******////
+//classe de données des micro-services Annonce et Favoris
+class Annonce extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            titre: this.props.titre,
+            description: this.props.description,
+            id: this.props.id,
+            prix: this.props.prix,
+            dateAffichage: this.props.dateAffichage,
+            cip: this.props.cip,
+            categorie: this.props.categorie,
+            etat: this.props.etat,
+            titreTest: this.props.titreTest,    //Titre du test effectué
+            ok: this.props.ok   //Boolean indiquant si le test à été réussi avec succès
+        };
+    }
+
+    render() {
+        let dateAffichage = new Date(this.state.dateAffichage);
+
+        dateAffichage = dateAffichage.getDate() + "-" + (dateAffichage.getMonth()+1)
+
+            + "-" + dateAffichage.getFullYear();
+        if(this.state.ok != null){  //Est-ce que le test à été fait correctement
+            if(this.state.ok){ //Test réussi
+                return (
+                    <div className='testReturnWrapper greenBckg'>
+                        Test: {this.state.titreTest} |
+                        {this.state.id}: {this.state.titre} {this.state.description} |
+                        {this.state.prix} | {dateAffichage} |
+                        {this.state.cip} | {this.state.etat} |
+                        {this.state.categorie}
+                    </div>
+                );
+            }
+            else{
+                return ( //Test échoué
+                    <div className='testReturnWrapper redBckg'>
+                        Test: {this.state.titreTest} |
+                        {this.state.id}: {this.state.titre} {this.state.description} |
+                        {this.state.prix} | {dateAffichage} |
+                        {this.state.cip} | {this.state.etat} |
+                        {this.state.categorie}
+                    </div>
+                );
+            }
+        }
+        else{
+            return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
+                <div className='testReturnWrapper'>
+                    Test: {this.state.titreTest} |
+                    {this.state.id}: {this.state.titre} {this.state.description} |
+                    {this.state.prix} | {dateAffichage} |
+                    {this.state.cip} | {this.state.etat} |
+                    {this.state.categorie}
+                </div>
+            );
+        }
+    }
+}
+//Fin classe de données annonce
+
+
+
+////****** MICRO-SERVICE ANNONCE ******////
+
+//classe des tests du micro-service Annonce
+class TestAnnonce extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: [],
+            increment: this.props.increment
+        };
+
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests(){
+        this.testAnnonces();
+        this.testAnnonceById(1);
+        this.testAnnonceById(0);
+        this.testAnnoncesByCip("boui2215");
+        this.testOpenAnnonce(13);
+        this.testAnnoncePublishedByCategorie("LIVRE");
+        this.testAnnoncePublishedByCategorie("LOYER");
+        this.testAnnoncePublishedByCategorie("AUTRE");
+        this.testAnnonceNouveauxByCategorie("LIVRE");
+        this.testAnnonceNouveauxByCategorie("LOYER");
+        this.testAnnonceNouveauxByCategorie("AUTRE");
+        this.testFindLastIdAnnonce();
+    }
+
+    //TEST annonceById
+    testAnnonceById(id) {
+        fetch("/Volos/api/annonceById?id="+id)
+            .then(data => data.json())
+            .then(annonce => {
+                //Vérification de l'id recherché
+                if(annonce.id === id){  //RÉUSSI
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                      etat={annonce.etat} titreTest={'annonceById'} ok={true} />)
+                }
+                else{   //ÉCHOUÉ
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                      etat={annonce.etat} titreTest={'annonceById'} ok={false} />)
+                }
+
+                this.state.increment++;
+            });
+    }
+
+    //TEST annoncesByCip
+    testAnnoncesByCip(cip) {
+        fetch("/Volos/api/annoncesByCip?cip="+cip)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    //Vérification du cip recherché
+                    if(annonce.cip === cip){  //RÉUSSI
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annoncesByCip'} ok={true} />)
+                    }
+                    else{   //ÉCHOUÉ
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annoncesByCip'} ok={false} />)
+                    }
+
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST annonces
+    testAnnonces() {
+        fetch("/Volos/api/annonces")
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    //À VÉRIFIER MANUELLEMENT
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                      etat={annonce.etat} titreTest={'annonces'} ok={null} />)
+
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST openAnnonce
+    testOpenAnnonce(id) {
+        fetch("/Volos/api/openAnnonce?id="+id)
+            .then(() =>
+                fetch("/Volos/api/annonceById?id="+id)
+                    .then(data => data.json())
+                    .then(annonce => {
+                        //Vérification de l'id recherché
+                        if(annonce.etat == 0){  //RÉUSSI
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'openAnnonce'} ok={true} />)
+                        }
+                        else{   //ÉCHOUÉ
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'openAnnonce'} ok={false} />)
+                        }
+
+                        this.state.increment++;
+
+                        this.testCancelAnnonce(id);
+                    })
+            );
+    }
+
+    //TEST cancelAnnonce
+    testCancelAnnonce(id) {
+        fetch("/Volos/api/cancelAnnonce?id="+id)
+            .then(() =>
+                fetch("/Volos/api/annonceById?id="+id)
+                    .then(data => data.json())
+                    .then(annonce => {
+                        //Vérification de l'id recherché
+                        if(annonce.etat == 1){  //RÉUSSI
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'cancelAnnonce'} ok={true} />)
+                        }
+                        else{   //ÉCHOUÉ
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'cancelAnnonce'} ok={false} />)
+                        }
+
+                        this.state.increment++;
+
+                        this.testAnnonceVendue(id);
+                    })
+            );
+    }
+
+    //TEST annonceVendue
+    testAnnonceVendue(id) {
+        fetch("/Volos/api/annonceVendue?id="+id)
+            .then(() =>
+                fetch("/Volos/api/annonceById?id="+id)
+                    .then(data => data.json())
+                    .then(annonce => {
+                        //Vérification de l'id recherché
+                        if(annonce.etat == 2){  //RÉUSSI
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'annonceVendue'} ok={true} />)
+                        }
+                        else{   //ÉCHOUÉ
+                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                              etat={annonce.etat} titreTest={'annonceVendue'} ok={false} />)
+                        }
+
+                        this.state.increment++;
+                    })
+            );
+    }
+
+    //TEST annoncePublishedByCategorie
+    testAnnoncePublishedByCategorie(categorie) {
+        fetch("/Volos/api/annoncePublishedByCategorie?categorie="+categorie)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    //Vérification de le catégorie recherché
+                    if(annonce.categorie == categorie){  //RÉUSSI
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annoncePublishedByCategorie'} ok={true} />)
+                    }
+                    else{   //ÉCHOUÉ
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annoncePublishedByCategorie'} ok={false} />)
+                    }
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST annonceNouveauxByCategorie
+    testAnnonceNouveauxByCategorie(categorie) {
+        fetch("/Volos/api/annonceNouveauxByCategorie?categorie="+categorie)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    if(annonce.categorie == categorie){  //À VÉRIFIER MANUELLEMENT
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annonceNouveauxByCategorie'} ok={null} />)
+                    }
+                    else{   //ÉCHOUÉ
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'annonceNouveauxByCategorie'} ok={false} />)
+                    }
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST findLastIdAnnonce
+    testFindLastIdAnnonce() {
+        fetch("/Volos/api/findLastIdAnnonce")
+            .then(data => data.json())
+            .then(dernierId => {
+                fetch("/Volos/api/annonceById?id="+dernierId)
+                    .then(data => data.json())
+                    .then(annonce => {
+                        //À VÉRIFIER MANUELLEMENT
+                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
+                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
+                                                          etat={annonce.etat} titreTest={'findLastIdAnnonce'} ok={null} />)
+
+                        this.state.increment++;
+                    })
+            });
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress(){
+        let domContain = document.querySelector('#annonceServiceReturn');
+        ReactDOM.render(this.state.annonces, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestAnnonceButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+
+//Lien du bouton 'testAnnonceButton' avec React
+domContainer = document.querySelector('#testAnnonceButton');
+ReactDOM.render(<TestAnnonce/>, domContainer);
+
+////****** FIN MICRO-SERVICE ANNONCE ******////
 
 
 
@@ -151,6 +484,244 @@ var domContainer = document.querySelector('#testAuteurButton');
 ReactDOM.render(<TestAuteur/>, domContainer);
 
 ///****** FIN MICRO-SERVICE AUTEUR ******////
+
+
+
+////****** MICRO-SERVICES FAVORIS ******////
+
+//classe des tests du micro-service
+class TestFavoris extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            annonces: [],
+            increment: this.props.increment
+        };
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests() {
+        this.testGetFavoris("durp0701");
+        this.testAddFavoris("scop2401", 0);
+    }
+
+    //TEST getFavoris
+    testGetFavoris(cip) {
+        fetch("/Volos/api/favoris?cip="+cip)
+            .then(data => data.json())
+            .then(annonces => {
+                annonces.forEach(annonce => {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
+                                                      id={annonce.id} prix={annonce.prix}
+                                                      dateAffichage={annonce.dateAffichage} cip={annonce.cip}
+                                                      categorie={annonce.categorie} etat={annonce.etat} titreTest={'GetFavoris'}
+                                                      ok={null}/>)
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST addFavoris
+    testAddFavoris(cip, annonceId) {
+        return fetch("/Volos/api/ajouter_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "addFavoris"));
+    }
+
+    //TEST existFavoris
+    testExistFavoris(cip, annonceId, test) {
+        return fetch("/Volos/api/existFavori?cip="+cip+"&id="+annonceId)
+            .then(data => data.json())
+            .then(data => {
+                if (data == true) {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={true}/>)
+                    this.state.increment++;
+                } else {
+                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
+                                                      ok={false}/>)
+                    this.state.increment++;
+                }
+
+                if(test === "addFavoris") {
+                    this.testRemoveFavoris(cip, annonceId);
+                }
+            });
+    }
+
+    //TEST removeFavoris
+    testRemoveFavoris(cip, annonceId) {
+        return fetch("/Volos/api/retirer_favori?cip="+cip+"&id="+annonceId)
+            .then(() => this.testExistFavoris(cip, annonceId, "removeFavoris"));
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress() {
+        let domContain = document.querySelector('#favorisServiceReturn');
+        ReactDOM.render(this.state.annonces, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestFavorisButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+//Lien du bouton 'Test' avec React
+var domContainer = document.querySelector('#testFavorisButton');
+ReactDOM.render(<TestFavoris/>, domContainer);
+
+////****** FIN MICRO-SERVICES FAVORIS ******////
+
+
+
+///****** MICRO-SERVICE LIVRE ******////
+
+//Classe de données pour le micro-service Livre
+class Livre extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            resume: this.props.resume,
+            maisonEdition: this.props.maisonEdition,
+            datePublication: this.props.datePublication,
+            titreTest: this.props.titreTest,    //Titre du test effectué
+            ok: this.props.ok   //Boolean indiquant si le test à été réussi avec succès
+        };
+    }
+
+    render() {
+        let datePublication = new Date(this.state.datePublication);
+        datePublication = datePublication.getDate() + "/" +
+            (datePublication.getMonth()+1) + "/" +
+            datePublication.getFullYear();
+
+        if(this.state.ok != null){  //Est-ce que le test à été fait correctement
+            if(this.state.ok){ //Test réussi
+                return (
+                    <div className='testReturnWrapper greenBckg'>
+                        Test: {this.state.titreTest} | {this.state.resume} | {this.state.maisonEdition} | {datePublication}
+                    </div>
+                );
+            }
+            else{
+                return ( //Test échoué
+                    <div className='testReturnWrapper redBckg'>
+                        Test: {this.state.titreTest} | {this.state.resume} | {this.state.maisonEdition} | {datePublication}
+                    </div>
+                );
+            }
+        }
+        else{
+            return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
+                <div className='testReturnWrapper'>
+                    Test: {this.state.titreTest} | {this.state.resume} | {this.state.maisonEdition} | {datePublication}
+                </div>
+            );
+        }
+    }
+}
+
+//Classe des tests du micro-service
+class TestLivre extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            livres: [],
+            increment: this.props.increment
+        };
+
+        this.state.increment = 0;
+
+        //Éxectuer tout les tests du micro-service
+        this.executerTests();
+
+        // This binding is necessary to make `this` work in the callback
+        this.buttonPress = this.buttonPress.bind(this);
+    }
+
+    //Éxecute tout les tests
+    executerTests(){
+        this.livreById(2);
+        this.livres();
+        this.insertLivre();
+        this.updateLivre();
+    }
+
+    //TEST LivreById
+    livreById(id){
+        fetch("/Volos/api/livreById?id="+id)
+            .then(data => data.json())
+            .then(livre => {
+                console.log(livre);
+                if(livre.id === id)
+                {
+                    this.state.livres.push(<Livre key={this.state.increment} resume={livre.resume}
+                                                  maisonEdition={livre.maisonEdition} datePublication={livre.datePublication}
+                                                  titreTest={'LivreById'} ok={true}/>)
+                    this.state.increment++;
+                }
+                else
+                {
+                    this.state.livres.push(<Livre key={this.state.increment} resume={livre.resume}
+                                                  maisonEdition={livre.maisonEdition} datePublication={livre.datePublication}
+                                                  titreTest={'LivreById'} ok={false}/>)
+                    this.state.increment++;
+                }
+            });
+    }
+
+    //TEST Livres
+    livres(){
+        fetch("/Volos/api/livres")
+            .then(data => data.json())
+            .then(livres => {
+                livres.forEach(livre => {
+                    this.state.livres.push(<Livre key={this.state.increment} resume={livre.resume}
+                                                  maisonEdition={livre.maisonEdition} datePublication={livre.datePublication}
+                                                  titreTest={'Livres'} ok={null}/>)
+                    this.state.increment++;
+                });
+            });
+    }
+
+    //TEST InsertLivre
+    insertLivre(){
+        this.state.livres.push(<Livre key={this.state.increment} titreTest={'InsertLivre'} ok={false} />);
+        this.state.increment++;
+    }
+
+    //TEST UpdateLivre
+    updateLivre(){
+        this.state.livres.push(<Livre key={this.state.increment} titreTest={'UpdateLivre'} ok={false} />);
+        this.state.increment++;
+    }
+
+    //Lien du bouton avec le render des réponses
+    buttonPress(){
+        let domContain = document.querySelector('#livreServiceReturn');
+        ReactDOM.render(this.state.livres, domContain);
+    }
+
+    render() {
+        return (
+            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
+            <button id='reactTestLivreButton' onClick={this.buttonPress}>TestReact</button>
+        )
+    }
+}
+//Lien du bouton 'Test' avec React
+var domContainer = document.querySelector('#testLivreButton');
+ReactDOM.render(<TestLivre/>, domContainer);
+
+///****** FIN MICRO-SERVICE LIVRE ******////
 
 
 
@@ -508,436 +1079,3 @@ var domContainer = document.querySelector('#testUtilisateurButton');
 ReactDOM.render(<TestUtilisateur/>, domContainer);
 
 ////****** FIN MICRO-SERVICE UTILISATEUR ******////
-
-
-
-//classe de données des micro-services Annonce, Favoris, Loyer et Livre
-class Annonce extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            titre: this.props.titre,
-            description: this.props.description,
-            id: this.props.id,
-            prix: this.props.prix,
-            dateAffichage: this.props.dateAffichage,
-            cip: this.props.cip,
-            categorie: this.props.categorie,
-            etat: this.props.etat,
-            titreTest: this.props.titreTest,    //Titre du test effectué
-            ok: this.props.ok   //Boolean indiquant si le test à été réussi avec succès
-        };
-    }
-
-    render() {
-        let dateAffichage = new Date(this.state.dateAffichage);
-
-        dateAffichage = dateAffichage.getDate() + "-" + (dateAffichage.getMonth()+1)
-
-            + "-" + dateAffichage.getFullYear();
-        if(this.state.ok != null){  //Est-ce que le test à été fait correctement
-            if(this.state.ok){ //Test réussi
-                return (
-                    <div className='testReturnWrapper greenBckg'>
-                        Test: {this.state.titreTest} |
-                        {this.state.id}: {this.state.titre} {this.state.description} |
-                        {this.state.prix} | {dateAffichage} |
-                        {this.state.cip} | {this.state.etat} |
-                        {this.state.categorie}
-                    </div>
-                );
-            }
-            else{
-                return ( //Test échoué
-                    <div className='testReturnWrapper redBckg'>
-                        Test: {this.state.titreTest} |
-                        {this.state.id}: {this.state.titre} {this.state.description} |
-                        {this.state.prix} | {dateAffichage} |
-                        {this.state.cip} | {this.state.etat} |
-                        {this.state.categorie}
-                    </div>
-                );
-            }
-        }
-        else{
-            return ( //Test non fonctionnel ou impossibilité de déterminer l'issue
-                <div className='testReturnWrapper'>
-                    Test: {this.state.titreTest} |
-                    {this.state.id}: {this.state.titre} {this.state.description} |
-                    {this.state.prix} | {dateAffichage} |
-                    {this.state.cip} | {this.state.etat} |
-                    {this.state.categorie}
-                </div>
-            );
-        }
-    }
-}
-//Fin classe de données annonce
-
-
-////****** MICRO-SERVICES FAVORIS ******////
-
-//classe des tests du micro-service
-class TestFavoris extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            annonces: [],
-            increment: this.props.increment
-        };
-        this.state.increment = 0;
-
-        //Éxectuer tout les tests du micro-service
-        this.executerTests();
-
-        // This binding is necessary to make `this` work in the callback
-        this.buttonPress = this.buttonPress.bind(this);
-    }
-
-    //Éxecute tout les tests
-    executerTests() {
-        this.testGetFavoris("durp0701");
-        this.testAddFavoris("scop2401", 0);
-    }
-
-    //TEST getFavoris
-    testGetFavoris(cip) {
-        fetch("/Volos/api/favoris?cip="+cip)
-            .then(data => data.json())
-            .then(annonces => {
-                annonces.forEach(annonce => {
-                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                           id={annonce.id} prix={annonce.prix}
-                                           dateAffichage={annonce.dateAffichage} cip={annonce.cip}
-                                           categorie={annonce.categorie} etat={annonce.etat} titreTest={'GetFavoris'}
-                                           ok={null}/>)
-                    this.state.increment++;
-                });
-            });
-    }
-
-    //TEST addFavoris
-    testAddFavoris(cip, annonceId) {
-        return fetch("/Volos/api/ajouter_favori?cip="+cip+"&id="+annonceId)
-            .then(() => this.testExistFavoris(cip, annonceId, "addFavoris"));
-    }
-
-    //TEST existFavoris
-    testExistFavoris(cip, annonceId, test) {
-        return fetch("/Volos/api/existFavori?cip="+cip+"&id="+annonceId)
-            .then(data => data.json())
-            .then(data => {
-                if (data == true) {
-                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
-                                                      ok={true}/>)
-                    this.state.increment++;
-                } else {
-                    this.state.annonces.push(<Annonce key={this.state.increment} titreTest={'existFavoris '+test}
-                                                      ok={false}/>)
-                    this.state.increment++;
-                }
-
-                if(test === "addFavoris") {
-                    this.testRemoveFavoris(cip, annonceId);
-                }
-            });
-    }
-
-    //TEST removeFavoris
-    testRemoveFavoris(cip, annonceId) {
-        return fetch("/Volos/api/retirer_favori?cip="+cip+"&id="+annonceId)
-            .then(() => this.testExistFavoris(cip, annonceId, "removeFavoris"));
-    }
-
-    //Lien du bouton avec le render des réponses
-    buttonPress() {
-        let domContain = document.querySelector('#favorisServiceReturn');
-        ReactDOM.render(this.state.annonces, domContain);
-    }
-
-    render() {
-        return (
-            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
-            <button id='reactTestFavorisButton' onClick={this.buttonPress}>TestReact</button>
-        )
-    }
-}
-//Lien du bouton 'Test' avec React
-var domContainer = document.querySelector('#testFavorisButton');
-ReactDOM.render(<TestFavoris/>, domContainer);
-
-////****** FIN MICRO-SERVICES FAVORIS ******////
-
-
-
-////****** MICRO-SERVICE ANNONCE ******////
-
-//classe des tests du micro-service Annonce
-class TestAnnonce extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            annonces: [],
-            increment: this.props.increment
-        };
-
-        this.state.increment = 0;
-
-        //Éxectuer tout les tests du micro-service
-        this.executerTests();
-
-        // This binding is necessary to make `this` work in the callback
-        this.buttonPress = this.buttonPress.bind(this);
-    }
-
-    //Éxecute tout les tests
-    executerTests(){
-        this.testAnnonces();
-        this.testAnnonceById(1);
-        this.testAnnonceById(0);
-        this.testAnnoncesByCip("boui2215");
-        this.testOpenAnnonce(13);
-        this.testAnnoncePublishedByCategorie("LIVRE");
-        this.testAnnoncePublishedByCategorie("LOYER");
-        this.testAnnoncePublishedByCategorie("AUTRE");
-        this.testAnnonceNouveauxByCategorie("LIVRE");
-        this.testAnnonceNouveauxByCategorie("LOYER");
-        this.testAnnonceNouveauxByCategorie("AUTRE");
-        this.testFindLastIdAnnonce();
-    }
-
-    //TEST annonceById
-    testAnnonceById(id) {
-        fetch("/Volos/api/annonceById?id="+id)
-            .then(data => data.json())
-            .then(annonce => {
-                //Vérification de l'id recherché
-                if(annonce.id === id){  //RÉUSSI
-                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                      etat={annonce.etat} titreTest={'annonceById'} ok={true} />)
-                }
-                else{   //ÉCHOUÉ
-                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                      etat={annonce.etat} titreTest={'annonceById'} ok={false} />)
-                }
-
-                this.state.increment++;
-            });
-    }
-
-    //TEST annoncesByCip
-    testAnnoncesByCip(cip) {
-        fetch("/Volos/api/annoncesByCip?cip="+cip)
-            .then(data => data.json())
-            .then(annonces => {
-                annonces.forEach(annonce => {
-                    //Vérification du cip recherché
-                    if(annonce.cip === cip){  //RÉUSSI
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annoncesByCip'} ok={true} />)
-                    }
-                    else{   //ÉCHOUÉ
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annoncesByCip'} ok={false} />)
-                    }
-
-                    this.state.increment++;
-                });
-            });
-    }
-
-    //TEST annonces
-    testAnnonces() {
-        fetch("/Volos/api/annonces")
-            .then(data => data.json())
-            .then(annonces => {
-                annonces.forEach(annonce => {
-                    //À VÉRIFIER MANUELLEMENT
-                    this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                      cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                      prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                      etat={annonce.etat} titreTest={'annonces'} ok={null} />)
-
-                    this.state.increment++;
-                });
-            });
-    }
-
-    //TEST openAnnonce
-    testOpenAnnonce(id) {
-        fetch("/Volos/api/openAnnonce?id="+id)
-            .then(() =>
-                fetch("/Volos/api/annonceById?id="+id)
-                    .then(data => data.json())
-                    .then(annonce => {
-                        //Vérification de l'id recherché
-                        if(annonce.etat == 0){  //RÉUSSI
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'openAnnonce'} ok={true} />)
-                        }
-                        else{   //ÉCHOUÉ
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'openAnnonce'} ok={false} />)
-                        }
-
-                        this.state.increment++;
-
-                        this.testCancelAnnonce(id);
-                    })
-            );
-    }
-
-    //TEST cancelAnnonce
-    testCancelAnnonce(id) {
-        fetch("/Volos/api/cancelAnnonce?id="+id)
-            .then(() =>
-                fetch("/Volos/api/annonceById?id="+id)
-                    .then(data => data.json())
-                    .then(annonce => {
-                        //Vérification de l'id recherché
-                        if(annonce.etat == 1){  //RÉUSSI
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'cancelAnnonce'} ok={true} />)
-                        }
-                        else{   //ÉCHOUÉ
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'cancelAnnonce'} ok={false} />)
-                        }
-
-                        this.state.increment++;
-
-                        this.testAnnonceVendue(id);
-                    })
-            );
-    }
-
-    //TEST annonceVendue
-    testAnnonceVendue(id) {
-        fetch("/Volos/api/annonceVendue?id="+id)
-            .then(() =>
-                fetch("/Volos/api/annonceById?id="+id)
-                    .then(data => data.json())
-                    .then(annonce => {
-                        //Vérification de l'id recherché
-                        if(annonce.etat == 2){  //RÉUSSI
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'annonceVendue'} ok={true} />)
-                        }
-                        else{   //ÉCHOUÉ
-                            this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                              cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                              prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                              etat={annonce.etat} titreTest={'annonceVendue'} ok={false} />)
-                        }
-
-                        this.state.increment++;
-                    })
-            );
-    }
-
-    //TEST annoncePublishedByCategorie
-    testAnnoncePublishedByCategorie(categorie) {
-        fetch("/Volos/api/annoncePublishedByCategorie?categorie="+categorie)
-            .then(data => data.json())
-            .then(annonces => {
-                annonces.forEach(annonce => {
-                    //Vérification de le catégorie recherché
-                    if(annonce.categorie == categorie){  //RÉUSSI
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annoncePublishedByCategorie'} ok={true} />)
-                    }
-                    else{   //ÉCHOUÉ
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annoncePublishedByCategorie'} ok={false} />)
-                    }
-                    this.state.increment++;
-                });
-            });
-    }
-
-    //TEST annonceNouveauxByCategorie
-    testAnnonceNouveauxByCategorie(categorie) {
-        console.log("début");
-        fetch("/Volos/api/annonceNouveauxByCategorie?categorie="+categorie)
-            .then(data => data.json())
-            .then(annonces => {
-                console.log("annonces : " + annonces);
-                annonces.forEach(annonce => {
-                    console.log("annonce : " + annonce);
-                    if(annonce.categorie == categorie){  //À VÉRIFIER MANUELLEMENT
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annonceNouveauxByCategorie'} ok={null} />)
-                    }
-                    else{   //ÉCHOUÉ
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'annonceNouveauxByCategorie'} ok={false} />)
-                    }
-                    this.state.increment++;
-                });
-            });
-        console.log("fin");
-    }
-
-    //TEST findLastIdAnnonce
-    testFindLastIdAnnonce() {
-        fetch("/Volos/api/findLastIdAnnonce")
-            .then(data => data.json())
-            .then(dernierId => {
-                fetch("/Volos/api/annonceById?id="+dernierId)
-                    .then(data => data.json())
-                    .then(annonce => {
-                        //À VÉRIFIER MANUELLEMENT
-                        this.state.annonces.push(<Annonce key={this.state.increment} titre={annonce.titre} description={annonce.description}
-                                                          cip={annonce.cip} categorie={annonce.categorie} id={annonce.id}
-                                                          prix={annonce.prix} dateAffichage={annonce.dateAffichage}
-                                                          etat={annonce.etat} titreTest={'findLastIdAnnonce'} ok={null} />)
-
-                        this.state.increment++;
-                    })
-            });
-    }
-
-    //Lien du bouton avec le render des réponses
-    buttonPress(){
-        let domContain = document.querySelector('#annonceServiceReturn');
-        ReactDOM.render(this.state.annonces, domContain);
-    }
-
-    render() {
-        return (
-            //IMPORTANT DE DÉFINIR L'ID DU BOUTON
-            <button id='reactTestAnnonceButton' onClick={this.buttonPress}>TestReact</button>
-        )
-    }
-}
-
-//Lien du bouton 'testAnnonceButton' avec React
-domContainer = document.querySelector('#testAnnonceButton');
-ReactDOM.render(<TestAnnonce/>, domContainer);/**/
-////****** FIN MICRO-SERVICE ANNONCE ******////
