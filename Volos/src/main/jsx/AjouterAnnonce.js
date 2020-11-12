@@ -301,11 +301,6 @@ class FormAnnonce extends React.Component {
                         onChange={this.onChange}
                     />
                 </div>
-                <div className="photo">
-                    <p>
-                        <button>Ajouter une photo</button>
-                    </p>
-                </div>
                 <div className="buttonsAjout">
                     <span className="AnnulerAjout">
                         <a className="annulerBtn" href="index.html">Annuler</a>
