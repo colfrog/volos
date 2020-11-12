@@ -1,4 +1,9 @@
-//Classe form
+/*
+ * Gère un formulaire capable de prendre les données
+ * nécessaires pour créer n'importe quel type d'annonce,
+ * et capable d'envoyer ces données au microservice afin
+ * d'en créer une nouvelle annonce dans la BD.
+ */
 class FormAnnonce extends React.Component {
     constructor(props) {
         super(props);
@@ -317,5 +322,6 @@ class FormAnnonce extends React.Component {
         );
     }
 }
+
 var domContainer = document.querySelector('#annonceForm');
 ReactDOM.render(<FormAnnonce/>, domContainer);

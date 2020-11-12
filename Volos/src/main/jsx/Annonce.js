@@ -1,5 +1,8 @@
 import Auteur from '/Volos/components/Auteur.js';
 
+/*
+ * Gère l'affichage long de l'annonce, peu importe le type
+ */
 export default class Annonce extends React.Component {
     constructor(props) {
         super(props);
@@ -107,9 +110,6 @@ export default class Annonce extends React.Component {
         let resume = "", maisonEdition = "", datePublication = "", nbChambre = "",
             dateDebutLocation = "", dateFinLocation = "", auteurs = "", image="images/autre.jpg";
 
-        if (this.state.hasPhoto)
-            image = `/Volos/api/photo?id=${this.state.id}`;
-
         if(this.state.categorie === "LIVRE")
         {
             resume = <p>Résumé: {this.state.resume}</p>
@@ -136,9 +136,12 @@ export default class Annonce extends React.Component {
             image="images/loyer.jpg"
         }
 
+        if (this.state.hasPhoto)
+            image = `/Volos/api/photo?id=${this.state.id}`;
+
         var subjectMail = "Offre Volos";
         var bodyMail = "Bonjour,\n" +
-                    this.state.prenom + " " + this.state.nom + " est intéresssé par l'annonce suivante:\n" +
+                    this.state.prenom + " " + this.state.nom + " est intéressé par l'annonce suivante:\n" +
                     "Titre: " + this.state.titre + "\n" +
                     "Description: " + this.state.description + "\n" +
                     "Prix: " + this.state.prix + "\n" +

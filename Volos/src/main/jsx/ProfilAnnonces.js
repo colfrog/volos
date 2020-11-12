@@ -1,6 +1,9 @@
-import Profil from '/Volos/components/Profil.js';
 import ListeAnnonces from '/Volos/components/ListeAnnonces.js';
 
+/*
+ * Génère une liste d'annonces pour l'utilisateur connecté,
+ * ou pour l'utilisateur dont le cip est donné dans les props
+ */
 class ProfilAnnonces extends React.Component {
     constructor(props) {
         super(props);

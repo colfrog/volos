@@ -1,3 +1,8 @@
+/*
+ * Gère les informations relatives à l'utilisateur, soit connecté ou
+ * dont le cip est défini dans la querystring de la page, et gère
+ * l'affichage des informations de celui-ci.
+ */
 export default class Profil extends React.Component {
     constructor(props) {
         super(props);

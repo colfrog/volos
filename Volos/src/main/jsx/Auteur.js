@@ -1,3 +1,6 @@
+/*
+ * Gère l'affichage d'un auteur
+ */
 export default class Auteur extends React.Component {
     constructor(props) {
         super(props);

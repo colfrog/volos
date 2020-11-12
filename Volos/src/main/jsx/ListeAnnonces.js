@@ -1,5 +1,9 @@
 import CarteAnnonce from '/Volos/components/CarteAnnonce.js';
 
+/*
+ * Gère une liste d'annonces, générée par la fonction fetcher,
+ * qui est passée par un prop.
+ */
 export default class ListeAnnonces extends React.Component {
     constructor(props) {
         super(props);
