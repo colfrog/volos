@@ -7,10 +7,17 @@
 </head>
 <body>
     <div class="testsWrapper" id="TestsWrapper" >
-        <h1 class="testTitle" style="margin-bottom: 75px;">Tests Unitaires</h1>
+        <div class="testClassWrapper">
+            <h1 class="testTitle">Tests Unitaires</h1>
+            <p>Légende : </p>
+            <p class="testReturnWrapper greenBckg">Test réussi </p>
+            <p class="testReturnWrapper redBckg">Test échoué ou impossible à réalisé</p>
+            <p class="testReturnWrapper">Test à vérifié dans la BD </p>
+        </div>
+
 
         <div class="testGroupWrapper" id="TestsMicroServices">
-            <h2 class="testTitle" style="margin-bottom: 30px;">Tests Micro-Services</h2>
+            <h2 class="testTitle">Tests Micro-Services</h2>
             <span id="testMicroServiceButton">Test all</span>
             <div id="microServicesReturn"></div>
 
