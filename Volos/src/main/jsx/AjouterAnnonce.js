@@ -217,9 +217,9 @@ class FormAnnonce extends React.Component {
                 fetch('/Volos/api/addAutre?'+callAPI)
                     .then(function(response) {
                         if (response.ok) {
-                            alert("AUTRE OK");
+                            window.location.reload();
                         } else {
-                            alert("AUTRE NOT OK");
+                            alert("Erreur : l'annonce n'a pas été publiée");
                         }
                     });
             }
@@ -236,9 +236,9 @@ class FormAnnonce extends React.Component {
                 fetch('/Volos/api/addLivre?'+callAPI)
                     .then(function(response) {
                             if (response.ok) {
-                                alert("LIVRE OK");
+                                window.location.reload();
                             } else {
-                                alert("LIVRE NOT OK");
+                                alert("Erreur : l'annonce n'a pas été publiée");
                             }
                         });
             }
@@ -253,9 +253,9 @@ class FormAnnonce extends React.Component {
                 fetch('/Volos/api/addLoyer?'+callAPI)
                     .then(function(response) {
                         if (response.ok) {
-                            alert("LOYER OK");
+                            window.location.reload();
                         } else {
-                            alert("LOYER NOT OK");
+                            alert("Erreur : l'annonce n'a pas été publiée");
                         }
                     });
             }

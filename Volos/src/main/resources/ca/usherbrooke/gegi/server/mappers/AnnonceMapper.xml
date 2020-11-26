@@ -63,7 +63,8 @@
       FROM
         annonce
       where
-        id = #{id};
+        id = #{id}
+      order by etat, date_affichage;
     </select>
 
     <select id="selectByCip" resultType="Annonce">
@@ -79,7 +80,8 @@
       FROM
         annonce
       where
-        cip = #{cip};
+        cip = #{cip}
+      order by etat, date_affichage;
     </select>
 
     <insert id="insertAnnonce">
