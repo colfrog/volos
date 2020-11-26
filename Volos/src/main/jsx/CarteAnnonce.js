@@ -109,7 +109,13 @@ export default class CarteAnnonce extends React.Component {
             etat = <p className="texteVendu">VENDUE</p>;
 
         if (descrpt != "") {
-            descrpt = <p className="cardDescription">{this.state.description}</p>;
+            let desc = this.state.description;
+            let max_len = 256;
+            
+            if (desc.length > max_len)
+                desc = this.state.description.substring(0, max_len) + '...';
+
+            descrpt = <p className="cardDescription">{desc}</p>;
         }
 
         if (this.state.hasPhoto)
