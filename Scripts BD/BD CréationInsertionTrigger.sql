@@ -82,8 +82,8 @@ CREATE TABLE Evenement
   date TIMESTAMP NOT NULL,
   action VARCHAR(512) NOT NULL,
   id_annonce INT NOT NULL,
-  vieille_annonce VARCHAR(512),
-  nouvelle_annonce VARCHAR(512),
+  vieille_annonce VARCHAR(4096),
+  nouvelle_annonce VARCHAR(4096),
   PRIMARY KEY (id_evenement)
 );
 
