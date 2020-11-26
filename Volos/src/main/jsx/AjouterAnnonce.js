@@ -45,6 +45,8 @@ class FormAnnonce extends React.Component {
                             <textarea
                                 className="resumeText ajout_input"
                                 name="livreResume"
+                                id="inputLivreResume"
+                                maxLength="2048"
                                 defaultValue={this.state.livreResume}
                                 onChange={this.onChange}
                             />
@@ -55,6 +57,7 @@ class FormAnnonce extends React.Component {
                                 type="text"
                                 name="livreMaisonEdition"
                                 id="inputLivreMaisonEdition"
+                                maxLength="512"
                                 onChange={this.onChange}
                                 defaultValue=''
                             />
@@ -76,6 +79,7 @@ class FormAnnonce extends React.Component {
                                    type="text"
                                    name="livreNomAuteur"
                                    id="inputLivreNomAuteur"
+                                   maxLength="512"
                                    placeholder="Nom"
                                    onChange={this.onChange}
                                    defaultValue=''
@@ -84,6 +88,7 @@ class FormAnnonce extends React.Component {
                                    type="text"
                                    name="livrePrenomAuteur"
                                    id="inputLivrePrenomAuteur"
+                                   maxLength="512"
                                    placeholder="Prenom"
                                    onChange={this.onChange}
                                    defaultValue=''
@@ -141,7 +146,7 @@ class FormAnnonce extends React.Component {
 
         let OK = true;
         //Vérification des données générales
-        if(this.state.titre == null || this.state.titre == ''){
+        if(this.state.titre == null || this.state.titre == '' || this.state.titre.length > 512){
             document.getElementById("titreInput").classList.add("redBorder");
             OK = false;
         } else {
@@ -154,9 +159,16 @@ class FormAnnonce extends React.Component {
         } else {
             document.getElementById("prixInput").classList.remove("redBorder");
         }
+
+        if(this.state.description.length > 2048){
+            document.getElementById("inputDescription").classList.add("redBorder");
+            OK = false;
+        } else {
+            document.getElementById("inputDescription").classList.remove("redBorder");
+        }
         //Vérification des données d'un livre
         if(this.state.categorie == 'livre'){
-            if(this.state.livreMaisonEdition == ''){
+            if(this.state.livreMaisonEdition == '' || this.state.livreMaisonEdition.length > 512){
                 document.getElementById("inputLivreMaisonEdition").classList.add("redBorder");
                 OK = false;
             } else {
@@ -170,18 +182,25 @@ class FormAnnonce extends React.Component {
                 document.getElementById("inputLivreDatePublication").classList.remove("redBorder");
             }
 
-            if(this.state.livreNomAuteur == ''){
+            if(this.state.livreNomAuteur == '' || this.state.livreNomAuteur.length > 512){
                 document.getElementById("inputLivreNomAuteur").classList.add("redBorder");
                 OK = false;
             } else {
                 document.getElementById("inputLivreNomAuteur").classList.remove("redBorder");
             }
 
-            if(this.state.livrePrenomAuteur == ''){
+            if(this.state.livrePrenomAuteur == '' || this.state.livrePrenomAuteur.length > 512){
                 document.getElementById("inputLivrePrenomAuteur").classList.add("redBorder");
                 OK = false;
             } else {
                 document.getElementById("inputLivrePrenomAuteur").classList.remove("redBorder");
+            }
+
+            if(this.state.livreResume.length > 2048){
+                document.getElementById("inputLivreResume").classList.add("redBorder");
+                OK = false;
+            } else {
+                document.getElementById("inputLivreResume").classList.remove("redBorder");
             }
         }
         //Vérification des données d'un loyer
@@ -270,6 +289,7 @@ class FormAnnonce extends React.Component {
                     <input className="ajout_input"
                         type="text"
                         name="titre"
+                        maxLength="512"
                         id="titreInput"
                         onChange={this.onChange}
                     />
@@ -297,6 +317,8 @@ class FormAnnonce extends React.Component {
                     <textarea
                         className="descriptionText ajout_type"
                         name="description"
+                        id="inputDescription"
+                        maxLength="2048"
                         defaultValue={this.state.description}
                         onChange={this.onChange}
                     />
